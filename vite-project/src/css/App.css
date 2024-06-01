@@ -1,0 +1,94 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo{
+  margin: 3rem;
+}
+
+img{
+  width: 600px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.label-div {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  margin-left: 50px;
+}
+
+label {
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+input {
+  margin-bottom: 1rem;
+}
+
+#log_in {
+  background-color: var(--second-color);
+  color: var(--background-color);
+  margin-top: 2rem;
+}
+
+#log_in:hover {
+  background-color: var(--primary-color);
+}
+
+.separator {
+  background-color: var(--third-color);
+  margin: 1.2rem 0;
+  height: 3px;
+  width: 50%;
+}
+
+#sign_in {
+  background-color: var(--second-color);
+  color: var(--background-color);
+}
+
+#sign_in:hover {
+  background-color: var(--primary-color);
+}
+
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  #root {
+    padding: 0.8rem;
+  }
+
+  .logo {
+    margin: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  img{
+    width: 300px;
+  }
+
+  form {
+    gap: 0.4rem;
+  }
+
+  .label-div {
+    margin-left: 20px;
+  }
+
+  #log_in {
+    margin-top: 1rem;
+  }
+}
