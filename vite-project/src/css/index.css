@@ -1,0 +1,98 @@
+:root {
+
+  /* COLOURS */
+  --background-color: #FFFFFF;
+  --primary-color: #FF7B00;
+  --second-color: #240046;
+  --third-color: #FFE2CB;
+
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--background-color);
+  color: var(--second-color);
+  text-align: center;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 20px;
+  width: 250px;
+  border: 0px;
+  padding: 0.6em 1.2em;
+  margin: 0.5em;
+  font-size: 1em;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 0.25s ease-in-out;
+  background-color: var(--second-color);
+  color: var(--background-color);
+}
+
+button:hover {
+  background-color: var(--primary-color);
+}
+
+input {
+  width: 350px;
+  height: 26px;
+  padding: 0.5rem;
+  border-radius: 6px;
+  background-color: var(--third-color);
+  border: 0px;
+  color: var(--second-color);
+  font-size: 1em;
+}
+
+input:focus {
+  outline-color: var(--primary-color);
+}
+
+::placeholder {
+  color: var(--second-color);
+}
+
+::selection {
+  background-color: var(--primary-color);
+  color: var(--background-color);
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+
+  button {
+    width: 200px;
+    font-size: 0.9em;
+  }
+
+  input {
+    width: 250px;
+    height: 22px;
+    font-size: 0.85em;
+  }
+  
+}
