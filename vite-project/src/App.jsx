@@ -9,6 +9,13 @@ function App() {
   const [messageSignIn, setMessageSignIn] = useState('')
   const [messageLogin, setMessageLogin] = useState('')
 
+  // Simulated 3 accounts
+  const accounts = [
+    { email: "consommateur@consommateur.fr", password: "123456789", type: "consumer" },
+    { email: "livreur@livreur.fr", password: "123456789", type: "deliveryman" },
+    { email: "restaurant@restaurant.fr", password: "123456789", type: "restaurant" }
+  ]
+
   // Handlers
   const handleSignIn = () => {
     setSignInClicked(true)
@@ -29,6 +36,13 @@ function App() {
 
     // Send data to server
     /////////// TO DO ///////////
+
+    // Check if account exists
+    const account = accounts.find(account => account.email === data.email && account.password === data.password)
+    if (!account) {
+      setMessageLogin('Identifiant ou mot de passe incorrect.')
+      return
+    }
 
     // Reset form
     form.reset()
