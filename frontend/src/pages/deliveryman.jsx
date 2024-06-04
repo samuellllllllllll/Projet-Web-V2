@@ -2,7 +2,7 @@ const deliveryman = () => {
 
   return (
     <>
-      <h1>caca</h1>
+      <h1>Deliveryman</h1>
     </>
   )
 }

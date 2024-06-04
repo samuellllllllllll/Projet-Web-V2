@@ -2,7 +2,7 @@ const restaurant = () => {
 
   return (
     <>
-      <h1>Consumer</h1>
+      <h1>Restaurant</h1>
     </>
   )
 }
