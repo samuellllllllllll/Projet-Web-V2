@@ -103,7 +103,7 @@ const login = () => {
   // FRONT
   if (signeInClicked) {
     return (
-      <>
+      <div className="home">
         {/* Logo */}
         <div className="logo">
           <img src={logo} alt="logo CESI'Eats" />
@@ -154,13 +154,13 @@ const login = () => {
             <button type="submit" id="sign_up">Créer mon compte</button>
           </form>
         </div>
-      </>
+      </div>
     )
   }
 
   else {
     return (
-      <>
+      <div className="home">
         {/* Logo */}
         <div className="logo">
           <img src={logo} alt="logo CESI'Eats" />
@@ -197,7 +197,7 @@ const login = () => {
         <div>
           <button id="sign_up" onClick={handleSignIn}>Créer mon compte</button>
         </div>
-      </>
+      </div>
     )
   }
 }
