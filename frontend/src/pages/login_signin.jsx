@@ -1,13 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import '../css/App.css'
+import '../styles/login_signin.css'
 import logo from '../assets/logo.png'
-
-import Consumer from './consumer.jsx'
-import Restaurant from './restaurant.jsx'
-import Deliveryman from './deliveryman.jsx'
-import consumer from './consumer.jsx'
-import { Navigate } from 'react-router-dom'
 
 const login = () => {
 
@@ -54,9 +48,6 @@ const login = () => {
 
     // Reset form
     form.reset()
-
-    // Validation message
-    setMessageLogin('Connexion réussie.')
 
     // Redirect to account page
     switch (account.type) {
