@@ -1,8 +1,10 @@
-function restaurant() {
+const restaurant = () => {
 
   return (
     <>
-      <h1>Restaurant</h1>
+      <h1>Consumer</h1>
     </>
   )
 }
+
+export default restaurant;

@@ -1,8 +1,10 @@
-function deliveryman() {
+const deliveryman = () => {
 
   return (
     <>
-      <h1>Deliveryman</h1>
+      <h1>caca</h1>
     </>
   )
 }
+
+export default deliveryman;
