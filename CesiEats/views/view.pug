@@ -1,0 +1,37 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  title POST DEMO
+form
+  div
+    label Username
+    input#user(type='text')
+  div
+    label Password
+    input#pass(type='password')
+  button(type='submit')
+    | Submit
+script.
+  document.querySelector('button')
+  .addEventListener('click', (e) => {
+  e.preventDefault();
+  const username = document
+  .querySelector('#user').value;
+  const password = document
+  .querySelector('#pass').value;
+  fetch('/', {
+  method: 'POST',
+  headers: {
+  Authorization: 'Bearer abcdxyz',
+  'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+  username,
+  password,
+  }),
+  })
+  .then((res) => {
+  return res.json();
+  })
+  .then((data) => console.log(data));
+  });
