@@ -1,4 +1,4 @@
-function consumer() {
+const consumer = () => {
 
   return (
     <>
@@ -6,3 +6,5 @@ function consumer() {
     </>
   )
 }
+
+export default consumer;

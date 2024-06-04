@@ -1,17 +1,21 @@
 import { useState } from 'react'
-import './css/App.css'
-import logo from './img/logo.png'
+import { useNavigate } from 'react-router-dom';
+import '../css/App.css'
+import logo from '../assets/logo.png'
 
-import Consumer from './pages/consumer.jsx'
-import Restaurant from './pages/restaurant.jsx'
-import Deliveryman from './pages/deliveryman.jsx'
+import Consumer from './consumer.jsx'
+import Restaurant from './restaurant.jsx'
+import Deliveryman from './deliveryman.jsx'
+import consumer from './consumer.jsx'
+import { Navigate } from 'react-router-dom'
 
-function App() {
+const login = () => {
 
   // State
   const [signeInClicked, setSignInClicked] = useState(false)
   const [messageSignIn, setMessageSignIn] = useState('')
   const [messageLogin, setMessageLogin] = useState('')
+  const navigate = useNavigate();
 
   // Simulated 3 accounts
   const accounts = [
@@ -31,7 +35,7 @@ function App() {
 
   const handleSubmitLogin = (e) => {
     e.preventDefault()
-    
+
     // Get form data
     const form = e.target
     const formData = new FormData(form)
@@ -57,11 +61,14 @@ function App() {
     // Redirect to account page
     switch (account.type) {
       case 'consumer':
-        return <Consumer />
+        navigate('/consumer');
+        break
       case 'restaurant':
-        return <Restaurant />
+        navigate('/restaurant');
+        break
       case 'deliveryman':
-        return <Deliveryman />
+        navigate('/deliveryman');
+        break
     }
   }
 
@@ -160,7 +167,7 @@ function App() {
     )
   }
 
-  else{
+  else {
     return (
       <>
         {/* Logo */}
@@ -172,7 +179,7 @@ function App() {
         <div className="intro-text">
           <p>Connectez-vous pour accéder à votre compte</p>
         </div>
-  
+
         {/* Log in card */}
         <div className="log-in-card">
           <form onSubmit={handleSubmitLogin}>
@@ -204,4 +211,4 @@ function App() {
   }
 }
 
-export default App
+export default login;
