@@ -1,0 +1,34 @@
+.card-section {
+display: flex;
+flex-direction: column;
+}
+
+.card-item {
+display: flex;
+flex-direction: column;
+}
+
+.card-item img {
+    width: 400px; /* ou toute autre largeur désirée */
+    height: 200px; /* ou toute autre hauteur désirée */
+    object-fit: cover; /* ou une autre valeur pour ajuster le contenu */
+    border-radius: 10px;
+    margin-bottom: -5px;
+}
+
+.item-name{
+margin-right: auto;
+margin-bottom: -10px;
+}
+
+.item-price{
+margin-right: auto;
+}
+
+@media screen and (max-width: 768px) {
+    
+    .card-item img {
+    width: 150px; /* ou toute autre largeur désirée */
+    height: 100px;
+    }
+}
