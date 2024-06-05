@@ -3,6 +3,7 @@ import Consumer from "./pages/consumer.jsx"
 import Deliveryman from "./pages/deliveryman.jsx"
 import Restaurant from "./pages/restaurant.jsx"
 import Login from './pages/login_signin.jsx';
+import MenuEdit from './pages/menuEdit.jsx';
 
 const App = () => {
   return (
@@ -12,7 +13,7 @@ const App = () => {
         <Route path="/deliveryman" element={<Deliveryman />} />
         <Route path="/restaurant" element={<Restaurant />} />
         <Route path="/consumer" element={<Consumer />} />
-        <Route path="/menuEdit" element={<menuEdit />} />
+        <Route path="/menuEdit" element={<MenuEdit />} />
       </Routes>
     </Router>
   )
