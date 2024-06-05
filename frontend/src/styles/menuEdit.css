@@ -31,8 +31,7 @@ width: 3%;
 }
 
 .menu-title {
-margin-left: 550px; 
-margin-right: auto;
+margin-left: 650px; 
 color: #240046;
 }
 
@@ -68,10 +67,15 @@ margin-left: 150px;
 }
 
 @media screen and (max-width: 768px) {
-    .menu-title {  
+    .menu-title {   
       margin-left: 130px;
-        text-align: center; /* Centrer le texte */
+        text-align: center;
         font-size: 1.8em;
+    }
+
+    .menu-nav{
+      width: auto;
+      height: auto;
     }
 
     .logo{
@@ -99,7 +103,10 @@ margin-left: 150px;
         flex-direction: row; /* Empiler les cartes verticalement */
     }
 
-    .card-right,  
+    .card-right{
+        margin-right: 5%;
+    }  
+
     .card-left {
         margin: 0; /* Supprimer les marges latérales pour centrer les cartes */
     }
