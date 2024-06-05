@@ -5,9 +5,9 @@ const FoodCard = (props) => {
     return (
         <section className="card-section">
             <div className="card-item">
-                <img src={props.images} alt="Coca Cola 33cl" />
-                <p className="item-name">{props.text}</p>
-                <p className="item-price">{props.text}</p>
+                <img src={props.images} />
+                <p className="item-name">{props.name}</p>
+                <p className="item-price">{props.price}</p>
             </div>
         </section>
     );

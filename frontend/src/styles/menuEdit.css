@@ -31,7 +31,7 @@ width: 3%;
 }
 
 .menu-title {
-margin-left: 680px; 
+margin-left: 550px; 
 margin-right: auto;
 color: #240046;
 }
@@ -53,46 +53,54 @@ margin-left: 50px;
 color: #FF7B00;
 }
 
-.menu-items {
-display: flex;
-flex-direction: row; /* Pour aligner les éléments horizontalement */
-justify-content: space-between;
-align-items: center;
+.card-row{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-.menu-item-1 {
-margin-left: 200px;
-display: flex;
-flex-direction: column;
+.card-right{
+  margin-right: 150px;
 }
 
-.menu-item-2 {
-margin-right: 200px;
-display: flex;
-flex-direction: column;
+.card-left{
+margin-left: 150px;
 }
 
-.menu-item-1 img {
-    width: 400px; /* ou toute autre largeur désirée */
-    height: 200px; /* ou toute autre hauteur désirée */
-    object-fit: cover; /* ou une autre valeur pour ajuster le contenu */
-    border-radius: 10px;
-    margin-bottom: -5px;
-}
+@media screen and (max-width: 768px) {
+    .menu-title {  
+      margin-left: 130px;
+        text-align: center; /* Centrer le texte */
+        font-size: 1.8em;
+    }
 
-.menu-item-2 img {
-    width: 400px; /* ou toute autre largeur désirée */
-    height: 200px; /* ou toute autre hauteur désirée */
-    object-fit: cover; /* ou une autre valeur pour ajuster le contenu */
-    border-radius: 10px;
-    margin-bottom: -5px;
-}
+    .logo{
+      margin-left: -2%;
+      width: 30%;
+    }
 
-.item-name{
-margin-right: auto;
-margin-bottom: -10px;
-}
+    .menuIcon{
+      width: 6%;
+    }
 
-.item-price{
-margin-right: auto;
+    .edit-button{
+      margin-left: 18%;
+    }
+
+    .menu-section {
+        align-items: center; /* Centrer verticalement les éléments */
+    }
+
+    .section-title {
+        margin-left: 0%;
+    }
+
+    .card-row {
+        flex-direction: row; /* Empiler les cartes verticalement */
+    }
+
+    .card-right,  
+    .card-left {
+        margin: 0; /* Supprimer les marges latérales pour centrer les cartes */
+    }
 }
