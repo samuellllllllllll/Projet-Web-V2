@@ -1,0 +1,83 @@
+.consumer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.consumer-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 90vh;
+    margin-top: 10vh;
+}
+
+.consumer-title{
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.consumer-text{
+    font-size: 1.5rem;
+    margin: 1rem 0;
+}
+
+.consumer-categories{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 1rem 0;
+    padding: 0 5rem;   
+}
+
+.consumer-category{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+
+    img{
+        width: 80px;
+    }
+}
+
+.consumer-restaurants{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+}
+
+
+/* RESPONSIVE */
+@media screen and (max-width: 1400px){
+
+    .consumer-categories{
+        padding: 0 2rem;
+    }
+    
+    .consumer-category{
+        font-size: 1rem;
+    
+        img{
+            width: 60px;
+        }
+    }
+}
+
+@media screen and (max-width: 1150px){
+
+    .consumer-category{
+        font-size: 0.9rem;
+    
+        img{
+            width: 50px;
+        }
+    }
+}
