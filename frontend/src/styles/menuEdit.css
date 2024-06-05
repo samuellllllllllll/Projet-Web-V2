@@ -1,12 +1,98 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.menu-page {
+    width: 100%;
+    height: 100vh; /* S'assure que la page prend toute la hauteur de la fenêtre */
+    display: flex;
+    flex-direction: column; /* Permet une disposition verticale */
 }
 
-.logo{
-  margin: 2rem;
+.menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: relative; /* Assure que le header est positionné relativement */
+    z-index: 100; /* Assure que le header est au-dessus d'autres éléments */
+}
+
+.logo {
+  width: 10%;
+}
+
+.menuIcon {
+width: 3%;
+}
+
+.menu-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Pour séparer les éléments à chaque extrémité */
+    height: 100vh; /* Assure que le nav prend toute la hauteur de .menu-page */
+    padding: 0 20px; /* Ajoute un padding pour l'espacement entre les éléments */
+}
+
+.menu-title {
+margin-left: 680px; 
+margin-right: auto;
+color: #240046;
+}
+
+.edit-button {
+    background-color: white;
+    color: #FF7B00;
+    margin-left: auto;
+}
+
+.menu-section {
+display: flex;
+flex-direction: column;
+}
+
+.section-title {
+margin-right: auto;
+margin-left: 50px;
+color: #FF7B00;
+}
+
+.menu-items {
+display: flex;
+flex-direction: row; /* Pour aligner les éléments horizontalement */
+justify-content: space-between;
+align-items: center;
+}
+
+.menu-item-1 {
+margin-left: 200px;
+display: flex;
+flex-direction: column;
+}
+
+.menu-item-2 {
+margin-right: 200px;
+display: flex;
+flex-direction: column;
+}
+
+.menu-item-1 img {
+    width: 400px; /* ou toute autre largeur désirée */
+    height: 200px; /* ou toute autre hauteur désirée */
+    object-fit: cover; /* ou une autre valeur pour ajuster le contenu */
+    border-radius: 10px;
+    margin-bottom: -5px;
+}
+
+.menu-item-2 img {
+    width: 400px; /* ou toute autre largeur désirée */
+    height: 200px; /* ou toute autre hauteur désirée */
+    object-fit: cover; /* ou une autre valeur pour ajuster le contenu */
+    border-radius: 10px;
+    margin-bottom: -5px;
+}
+
+.item-name{
+margin-right: auto;
+margin-bottom: -10px;
+}
+
+.item-price{
+margin-right: auto;
 }
