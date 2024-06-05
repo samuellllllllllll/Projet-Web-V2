@@ -1,0 +1,30 @@
+
+       .Button{
+        --leftButton: 175px;
+        left: 0;
+        top: 0;
+        position: absolute;
+        width: 175px;
+        height: 100%;
+        background: var(--theme-second-color);
+        border-radius: 30px;
+        transition: .5s;
+      }
+
+        .Toggle-button{
+        width: 175px;
+        height: 50px;
+        cursor: pointer;
+        background: transparent;
+        border: 0;
+        outline: none;
+        position: relative;
+        color: var(--theme-first-color);
+        font-size: 18px;
+      }
+
+      .Menu-bottom-button{
+        background-color: orange;
+        border-radius: 30px;
+        width: 30%;
+      }
