@@ -3,9 +3,13 @@ const bodyParser = require('body-parser');
 const app = express()
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
+const path = require('path');
 
 dotenv.config();
 process.env.TOKEN_SECRET;
+
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, '../views'));
 
 function generateAccessJWT(username) {
   return jwt.sign({username}, process.env.TOKEN_SECRET, {expiresIn: '1800s'})
@@ -25,8 +29,9 @@ function authenticateToken(req, res, next) {
 }
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
-app.post('/login', (req, res) => { 
+app.post('/token', (req, res) => { 
   const { username, password } = req.body;
 
   console.log(username, password)
@@ -46,6 +51,15 @@ app.get('/protected', authenticateToken, (req, res) => {
 
 app.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
+});
+
+app.get('/login', (req, res) => {
+  res.render('login', { title: 'Login' });
+});
+
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;;
+  res.send(`Username: ${username}, Password: ${password}`);
 });
 
 const port = 3001;
