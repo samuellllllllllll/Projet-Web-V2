@@ -8,8 +8,7 @@ const path = require('path');
 dotenv.config();
 process.env.TOKEN_SECRET;
 
-app.set('view engine', 'pug');
-app.set('views', path.join(__dirname, '../views'));
+app.use(express.static(path.join(__dirname, '../public')));
 
 function generateAccessJWT(username) {
   return jwt.sign({username}, process.env.TOKEN_SECRET, {expiresIn: '1800s'})
@@ -48,18 +47,8 @@ app.get('/protected', authenticateToken, (req, res) => {
   res.send(`Hello, ${req.user.username}. You are authenticated!`);
 });
 
-
-app.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
-app.get('/login', (req, res) => {
-  res.render('login', { title: 'Login' });
-});
-
-app.post('/login', (req, res) => {
-  const { username, password } = req.body;;
-  res.send(`Username: ${username}, Password: ${password}`);
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public', 'index.html'));
 });
 
 const port = 3001;
