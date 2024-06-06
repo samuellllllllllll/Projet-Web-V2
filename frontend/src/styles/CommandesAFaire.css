@@ -1,0 +1,22 @@
+.demandes-box {
+    width: 170%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #f3c5a8;
+}
+
+.details, .heure ,.id {
+    flex: 1;
+    text-align: left;
+    color: #3a0457; /* Couleur pour le texte des détails et de l'heure */
+}
+
+.details {
+    margin-right: 20px; /* Espace entre les détails et l'heure */
+}
+
+.heure {
+    margin-right: 20px; /* Espace entre l'heure et l'id*/
+}

@@ -2,12 +2,22 @@ import React, { useState } from 'react';
 import '../styles/restaurant.css';
 import logo from '../assets/logo.png';
 import menuIcon from '../assets/menu.png';
+import DemandesCommandes from '../components/DemandesCommandes';
+import CommandesAFaire from '../components/CommandesAFaire';
 
 const Restaurant = () => {
   const [isOpen, setIsOpen] = useState(true);
 
   const toggleButton = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleAccept = () => {
+    console.log("Accepted");
+  };
+
+  const handleDeny = () => {
+    console.log("Denied");
   };
 
   return (
@@ -46,12 +56,18 @@ const Restaurant = () => {
           <thead>
             <tr>
               <th>Détail</th>
-              <th>Heure récupération</th>
+              <th className='heure'>Heure récupération</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td colSpan="2" className="table-empty">Vous n'avez aucune demande.</td>
+              <DemandesCommandes
+                details="1 Kebab"
+                heure="10 h 00"
+                onAccept={handleAccept}
+                onDeny={handleDeny}
+              />
+              {/* <td colSpan="2" className="table-empty">Vous n'avez aucune demande.</td> */}
             </tr>
           </tbody>
         </table>
@@ -66,7 +82,12 @@ const Restaurant = () => {
           </thead>
           <tbody>
             <tr>
-              <td colSpan="3" className="table-empty">Vous n'avez aucune commande à faire.</td>
+              <CommandesAFaire
+                details="1 Kebab"
+                heure="10 h 00"
+                id="2002"
+              />
+              {/* <td colSpan="3" className="table-empty">Vous n'avez aucune commande à faire.</td> */}
             </tr>
           </tbody>
         </table>
