@@ -52,13 +52,13 @@ const login = () => {
     // Redirect to account page
     switch (account.type) {
       case 'consumer':
-        navigate('/consumer');
+        navigate('/consommateur');
         break
       case 'restaurant':
         navigate('/restaurant');
         break
       case 'deliveryman':
-        navigate('/deliveryman');
+        navigate('/livreur');
         break
     }
   }

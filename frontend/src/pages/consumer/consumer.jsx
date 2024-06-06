@@ -100,6 +100,16 @@ const consumer = () => {
             image="https://lh3.googleusercontent.com/p/AF1QipM9C4-VklY3hzaxGb_h4M3wDVhwh5KIpN_Ozv1k=s1360-w1360-h1020"
             title="Kebab Istanbul"
           />
+          <Restaurant_card
+            link="/consumer"
+            image="https://lh3.googleusercontent.com/p/AF1QipMYiYNeAb--caulTsF8hGu80VCm7Lh1lt53HbUC=s1360-w1360-h1020"
+            title="Aladdin Ravezies"
+          />
+          <Restaurant_card 
+            link="/consumer"
+            image="https://lh3.googleusercontent.com/p/AF1QipM9C4-VklY3hzaxGb_h4M3wDVhwh5KIpN_Ozv1k=s1360-w1360-h1020"
+            title="Kebab Istanbul"
+          />
           <Footer />
         </div>
       </div>

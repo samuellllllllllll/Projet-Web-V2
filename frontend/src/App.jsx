@@ -4,16 +4,18 @@ import Deliveryman from "./pages/deliveryman.jsx"
 import Restaurant from "./pages/restaurant.jsx"
 import Login from './pages/login_signin.jsx';
 import AccountConsumer from './pages/consumer/account.jsx';
+import ShoppingBasket from './pages/consumer/shopping_basket.jsx';
 
 const App = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/deliveryman" element={<Deliveryman />} />
+        <Route path="/livreur" element={<Deliveryman />} />
         <Route path="/restaurant" element={<Restaurant />} />
-        <Route path="/consumer" element={<Consumer />} />
-        <Route path="/consumer/account" element={<AccountConsumer />} />
+        <Route path="/consommateur" element={<Consumer />} />
+        <Route path="/consommateur/compte" element={<AccountConsumer />} />
+        <Route path="/consommateur/panier" element={<ShoppingBasket />} />
       </Routes>
     </Router>
   )
