@@ -1,0 +1,70 @@
+.account{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.account-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 80vh;
+    margin-top: 10vh;
+}
+
+.account-title{
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.consumer-text{
+    font-size: 1.5rem;
+    margin: 1rem 0;
+}
+
+.account-details{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 0;
+    padding: 0 5rem;   
+}
+
+.account-details-left{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 1rem 0;
+    width: 150px;
+    font-weight: 700;
+}
+
+.account-details-right{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 1rem 0;
+    width: 200px;
+}
+
+.account-button{
+    color: var(--background-color);
+    font-size: 1.1rem;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 40px;
+    border-radius: 30px;
+    transition: all 0.3s ease-in-out;
+    width: 300px;
+}
+
+/* RESPONSIVE */
+@media screen and (max-width: 1400px){
+
+    .account-button{
+        font-size: 0.9rem;
+    }
+}

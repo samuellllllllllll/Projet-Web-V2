@@ -1,13 +1,11 @@
 .footer{
     display: flex;
-    position: absolute;
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
     background-color: var(--third-color);
-    bottom: 0;
     width: 95%;
-    height: 80px;
+    height: 10vh;
     padding-left: 2.5%;
     padding-right: 2.5%;
 }
@@ -43,6 +41,7 @@
         font-size: 1.2rem;
         text-decoration: none;
         font-weight: 500;
+        transition: all 0.3s ease-in-out;
     }
 
     a:hover{
@@ -57,4 +56,24 @@
     color: var(--primary-color);
     font-weight: 600;
     font-size: 0.9rem;
+}
+
+/* RESPONSIVE */
+@media screen and (max-width: 1400px){
+    .logo-footer{
+        width: 110px;
+        height: fit-content;
+    }
+
+    .footer-text{
+        color: var(--primary-color);
+    
+        a{
+            font-size: 0.9rem;
+        }
+    }
+
+    .footer-bottom{
+        font-size: 0.7rem;
+    }
 }
