@@ -1,0 +1,23 @@
+.menu-page {
+    width: 100%;
+    height: 100vh; /* S'assure que la page prend toute la hauteur de la fenêtre */
+    display: flex;
+    flex-direction: column; /* Permet une disposition verticale */
+}
+
+.menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: relative; /* Assure que le header est positionné relativement */
+    z-index: 100; /* Assure que le header est au-dessus d'autres éléments */
+}
+
+.logo {
+  width: 10%;
+}
+
+.menuIcon {
+width: 3%;
+}
