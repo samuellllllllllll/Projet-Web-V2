@@ -1,5 +1,5 @@
-.demandes-box {
-    width: 170%;
+.demandes-box-2 {
+    width: 195%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -7,16 +7,16 @@
     border-bottom: 1px solid #f3c5a8;
 }
 
-.details, .heure ,.id {
+.details-2, .heure-2 ,.id {
     flex: 1;
     text-align: left;
     color: #3a0457; /* Couleur pour le texte des détails et de l'heure */
 }
 
-.details {
+.details-2 {
     margin-right: 20px; /* Espace entre les détails et l'heure */
 }
 
-.heure {
+.heure-2 {
     margin-right: 20px; /* Espace entre l'heure et l'id*/
 }

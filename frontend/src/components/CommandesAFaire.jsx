@@ -4,11 +4,11 @@ import "../styles/CommandesAFaire.css";
 const CommandesAFaire = (props) => {
     const { details, heure, id } = props;
     return (
-        <div className="demandes-box">
-            <div className='details'>
+        <div className="demandes-box-2">
+            <div className='details-2'>
                 {details}
             </div>
-            <div className='heure'>
+            <div className='heure-2'>
                 {heure}
             </div>
             <div className='id'>
