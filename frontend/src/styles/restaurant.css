@@ -114,3 +114,6 @@ h1 {
   padding: 20px;
   color: #666;
 }
+
+@media (max-width: 768px) {
+}

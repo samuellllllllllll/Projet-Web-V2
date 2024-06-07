@@ -55,7 +55,7 @@ const Restaurant = () => {
         <table className="table">
           <thead>
             <tr>
-              <th>Détail</th>
+              <th className='test'>Détail</th>
               <th className='heure'>Heure récupération</th>
             </tr>
           </thead>
