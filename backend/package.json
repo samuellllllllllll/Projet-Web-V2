@@ -21,5 +21,8 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "@orangeopensource/hurl": "^4.3.2"
+  }
 }
