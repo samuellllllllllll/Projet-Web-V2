@@ -6,6 +6,7 @@ import Login from './pages/login_signin.jsx';
 import MenuEdit from './pages/menuEdit.jsx';
 import DeliverymanOrder from './pages/deliverymanOrder.jsx';
 import DeliverymanOrder2 from './pages/deliverymanOrder2.jsx';
+import DeliverymanOrder3 from './pages/deliverymanOrder3.jsx';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/menuEdit" element={<MenuEdit />} />
         <Route path="/deliverymanOrder" element={<DeliverymanOrder />} />
         <Route path="/deliverymanOrder2" element={<DeliverymanOrder2 />} />
+        <Route path="/deliverymanOrder3" element={<DeliverymanOrder3 />} />
       </Routes>
     </Router>
   )
