@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/restaurant.css';
+import '../styles/deliverymanOrder.css';
 import logo from '../assets/logo.png';
 import menuIcon from '../assets/menu.png';
 import locationIcon from '../assets/localisateur.png';
@@ -13,6 +13,10 @@ const DeliverymanOrder = () => {
             </header>
             <main className="order-details">
                 <h1>Récupérez la commande au restaurant</h1>
+                <div className="progress-bar">
+                    <div className="step1 active"></div>
+                    <div className="step2"></div>
+                </div>
                 <div className="order-location">
                     <img src={locationIcon} alt="Location Icon" className="locationIcon" />
                     <p>2 Pl. Ravezies, 33300 Bordeaux</p>
