@@ -5,6 +5,7 @@ import Restaurant from "./pages/restaurant.jsx"
 import Login from './pages/login_signin.jsx';
 import MenuEdit from './pages/menuEdit.jsx';
 import DeliverymanOrder from './pages/deliverymanOrder.jsx';
+import DeliverymanOrder2 from './pages/deliverymanOrder2.jsx';
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route path="/consumer" element={<Consumer />} />
         <Route path="/menuEdit" element={<MenuEdit />} />
         <Route path="/deliverymanOrder" element={<DeliverymanOrder />} />
+        <Route path="/deliverymanOrder2" element={<DeliverymanOrder2 />} />
       </Routes>
     </Router>
   )
