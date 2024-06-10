@@ -12,7 +12,7 @@ const ShoppingBasket = () => {
         <div className="shopping-basket">
             <Header />
             <div className="shopping-basket-container">
-                <div className="shopping-basket-title">Votre panier</div>
+                <div className="shopping-basket-title">Mon panier</div>
                 <div className="shopping-basket-details">
                     <div className="shopping-basket-details-order">
                         <div className="shopping-basket-details-order-title">{restaurant}</div>

@@ -9,6 +9,7 @@
     padding-left: 2.5%;
     padding-right: 2.5%;
     position: fixed;
+    z-index: 1;
 }
 
 .logo-header{
