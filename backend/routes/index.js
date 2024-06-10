@@ -1,17 +1,34 @@
-const express = require('express')
+const express = require('express');
 const bodyParser = require('body-parser');
-const app = express()
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const path = require('path');
+const crypto = require('crypto');
 
 dotenv.config();
-process.env.TOKEN_SECRET;
+const app = express();
 
 app.use(express.static(path.join(__dirname, '../public')));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
-function generateAccessJWT(username) {
-  return jwt.sign({username}, process.env.TOKEN_SECRET, {expiresIn: '1800s'})
+let refreshTokens = [];
+
+function generateAccessJWT(username, data) {
+  return jwt.sign(
+    {
+      username,
+      data
+    },
+    process.env.TOKEN_SECRET,
+    { expiresIn: '1800s' }
+  );
+}
+
+function generateRefreshToken(username) {
+  const refreshToken = crypto.randomBytes(64).toString('hex');
+  refreshTokens.push({ refreshToken, username });
+  return refreshToken;
 }
 
 function authenticateToken(req, res, next) {
@@ -27,20 +44,30 @@ function authenticateToken(req, res, next) {
   });
 }
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.post('/token', (req, res) => {
+  const { username, password, data } = req.body;
 
-app.post('/token', (req, res) => { 
-  const { username, password } = req.body;
-
-  console.log(username, password)
   if (username && password) {
-    const token = generateAccessJWT(username);
-    res.json({token});
-    res.status(200).send(`Username: ${username}, Password: ${password}`);
-} else {
+    const accessToken = generateAccessJWT(username, data);
+    const refreshToken = generateRefreshToken(username);
+    res.json({ accessToken, refreshToken });
+  } else {
     res.status(400).send('Username and Password are required');
-}
+  }
+});
+
+app.post('/token/auth', (req, res) => {
+  const { refreshToken } = req.body;
+
+  if (!refreshToken) return res.sendStatus(401);
+  const storedToken = refreshTokens.find(token => token.refreshToken === refreshToken);
+
+  if (!storedToken) return res.sendStatus(403);
+
+  const user = storedToken.username;
+
+  const newAccessToken = generateAccessJWT(user);
+  res.json({ accessToken: newAccessToken });
 });
 
 app.get('/protected', authenticateToken, (req, res) => {
@@ -51,7 +78,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../public', 'index.html'));
 });
 
-const port = 3001;
+const port = process.env.PORT || 3001;
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}/`);
 });
