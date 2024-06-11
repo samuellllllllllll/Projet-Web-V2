@@ -1,0 +1,37 @@
+.demandes-box-2 {
+    width: 100%; /* Ajustement pour les petits écrans */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #f3c5a8;
+}
+
+.details-2, .heure-2, .id {
+    flex: 1;
+    text-align: left;
+    color: #3a0457; /* Couleur pour le texte des détails et de l'heure */
+}
+
+.details-2 {
+    margin-right: 20px; /* Espace entre les détails et l'heure */
+}
+
+.heure-2 {
+    margin-right: 20px; /* Espace entre l'heure et l'id */
+}
+
+/* Media query pour les écrans de 768px et moins */
+@media (max-width: 768px) {
+.demandes-box-2 {
+        width: 70%;
+    }
+
+    .details-2{
+        width: 150px;
+    }
+    
+    .heure-2{
+        width: 250px;
+    }
+}

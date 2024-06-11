@@ -1,0 +1,110 @@
+.menu-page {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 20px;
+  background-color: #fff;
+}
+
+.menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #fff;
+}
+
+.logo {
+  height: 30px;
+}
+
+.menuIcon {
+  height: 30px;
+}
+
+.order-details {
+  padding: 20px;
+}
+
+.order-details h1 {
+  color: #3e0066;
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}
+
+.order-location {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.locationIcon {
+  width: 10% ;
+  margin-right: 10px;
+}
+
+.order-location p {
+  color: #3e0066;
+  font-size: 1.2em;
+}
+
+.order-id {
+  margin-bottom: 20px;
+}
+
+.order-id h2 {
+  color: #3e0066;
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.id-number {
+  color: #ff6600;
+  font-size: 2.5em;
+  font-weight: bold;
+}
+
+.confirm-section h3 {
+  color: #3e0066;
+  font-size: 1.2em;
+  margin-bottom: 20px;
+}
+
+.confirm-button {
+  background-color: #ff6600;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 1.2em;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background-color: #FFE2CB;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.progress-bar .step1 {
+  width: 50%; /* Première étape de la progression */
+  height: 100%;
+  background-color: #ff6600;
+  border-radius: 10px 0 0 10px;
+  transition: width 0.3s ease-in-out;
+}
+
+.progress-bar .step2 {
+  width: 0%; /* Deuxième étape de la progression */
+  height: 100%;
+  background-color: #ff6600;
+  border-radius: 0 10px 10px 0;
+  transition: width 0.3s ease-in-out;
+}
+
+.progress-bar .active {
+  width: 50%; /* Mettre en surbrillance la première étape lorsque active */
+}

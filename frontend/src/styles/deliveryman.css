@@ -1,0 +1,87 @@
+.menu-page {
+    width: 100%;
+    height: 100vh; /* S'assure que la page prend toute la hauteur de la fenêtre */
+    display: flex;
+    flex-direction: column; /* Permet une disposition verticale */
+    align-items: center; /* Centre horizontalement les éléments */
+    padding: 20px;
+    box-sizing: border-box; /* Inclut le padding dans les dimensions */
+    background-color: #fff; /* Fond blanc pour la page */
+}
+
+.menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px 20px;
+    position: relative; /* Assure que le header est positionné relativement */
+    z-index: 100; /* Assure que le header est au-dessus d'autres éléments */
+    background-color: #fff; /* Fond blanc pour le header */
+}
+
+.logo {
+    width: 10%;
+}
+
+.menuIcon {
+    width: 3%;
+}
+
+h1 {
+    margin: 20px 0;
+    color: #333; /* Couleur du texte */
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse; /* Enlève les espaces entre les cellules */
+    margin-top: 20px;
+    font-size: 16px;
+    border-bottom: 2px solid #f3c5a8;
+    border-top: 2px solid #f3c5a8;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+}
+
+th {
+    color: #333;
+}
+
+.order-row:hover {
+    background-color: #ffe6cc; /* Couleur de fond au survol */
+}
+
+.order-row.selected {
+    background-color: #ffcc99; /* Couleur de fond pour la commande sélectionnée */
+    border: 1px solid #ff6600; /* Bordure orange pour la commande sélectionnée */
+}
+
+.deliver-button {
+    margin-top: 20px;
+    padding: 15px 30px;
+    background-color: #ff6600; /* Couleur de fond orange */
+    color: #fff; /* Couleur du texte blanc */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.deliver-button:hover {
+    background-color: #e65c00; /* Couleur de fond orange foncé au survol */
+}
+
+@media (max-width: 768px) {
+
+  h1 {
+    font-size: 170% !important;
+}
+
+}
+
+@import './menu.css';
