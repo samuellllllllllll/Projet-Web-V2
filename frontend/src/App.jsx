@@ -16,6 +16,7 @@ import { AuthProvider } from './authContext.jsx';
 
 const App = () => {
   return (
+    <AuthProvider>
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
@@ -32,6 +33,7 @@ const App = () => {
         <Route path="/authenticated" element={<AuthenticationProcess />} />
       </Routes>
     </Router>
+  </AuthProvider>
   )
 }
 
