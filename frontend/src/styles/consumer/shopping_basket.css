@@ -23,3 +23,35 @@
     font-size: 1.5rem;
     margin: 1rem 0;
 }
+
+.shopping-basket-details{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin: 1rem 0;
+    height: 100%;
+    justify-content: center;
+}
+
+.shopping-basket-details-separator{
+    width: 2px;
+    height: 80%;
+    background-color: var(--third-color);
+    margin: 1rem 2rem;
+}
+
+.shopping-basket-details-order, .shopping-basket-details-price{
+    width: 40%;
+}
+
+.shopping-basket-details-order-title, .shopping-basket-details-price-title{
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.shopping-basket-details-price-value{
+    font-size: 1.7rem;
+    font-weight: 500;
+    margin: 2rem 0;
+    color: var(--primary-color);
+}

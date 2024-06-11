@@ -9,9 +9,6 @@ const footer = () => {
                 <a href="/consommateur"><img className="logo-footer" src={logo} alt="logo CESI'Eats" /></a>
                 <div className="footer-right-part">
                     <div className="footer-text">
-                        <a href="/consommateur/panier">Commande</a>
-                    </div>
-                    <div className="footer-text">
                         <a href="/consommateur/compte">Mon compte</a>
                     </div>
                     <div className="footer-text">

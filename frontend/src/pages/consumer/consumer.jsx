@@ -61,53 +61,53 @@ const consumer = () => {
          </div>
         <div className="consumer-restaurants">
           <Restaurant_card
-            link="/consumer"
-            image="https://lh3.googleusercontent.com/p/AF1QipMYiYNeAb--caulTsF8hGu80VCm7Lh1lt53HbUC=s1360-w1360-h1020"
+            link="/consommateur/page_restaurant"
+            image="https://img.restaurantguru.com/r155-Aladdin-Kebab-Pessac-meals.jpg"
             title="Aladdin Ravezies"
           />
           <Restaurant_card 
-            link="/consumer"
-            image="https://lh3.googleusercontent.com/p/AF1QipM9C4-VklY3hzaxGb_h4M3wDVhwh5KIpN_Ozv1k=s1360-w1360-h1020"
+            link="/consommateur/page_restaurant"
+            image="https://img.restaurantguru.com/r155-Aladdin-Kebab-Pessac-meals.jpg"
             title="Kebab Istanbul"
           />
           <Restaurant_card
-            link="/consumer"
-            image="https://lh3.googleusercontent.com/p/AF1QipMYiYNeAb--caulTsF8hGu80VCm7Lh1lt53HbUC=s1360-w1360-h1020"
+            link="/consommateur/page_restaurant"
+            image="https://img.restaurantguru.com/r155-Aladdin-Kebab-Pessac-meals.jpg"
             title="Aladdin Ravezies"
           />
           <Restaurant_card 
-            link="/consumer"
-            image="https://lh3.googleusercontent.com/p/AF1QipM9C4-VklY3hzaxGb_h4M3wDVhwh5KIpN_Ozv1k=s1360-w1360-h1020"
+            link="/consommateur/page_restaurant"
+            image="https://img.restaurantguru.com/r155-Aladdin-Kebab-Pessac-meals.jpg"
             title="Kebab Istanbul"
           />
           <Restaurant_card
-            link="/consumer"
-            image="https://lh3.googleusercontent.com/p/AF1QipMYiYNeAb--caulTsF8hGu80VCm7Lh1lt53HbUC=s1360-w1360-h1020"
+            link="/consommateur/page_restaurant"
+            image="https://img.restaurantguru.com/r155-Aladdin-Kebab-Pessac-meals.jpg"
             title="Aladdin Ravezies"
           />
           <Restaurant_card 
-            link="/consumer"
-            image="https://lh3.googleusercontent.com/p/AF1QipM9C4-VklY3hzaxGb_h4M3wDVhwh5KIpN_Ozv1k=s1360-w1360-h1020"
+            link="/consommateur/page_restaurant"
+            image="https://img.restaurantguru.com/r155-Aladdin-Kebab-Pessac-meals.jpg"
             title="Kebab Istanbul"
           />
           <Restaurant_card
-            link="/consumer"
-            image="https://lh3.googleusercontent.com/p/AF1QipMYiYNeAb--caulTsF8hGu80VCm7Lh1lt53HbUC=s1360-w1360-h1020"
+            link="/consommateur/page_restaurant"
+            image="https://img.restaurantguru.com/r155-Aladdin-Kebab-Pessac-meals.jpg"
             title="Aladdin Ravezies"
           />
           <Restaurant_card 
-            link="/consumer"
-            image="https://lh3.googleusercontent.com/p/AF1QipM9C4-VklY3hzaxGb_h4M3wDVhwh5KIpN_Ozv1k=s1360-w1360-h1020"
+            link="/consommateur/page_restaurant"
+            image="https://img.restaurantguru.com/r155-Aladdin-Kebab-Pessac-meals.jpg"
             title="Kebab Istanbul"
           />
           <Restaurant_card
-            link="/consumer"
-            image="https://lh3.googleusercontent.com/p/AF1QipMYiYNeAb--caulTsF8hGu80VCm7Lh1lt53HbUC=s1360-w1360-h1020"
+            link="/consommateur/page_restaurant"
+            image="https://img.restaurantguru.com/r155-Aladdin-Kebab-Pessac-meals.jpg"
             title="Aladdin Ravezies"
           />
           <Restaurant_card 
-            link="/consumer"
-            image="https://lh3.googleusercontent.com/p/AF1QipM9C4-VklY3hzaxGb_h4M3wDVhwh5KIpN_Ozv1k=s1360-w1360-h1020"
+            link="/consommateur/page_restaurant"
+            image="https://img.restaurantguru.com/r155-Aladdin-Kebab-Pessac-meals.jpg"
             title="Kebab Istanbul"
           />
           <Footer />
