@@ -1,7 +1,7 @@
 // Order.js
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../styles/deliveryman.css';
+import '../styles/deliveryman/deliveryman.css';
 
 const Order = ({ order, isSelected, onClick }) => {
     return (

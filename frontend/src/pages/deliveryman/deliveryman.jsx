@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Order from '../components/Order';
-import MenuDeliveryman from '../components/menuDeliveryman';
-import '../styles/deliveryman.css';
-import logo from '../assets/logo.png';
-import menuIcon from '../assets/menu.png';
+import Order from '../../components/Order';
+import MenuDeliveryman from '../../components/menuDeliveryman';
+import '../../styles/deliveryman/deliveryman.css';
+import logo from '../../assets/logo.png';
+import menuIcon from '../../assets/menu.png';
 
 const Deliveryman = () => {
   const [selectedOrder, setSelectedOrder] = useState(null);

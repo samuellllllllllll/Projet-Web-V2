@@ -1,12 +1,12 @@
 import React from 'react';
-import '../styles/menuEdit.css';
-import logo from '../assets/logo.png';
-import coca from '../assets/coca.jpg';
-import fanta from '../assets/fanta.jpg';
-import tacos from '../assets/tacos.jpg';
-import kebab from '../assets/Kebab.jpeg';
-import menuIcon from '../assets/menu.png';
-import FoodCard from '../components/FoodCard';
+import '../../styles/restaurant/menuEdit.css';
+import logo from '../../assets/logo.png';
+import coca from '../../assets/coca.jpg';
+import fanta from '../../assets/fanta.jpg';
+import tacos from '../../assets/tacos.jpg';
+import kebab from '../../assets/Kebab.jpeg';
+import menuIcon from '../../assets/menu.png';
+import FoodCard from '../../components/FoodCard';
 
 const MenuEdit = () => {
     return (
