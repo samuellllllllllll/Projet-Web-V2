@@ -1,8 +1,8 @@
 import React from 'react';
-import '../styles/deliverymanOrder3.css';
-import logo from '../assets/logo.png';
-import menuIcon from '../assets/menu.png';
-import valid from '../assets/valid2.png';
+import '../../styles/deliveryman/deliverymanOrder3.css';
+import logo from '../../assets/logo.png';
+import menuIcon from '../../assets/menu.png';
+import valid from '../../assets/valid2.png';
 
 const DeliverymanOrder3 = () => {
     return (
