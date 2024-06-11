@@ -3,12 +3,13 @@
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
-    background-color: var(--background-color);
     top: 0;
     width: 95%;
-    height: 100px;
+    height: 10vh;
     padding-left: 2.5%;
     padding-right: 2.5%;
+    position: fixed;
+    z-index: 1;
 }
 
 .logo-header{
@@ -18,23 +19,25 @@
 
 .header-right-part{
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    width: 25%;
+    justify-content: flex-end;
+    width: 100%;
     height: 100%;
 }
 
 .header-text{
     color: var(--primary-color);
     font-size: 0.8rem;
+    padding: 1.2rem;
 
     a{
         color: var(--primary-color);
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         text-decoration: none;
         font-weight: 500;
         padding: 8px 40px;
         border-radius: 30px;
+        transition: all 0.3s ease-in-out;
     }
 
     a:hover{
@@ -57,5 +60,20 @@
 
     #account:hover{
         background-color: var(--primary-color);
+    }
+}
+
+/* RESPONSIVE */
+@media screen and (max-width: 1400px){
+    .logo-header{
+        width: 110px;
+        height: fit-content;
+    }
+
+    .header-text{
+    
+        a{
+            font-size: 0.9rem;
+        }
     }
 }
