@@ -15,7 +15,7 @@ const DeliverymanOrder3 = () => {
                 <img src={valid} alt="validation" className="valid" />
                 <h1>Commande livrée !</h1>
                 <div className="confirm-section">
-                    <button className="confirm-button">Confirmer</button>
+                    <button className="confirm-button">Retour à l'accueil</button>
                 </div>
             </main>
         </div>

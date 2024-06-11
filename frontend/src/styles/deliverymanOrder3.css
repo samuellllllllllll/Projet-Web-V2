@@ -11,10 +11,11 @@
   align-items: center;
   padding: 10px 20px;
   background-color: #fff;
+  margin-bottom: 150px;
 }
 
 .logo {
-  height: 30px;
+  height: 20px;
 }
 
 .valid{
@@ -23,6 +24,7 @@
 
 .menuIcon {
   height: 30px;
+  width: 30px;
 }
 
 .order-details {
@@ -30,7 +32,7 @@
 }
 
 .order-details h1 {
-  color: #3e0066;
+  color: #FF7B00;
   font-size: 1.5em;
   margin-bottom: 20px;
 }
@@ -38,7 +40,7 @@
 
 
 .confirm-button {
-  background-color: #ff6600;
+  background-color: #240046;
   color: white;
   padding: 10px 20px;
   border: none;
