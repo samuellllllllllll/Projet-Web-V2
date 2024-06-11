@@ -1,0 +1,83 @@
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  text-align: center;
+}
+
+.menu-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%; /* Utiliser toute la hauteur de la fenêtre */
+  padding: 20px;
+  text-align: center;
+  position: relative;
+}
+
+.menu-close {
+  position: absolute;
+  top: 0px;
+  color: #240046;
+  right: -40px; /* Positionnement en haut à droite */
+  background: transparent;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+  outline: none;
+}
+
+.menu-close:hover,
+.menu-close:focus {
+    background: transparent;
+    color: inherit;
+}
+
+.menu-logo {
+  position: absolute;
+  top: 30px;
+  left: 50px; /* Positionnement en haut à gauche */
+  width: 110px; /* Ajuster la taille selon vos besoins */
+}
+
+.menu-main {
+  flex: 1; /* Prendre tout l'espace disponible entre le logo et le footer */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.menu-main ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-main ul li {
+  margin: 20px 0;
+}
+
+.menu-main ul li a {
+  text-decoration: none;
+  color: #4B0082;
+  font-size: 1.5em;
+}
+
+.menu-footer {
+  margin-top: 20px;
+}
+
+.menu-footer a {
+  text-decoration: none;
+  color: #4B0082;
+  font-size: 0.8em;
+}
