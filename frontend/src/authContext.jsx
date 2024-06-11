@@ -6,6 +6,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [accessToken, setAccessToken] = useState(localStorage.getItem('accessToken'));
   const [refreshToken, setRefreshToken] = useState(localStorage.getItem('refreshToken'));
+  const [role, setRole] = useState(localStorage.getItem('role'));
 
   useEffect(() => {
     const refreshAccessToken = async () => {
@@ -22,7 +23,7 @@ export const AuthProvider = ({ children }) => {
 
     const interval = setInterval(() => {
       refreshAccessToken();
-    }, 15 * 60 * 1000); // Taux rafraichissement du token set à 15 minutes pour l'instant
+    }, 30 * 60 * 1000); // Taux rafraichissement du token set à 30 minutes pour l'instant
 
     return () => clearInterval(interval);
   }, [refreshToken]);
@@ -32,8 +33,10 @@ export const AuthProvider = ({ children }) => {
       const response = await axios.post('http://localhost:3001/token', { username, password });
       setAccessToken(response.data.accessToken);
       setRefreshToken(response.data.refreshToken);
+      setRole(response.data.role)
       localStorage.setItem('accessToken', response.data.accessToken);
       localStorage.setItem('refreshToken', response.data.refreshToken);
+      localStorage.setItem('role', response.data.setRole);
     } catch (error) {
       console.error('Login error:', error);
     }
@@ -42,12 +45,14 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setAccessToken(null);
     setRefreshToken(null);
+    setRole(null);
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
+    localStorage.removeItem('role');
   };
 
   return (
-    <AuthContext.Provider value={{ accessToken, login, logout }}>
+    <AuthContext.Provider value={{ accessToken, login, logout, role }}>
       {children}
     </AuthContext.Provider>
   );

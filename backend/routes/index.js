@@ -14,10 +14,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 let refreshTokens = [];
 
-function generateAccessJWT(username, data) {
+function generateAccessJWT(username, role, data) {
   return jwt.sign(
     {
       username,
+      role,
       data
     },
     process.env.TOKEN_SECRET,
@@ -44,15 +45,28 @@ function authenticateToken(req, res, next) {
   });
 }
 
-app.post('/token', (req, res) => {
-  const { username, password, data } = req.body;
+function authorizedRoles(...allowedRoles) {
+  return (req, res, next) => {
+    const { role } = req.user;
+    if (!role || !allowedRoles.includes(role)) {
+      return res.status(403).send('Access denied');
+    }
+    next();
+  };
+}
 
-  if (username && password) {
+app.post('/token', (req, res) => {
+  const { username, role, data } = req.body;
+
+  if (!role)
+    role = "Guest"; 
+
+  if (username && role) {
     const accessToken = generateAccessJWT(username, data);
     const refreshToken = generateRefreshToken(username);
     res.json({ accessToken, refreshToken });
   } else {
-    res.status(400).send('Username and Password are required');
+    res.status(400).send('Username/Role are required');
   }
 });
 
@@ -70,8 +84,16 @@ app.post('/token/auth', (req, res) => {
   res.json({ accessToken: newAccessToken });
 });
 
-app.get('/protected', authenticateToken, (req, res) => {
-  res.send(`Hello, ${req.user.username}. You are authenticated!`);
+app.get('/protected', authenticateToken, authorizeRoles('superuser', 'customer'), (req, res) => {
+  res.send(`Hello, ${req.user.username}. You are authenticated and have access as ${req.user.role}!`);
+});
+
+app.get('/restaurant', authenticateToken, authorizeRoles('superuser', 'restaurant'), (req, res) => {
+  res.send(`Hello, ${req.user.username}. You have restaurant access!`);
+});
+
+app.get('/delivery', authenticateToken, authorizeRoles('superuser', 'delivery'), (req, res) => {
+  res.send(`Hello, ${req.user.username}. You have delivery access!`);
 });
 
 app.get('*', (req, res) => {
