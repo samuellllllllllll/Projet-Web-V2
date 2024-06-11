@@ -13,25 +13,29 @@ import DeliverymanOrder3 from './pages/deliveryman/deliverymanOrder3.jsx';
 import Restaurant_page from './components/Restaurant_page.jsx';
 import AuthenticationProcess from './pages/authenticationProcess.jsx';
 import { AuthProvider } from './authContext.jsx';
+import DeliverymanAccount from './pages/deliveryman/account.jsx';
 
 const App = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/livreur" element={<Deliveryman />} />
-        <Route path="/restaurant" element={<Restaurant />} />
-        <Route path="/consommateur" element={<Consumer />} />
-        <Route path="/consommateur/compte" element={<AccountConsumer />} />
-        <Route path="/consommateur/panier" element={<ShoppingBasket />} />
-        <Route path="/consommateur/page_restaurant" element={<Restaurant_page />} />
-        <Route path="/menuEdit" element={<MenuEdit />} />
-        <Route path="/deliverymanOrder" element={<DeliverymanOrder />} />
-        <Route path="/deliverymanOrder2" element={<DeliverymanOrder2 />} />
-        <Route path="/deliverymanOrder3" element={<DeliverymanOrder3 />} />
-        <Route path="/authenticated" element={<AuthenticationProcess />} />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/livreur" element={<Deliveryman />} />
+          <Route path="/restaurant" element={<Restaurant />} />
+          <Route path="/consommateur" element={<Consumer />} />
+          <Route path="/consommateur/compte" element={<AccountConsumer />} />
+          <Route path="/consommateur/panier" element={<ShoppingBasket />} />
+          <Route path="/consommateur/page_restaurant" element={<Restaurant_page />} />
+          <Route path="/menuEdit" element={<MenuEdit />} />
+          <Route path="/deliverymanOrder" element={<DeliverymanOrder />} />
+          <Route path="/deliverymanOrder2" element={<DeliverymanOrder2 />} />
+          <Route path="/deliverymanOrder3" element={<DeliverymanOrder3 />} />
+          <Route path="/authenticated" element={<AuthenticationProcess />} />
+          <Route path="/deliverymanAccount" element={<DeliverymanAccount />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   )
 }
 
