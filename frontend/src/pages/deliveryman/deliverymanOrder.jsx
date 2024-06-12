@@ -1,16 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../../styles/deliveryman/deliverymanOrder.css';
 import logo from '../../assets/logo.png';
 import menuIcon from '../../assets/menu.png';
+import MenuDeliveryman from '../../components/menuDeliveryman';
 import locationIcon from '../../assets/localisateur.png';
+import MobileHeader from '../../components/MobileHeader';
 
 const DeliverymanOrder = () => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
+    const deliverOrder = () => {
+        window.location.href = "/deliverymanOrder2";
+    }
+
     return (
         <div className="menu-page">
-            <header className="menu-header">
-                <img src={logo} alt="logo CESI'Eats" className="logo" />
-                <img src={menuIcon} alt="Menu Icon" className="menuIcon" />
-            </header>
+            <MobileHeader />
             <main className="order-details">
                 <h1>Récupérez la commande au restaurant</h1>
                 <div className="progress-bar">
@@ -27,9 +36,10 @@ const DeliverymanOrder = () => {
                 </div>
                 <div className="confirm-section">
                     <h3>Avez-vous récupéré la commande ?</h3>
-                    <button className="confirm-button">Confirmer</button>
+                    <button className="confirm-button" onClick={deliverOrder}>Confirmer</button>
                 </div>
             </main>
+            <MenuDeliveryman isOpen={isMenuOpen} onClose={toggleMenu} activeMenu="deliver" />
         </div>
     );
 }

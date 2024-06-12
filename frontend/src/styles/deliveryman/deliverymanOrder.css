@@ -45,7 +45,7 @@
 }
 
 .order-location p {
-  color: #3e0066;
+  color: #240046;
   font-size: 1.2em;
 }
 
@@ -54,25 +54,25 @@
 }
 
 .order-id h2 {
-  color: #3e0066;
+  color: #240046;
   font-size: 1.2em;
   margin-bottom: 10px;
 }
 
 .id-number {
-  color: #ff6600;
+  color: #FF7B00;
   font-size: 2.5em;
   font-weight: bold;
 }
 
 .confirm-section h3 {
-  color: #3e0066;
+  color: #240046;
   font-size: 1.2em;
   margin-bottom: 20px;
 }
 
 .confirm-button {
-  background-color: #ff6600;
+  background-color: #FF7B00;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -92,7 +92,7 @@
 .progress-bar .step1 {
   width: 50%; /* Première étape de la progression */
   height: 100%;
-  background-color: #ff6600;
+  background-color: #FF7B00;
   border-radius: 10px 0 0 10px;
   transition: width 0.3s ease-in-out;
 }
@@ -100,7 +100,7 @@
 .progress-bar .step2 {
   width: 0%; /* Deuxième étape de la progression */
   height: 100%;
-  background-color: #ff6600;
+  background-color: #FF7B00;
   border-radius: 0 10px 10px 0;
   transition: width 0.3s ease-in-out;
 }

@@ -26,9 +26,9 @@
 
 .menu-close {
   position: absolute;
-  top: 0px;
+  top: 15px;
   color: #240046;
-  right: -40px; /* Positionnement en haut à droite */
+  right: -50px; /* Positionnement en haut à droite */
   background: transparent;
   border: none;
   font-size: 1.5em;
@@ -44,9 +44,10 @@
 
 .menu-logo {
   position: absolute;
-  top: 30px;
-  left: 50px; /* Positionnement en haut à gauche */
-  width: 110px; /* Ajuster la taille selon vos besoins */
+  top: 39px;
+  left: 38px; /* Positionnement en haut à gauche */
+  width: 140px;
+  height: 27.5px;
 }
 
 .menu-main {
@@ -68,7 +69,7 @@
 
 .menu-main ul li a {
   text-decoration: none;
-  color: #4B0082;
+  color: #240046;
   font-size: 1.5em;
 }
 
@@ -78,6 +79,6 @@
 
 .menu-footer a {
   text-decoration: none;
-  color: #4B0082;
+  color: #240046;
   font-size: 0.8em;
 }
