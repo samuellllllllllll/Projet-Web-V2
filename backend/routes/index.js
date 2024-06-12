@@ -84,15 +84,15 @@ app.post('/token/auth', (req, res) => {
   res.json({ accessToken: newAccessToken });
 });
 
-app.get('/protected', authenticateToken, authorizeRoles('superuser', 'customer'), (req, res) => {
+app.get('/protected', authenticateToken, authorizedRoles('superuser', 'customer'), (req, res) => {
   res.send(`Hello, ${req.user.username}. You are authenticated and have access as ${req.user.role}!`);
 });
 
-app.get('/restaurant', authenticateToken, authorizeRoles('superuser', 'restaurant'), (req, res) => {
+app.get('/restaurant', authenticateToken, authorizedRoles('superuser', 'restaurant'), (req, res) => {
   res.send(`Hello, ${req.user.username}. You have restaurant access!`);
 });
 
-app.get('/delivery', authenticateToken, authorizeRoles('superuser', 'delivery'), (req, res) => {
+app.get('/delivery', authenticateToken, authorizedRoles('superuser', 'delivery'), (req, res) => {
   res.send(`Hello, ${req.user.username}. You have delivery access!`);
 });
 
