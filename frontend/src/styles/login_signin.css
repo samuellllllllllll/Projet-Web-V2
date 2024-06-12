@@ -19,6 +19,7 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  height: fit-content !important;
 }
 
 img{
