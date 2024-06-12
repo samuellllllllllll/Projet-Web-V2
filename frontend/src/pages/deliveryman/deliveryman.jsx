@@ -4,6 +4,7 @@ import MenuDeliveryman from '../../components/menuDeliveryman';
 import '../../styles/deliveryman/deliveryman.css';
 import logo from '../../assets/logo.png';
 import menuIcon from '../../assets/menu.png';
+import MobileHeader from '../../components/MobileHeader';
 
 const Deliveryman = () => {
   const [selectedOrder, setSelectedOrder] = useState(null);
@@ -17,12 +18,15 @@ const Deliveryman = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const deliverOrder = () => {
+    if (selectedOrder) {
+      window.location.href = "/deliverymanOrder";
+    }
+  };
+
   return (
     <div className="menu-page">
-      <header className="menu-header">
-        <img src={logo} alt="logo CESI'Eats" className="logo" />
-        <img src={menuIcon} alt="Menu Icon" className="menuIcon" onClick={toggleMenu} />
-      </header>
+      <MobileHeader />
       <h1>Choisissez une commande à livrer</h1>
       <table>
         <thead className='bottom'>
@@ -44,7 +48,7 @@ const Deliveryman = () => {
         </tbody>
       </table>
       {selectedOrder && (
-        <button className="deliver-button" onClick={() => alert(`Commande de ${selectedOrder.restaurant} livrée !`)}>
+        <button className="deliver-button" onClick={deliverOrder}>
           Livrer cette commande
         </button>
       )}

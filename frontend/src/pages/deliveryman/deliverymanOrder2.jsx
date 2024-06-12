@@ -1,16 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../../styles/deliveryman/deliverymanOrder2.css';
 import logo from '../../assets/logo.png';
 import menuIcon from '../../assets/menu.png';
 import locationIcon from '../../assets/localisateur.png';
+import MenuDeliveryman from '../../components/menuDeliveryman';
+import MobileHeader from '../../components/MobileHeader';
 
 const DeliverymanOrder2 = () => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [code, setCode] = useState(["", "", "", ""]);
+
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
+    const handleCodeChange = (e, index) => {
+        const newCode = [...code];
+        newCode[index] = e.target.value;
+        setCode(newCode);
+    };
+
+    const deliverOrder = () => {
+        if (code.every(digit => digit !== "")) {
+            window.location.href = "/deliverymanOrder3";
+        } else {
+            alert("Veuillez entrer un code valide à 4 chiffres");
+        }
+    }
+
     return (
         <div className="menu-page">
-            <header className="menu-header">
-                <img src={logo} alt="logo CESI'Eats" className="logo" />
-                <img src={menuIcon} alt="Menu Icon" className="menuIcon" />
-            </header>
+            <MobileHeader />
             <main className="order-details">
                 <h1>Livrez la commande au client</h1>
                 <div className="progress-bar">
@@ -24,16 +44,22 @@ const DeliverymanOrder2 = () => {
                 <div className='order-code'>
                     <h2>Demandez le code au client et rentrez le pour confirmer la livraison</h2>
                     <div className="code-input">
-                        <input type="text" maxLength="1" />
-                        <input type="text" maxLength="1" />
-                        <input type="text" maxLength="1" />
-                        <input type="text" maxLength="1" />
+                        {code.map((digit, index) => (
+                            <input
+                                key={index}
+                                type="text"
+                                maxLength="1"
+                                value={digit}
+                                onChange={(e) => handleCodeChange(e, index)}
+                            />
+                        ))}
                     </div>
                 </div>
                 <div className="confirm-section">
-                    <button className="confirm-button">Confirmer</button>
+                    <button className="confirm-button" onClick={deliverOrder}>Confirmer</button>
                 </div>
             </main>
+            <MenuDeliveryman isOpen={isMenuOpen} onClose={toggleMenu} activeMenu="deliver" />
         </div>
     );
 }
