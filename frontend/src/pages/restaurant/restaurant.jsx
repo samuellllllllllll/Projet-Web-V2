@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import '../styles/restaurant.css';
-import logo from '../assets/logo.png';
-import menuIcon from '../assets/menu.png';
-import DemandesCommandes from '../components/DemandesCommandes';
-import CommandesAFaire from '../components/CommandesAFaire';
+import '../../styles/restaurant/restaurant.css';
+import logo from '../../assets/logo.png';
+import menuIcon from '../../assets/menu.png';
+import DemandesCommandes from '../../components/DemandesCommandes';
+import CommandesAFaire from '../../components/CommandesAFaire';
 
 const Restaurant = () => {
   const [isOpen, setIsOpen] = useState(true);
