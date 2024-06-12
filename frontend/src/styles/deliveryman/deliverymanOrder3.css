@@ -5,26 +5,9 @@
   background-color: #fff;
 }
 
-.menu-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  background-color: #fff;
-  margin-bottom: 150px;
-}
-
-.logo {
-  height: 20px;
-}
-
 .valid{
     width: 50%;
-}
-
-.menuIcon {
-  height: 30px;
-  width: 30px;
+    margin-top: 60%;
 }
 
 .order-details {
@@ -36,8 +19,6 @@
   font-size: 1.5em;
   margin-bottom: 20px;
 }
-
-
 
 .confirm-button {
   background-color: #240046;

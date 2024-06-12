@@ -33,7 +33,7 @@ const DeliverymanOrder2 = () => {
             <MobileHeader />
             <main className="order-details">
                 <h1>Livrez la commande au client</h1>
-                <div className="progress-bar">
+                <div className="progress-bar-2">
                     <div className="step1 active"></div>
                     <div className="step2"></div>
                 </div>

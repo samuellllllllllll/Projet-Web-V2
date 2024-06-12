@@ -3,7 +3,16 @@ import PropTypes from 'prop-types';
 import '../styles/menuDeliveryman.css';
 import logo from '../assets/logo.png';
 
-const MenuDeliveryman = ({ isOpen, onClose, activeMenu }) => {
+const MenuDeliveryman = ({ isOpen, onClose }) => {
+    const currentPath = window.location.pathname;
+
+    const handleLinkClick = (path) => {
+        if (currentPath === path) {
+            return;
+        }
+        window.location.pathname = path;
+    };
+
     if (!isOpen) return null;
 
     return (
@@ -13,9 +22,9 @@ const MenuDeliveryman = ({ isOpen, onClose, activeMenu }) => {
                 <img src={logo} alt="Logo" className="menu-logo" />
                 <div className="menu-main">
                     <ul>
-                        <li><a href="#deliver" style={activeMenu === 'deliver' ? { color: '#FF7B00', fontSize: '2.5em' } : null}>Faire une livraison</a></li>
-                        <li><a href="#delivered" style={activeMenu === 'delivered' ? { color: '#FF7B00', fontSize: '2.5em' } : null}>Commandes livrées</a></li>
-                        <li><a href="#account" style={activeMenu === 'account' ? { color: '#FF7B00', fontSize: '2.5em' } : null}>Mon compte</a></li>
+                        <li><a href="#livreur" onClick={() => handleLinkClick('/livreur')} style={currentPath === '/livreur' ? { color: '#FF7B00', fontSize: '2.5em' } : null}>Faire une livraison</a></li>
+                        <li><a href="#delivered" onClick={() => handleLinkClick('/delivered')} style={currentPath === '/delivered' ? { color: '#FF7B00', fontSize: '2.5em' } : null}>Commandes livrées</a></li>
+                        <li><a href="#deliverymanAccount" onClick={() => handleLinkClick('/deliverymanAccount')} style={currentPath === '/deliverymanAccount' ? { color: '#FF7B00', fontSize: '2.5em' } : null}>Mon compte</a></li>
                     </ul>
                 </div>
                 <footer className="menu-footer">

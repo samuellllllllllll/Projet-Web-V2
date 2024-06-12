@@ -26,7 +26,7 @@
 .edit-button {
     background-color: transparent;
     border: none;
-    color: orange;
+    color: #FF7B00;
     font-size: 16px;
     cursor: pointer;
 }
@@ -62,11 +62,31 @@
 
 .label {
     font-weight: bold;
-    color: purple;
+    color: #240046;
 }
 
 .value {
-    color: black;
+    color: #240046;
     text-align: center; 
     margin-left: 10px; 
+}
+
+@media screen and (max-width: 750px) {
+    .header-container h1 {
+    width: 100%;   
+    }
+
+    .header-container {
+        margin-top: 10px; /* Réduire la marge en mode téléphone */
+    }
+
+    .edit-button {
+        margin-left: -30px; /* Ajuster la marge du bouton Modifier */
+    }
+
+    .info-item {
+        width: 90%;
+    }
+    
+
 }

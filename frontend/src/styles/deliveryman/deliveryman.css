@@ -58,13 +58,13 @@ th {
 
 .order-row.selected {
     background-color: #ffcc99; /* Couleur de fond pour la commande sélectionnée */
-    border: 1px solid #ff6600; /* Bordure orange pour la commande sélectionnée */
+    border: 1px solid #FF7B00; /* Bordure orange pour la commande sélectionnée */
 }
 
 .deliver-button {
     margin-top: 20px;
     padding: 15px 30px;
-    background-color: #ff6600; /* Couleur de fond orange */
+    background-color: #FF7B00; /* Couleur de fond orange */
     color: #fff; /* Couleur du texte blanc */
     border: none;
     border-radius: 5px;
@@ -73,7 +73,7 @@ th {
 }
 
 .deliver-button:hover {
-    background-color: #e65c00; /* Couleur de fond orange foncé au survol */
+    background-color: #FF7B00; /* Couleur de fond orange foncé au survol */
 }
 
 @media (max-width: 768px) {
@@ -83,5 +83,3 @@ th {
 }
 
 }
-
-@import './menu.css';
