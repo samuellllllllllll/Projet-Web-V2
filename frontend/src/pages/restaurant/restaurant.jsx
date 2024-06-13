@@ -4,6 +4,7 @@ import logo from '../../assets/logo.png';
 import menuIcon from '../../assets/menu.png';
 import DemandesCommandes from '../../components/DemandesCommandes';
 import CommandesAFaire from '../../components/CommandesAFaire';
+import MobileHeader2 from '../../components/MobileHeader2';
 
 const Restaurant = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -22,10 +23,7 @@ const Restaurant = () => {
 
   return (
     <div className="menu-page">
-      <header className="menu-header">
-        <img src={logo} alt="logo CESI'Eats" className="logo" />
-        <img src={menuIcon} alt="Menu Icon" className="menuIcon" />
-      </header>
+      <MobileHeader2 />
       <main className="menu-content">
         <div className="Menu-bottom-button-box">
           Mon restaurant est ...
