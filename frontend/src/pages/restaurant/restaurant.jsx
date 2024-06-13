@@ -53,19 +53,20 @@ const Restaurant = () => {
         <table className="table">
           <thead>
             <tr>
-              <th className='test'>Détail</th>
-              <th className='heure'>Heure récupération</th>
+              <th>Détail</th>
+              <th>Heure récupération</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <DemandesCommandes
-                details="1 Kebab"
-                heure="10 h 00"
-                onAccept={handleAccept}
-                onDeny={handleDeny}
-              />
-              {/* <td colSpan="2" className="table-empty">Vous n'avez aucune demande.</td> */}
+              <td colSpan="2">
+                <DemandesCommandes
+                  details="1 Kebab"
+                  heure="10 h 00"
+                  onAccept={handleAccept}
+                  onDeny={handleDeny}
+                />
+              </td>
             </tr>
           </tbody>
         </table>
@@ -80,12 +81,13 @@ const Restaurant = () => {
           </thead>
           <tbody>
             <tr>
-              <CommandesAFaire
-                details="1 Kebab"
-                heure="10 h 00"
-                id="2002"
-              />
-              {/* <td colSpan="3" className="table-empty">Vous n'avez aucune commande à faire.</td> */}
+              <td colSpan="3" className="table-empty">
+                <CommandesAFaire
+                  details="1kebab"
+                  heure="10 h 00"
+                  id="1"
+                />
+              </td>
             </tr>
           </tbody>
         </table>

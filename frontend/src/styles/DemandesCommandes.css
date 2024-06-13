@@ -1,10 +1,10 @@
 .demandes-box { 
-    width: 100%; /* Ajustement pour les petits écrans */
+    width: 90%; /* Ajustement pour les petits écrans */
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px;
-    border-bottom: 1px solid #f3c5a8;
+    margin-left: -1%;
 }
 
 .details, .heure {
@@ -37,24 +37,25 @@
 /* Media query pour les écrans de 768px et moins */
 @media (max-width: 768px) {
     .demandes-box {
-        width: 65%;
+        width: 100%;
+        flex-direction: row;
+        align-items: flex-start;
     }
 
-    .details{
+    .details, .heure {
+        text-align: left;
         width: 150px;
-    }
-    
-    .heure {
-        width: 250px;
+        margin-bottom: 10px;
     }
 
-    .accept-button, .deny-button {  
-        width: 20%;
+    .accept-button, .deny-button {
+        width: 30%;
+        text-align: center;
     }
 
     .accept-button img, .deny-button img {
-        height: 15px; /* Agrandir les boutons pour les petits écrans */
-        width: 15px;
+        height: 10px; /* Agrandir les boutons pour les petits écrans */
+        width: 10px;
     }
 
     .accept-button, .deny-button {
