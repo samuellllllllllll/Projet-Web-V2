@@ -1,7 +1,15 @@
 const express = require("express");
 const app = express();
 const mongoose = require('mongoose');
+const bodyParser = require("body-parser");
+app.use(bodyParser.json());
 
+mongoose.connect('mongodb://user:mysecretpassword@0.0.0.0:8002/', {
+    dbName : 'cesi_eats_mongo'
+})
+.then(()=>{
+    console.log("Connected to mongo")
+})
 
 app.get("/", (req,res)=>{
     res.send("Orders default route")
@@ -14,9 +22,10 @@ app.listen(4545, ()=>{
 
 const ordersSchema = new mongoose.Schema({
     menu : String,
-    Status : Int8Array,
-    validation_code : Int8Array,
-    Status : Int8Array,
+    Status : Number,
+    validation_code : Number,
+    restaurant_id : Number,
+    user_id : Number,
 });
 const Orders = mongoose.model('Orders', ordersSchema);
 
@@ -24,7 +33,36 @@ app.get("/", (req, res)=> {
     res.send("Orders default route.")
 })
 
+app.post("/orders", (req, res)=>{
+    console.log(req.body);
 
+    var newOrder = {
+        menu : req.body.menu,
+        Status : req.body.Status,
+        validation_code :req.body.validation_code,
+        restaurant_id : req.body.restaurant_id,
+        user_id : req.body.user_id
+    }
+
+    const order = new Orders(newOrder);
+    order.save().then(()=>{
+        console.log("Succeful order !");
+        res.send("Successful order");
+    }).catch((err)=>{
+        if (err){
+            throw err;
+        }
+    });
+
+})
+
+app.get("/orders", (req, res)=>{
+
+})
+
+app.put("/orders", (req,res)=>{
+
+})
 
 // exports.getKittens = (req, res) =>{
 //     mongoose.connect('mongodb://user:mysecretpassword@0.0.0.0:8002/')
