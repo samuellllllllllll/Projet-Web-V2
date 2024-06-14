@@ -58,8 +58,6 @@ function authorizedRoles(...allowedRoles) {
 app.post('/token', (req, res) => {
   const { username, role, data } = req.body;
 
-  if (!role)
-    role = "Guest"; 
 
   if (username && role) {
     const accessToken = generateAccessJWT(username, data);
