@@ -16,8 +16,15 @@ import Autres from '../../assets/autres.png';
 
 const consumer = () => {
 
-  // restaurants sur autre par défaut
   const [restaurants, setRestaurants] = useState([]);
+  
+  // Active type change
+  // const activeType = (type) => {
+  //   const categories = document.querySelectorAll('.consumer-category');
+  //   categories.forEach((category) => {
+  //     category.classList.remove('active');
+  //   });
+  //   const activeCategory = document.querySelector(`.consumer-category p:contains(${type})`).parentNode;
 
   const handleTypeChange = async (restaurantType) => {
     try {
@@ -25,7 +32,6 @@ const consumer = () => {
         params: { type: restaurantType },
       });
       setRestaurants(response.data);
-      console.log(response.data);
 
       // If no restaurant found, display a message
       if (response.data.length === 0) {
@@ -43,39 +49,39 @@ const consumer = () => {
         <div className="consumer-title">Hello Victor !</div>
         <div className="consumer-text">Que veux tu commander ?</div>
         <div className="consumer-categories">
-          <div className="consumer-category" onClick={() => handleTypeChange("Sandwich")}>
+          <div className="consumer-category sandwich" onClick={() => handleTypeChange("Sandwich")}>
             <img src={Sandwich} alt="sandwich" />
             <p>Sandwich</p>
           </div>
-          <div className="consumer-category" onClick={() => handleTypeChange("Pizza")}>
+          <div className="consumer-category pizza" onClick={() => handleTypeChange("Pizza")}>
             <img src={Pizza} alt="pizza" />
             <p>Pizza</p>
           </div>
-          <div className="consumer-category" onClick={() => handleTypeChange("Sushi")}>
+          <div className="consumer-category sushi" onClick={() => handleTypeChange("Sushi")}>
             <img src={Sushi} alt="sushi" />
             <p>Sushi</p>
           </div>
-          <div className="consumer-category" onClick={() => handleTypeChange("Burger")}>
+          <div className="consumer-category burger" onClick={() => handleTypeChange("Burger")}>
             <img src={Burger} alt="burger" />
             <p>Burger</p>
           </div>
-          <div className="consumer-category" onClick={() => handleTypeChange("Kebab")}>
+          <div className="consumer-category kebab" onClick={() => handleTypeChange("Kebab")}>
             <img src={Kebab} alt="kebab" />
             <p>Kebab</p>
           </div>
-          <div className="consumer-category" onClick={() => handleTypeChange("Ramen")}>
+          <div className="consumer-category ramen" onClick={() => handleTypeChange("Ramen")}>
             <img src={Ramen} alt="ramen" />
             <p>Ramen</p>
           </div>
-          <div className="consumer-category" onClick={() => handleTypeChange("Salade")}>
+          <div className="consumer-category salade" onClick={() => handleTypeChange("Salade")}>
             <img src={Salade} alt="salade" />
             <p>Salade</p>
           </div>
-          <div className="consumer-category" onClick={() => handleTypeChange("Pâtes")}>
+          <div className="consumer-category pâtes" onClick={() => handleTypeChange("Pâtes")}>
             <img src={Pâtes} alt="pâtes" />
             <p>Pâtes</p>
           </div>
-          <div className="consumer-category" onClick={() => handleTypeChange("Autres")}>
+          <div className="consumer-category autres" onClick={() => handleTypeChange("Autres")}>
             <img src={Autres} alt="autres" />
             <p>Autres</p>
           </div>
@@ -89,7 +95,7 @@ const consumer = () => {
                   {restaurant.name}
                 </div>
               ) : (
-                <Restaurant_card image={restaurant["url_logo"]} title={restaurant["name"]} />
+                <Restaurant_card id={restaurant["id"]} image={restaurant["url_logo"]} title={restaurant["name"]} />
               )
             ))}
           </div>
