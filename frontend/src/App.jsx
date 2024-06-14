@@ -14,6 +14,7 @@ import Restaurant_page from './components/Restaurant_page.jsx';
 import AuthenticationProcess from './pages/authenticationProcess.jsx';
 import { AuthProvider } from './authContext.jsx';
 import DeliverymanAccount from './pages/deliveryman/account.jsx';
+import RestaurantAccount from './pages/restaurant/accountRestaurant.jsx';
 
 const App = () => {
   return (
@@ -33,6 +34,7 @@ const App = () => {
           <Route path="/deliverymanOrder3" element={<DeliverymanOrder3 />} />
           <Route path="/authenticated" element={<AuthenticationProcess />} />
           <Route path="/deliverymanAccount" element={<DeliverymanAccount />} />
+          <Route path="/restaurantAccount" element={<RestaurantAccount />} />
         </Routes>
       </Router>
     </AuthProvider>
