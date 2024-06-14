@@ -30,15 +30,18 @@ const LoginSignIn = () => {
     const data = {};
     formData.forEach((value, key) => data[key] = value);
 
+    // Log the form data to check if it's correct
+    console.log('Form Data:', data);
+
     try {
-      await login(data.email, data.password);
+      await login(data.username, data.password, data.role);
 
       // Simulated account types for navigation purposes
-      if (data.email === "consommateur@consommateur.fr") {
+      if (data.username === "consommateur@consommateur.fr") {
         navigate('/consommateur');
-      } else if (data.email === "livreur@livreur.fr") {
+      } else if (data.username === "livreur@livreur.fr") {
         navigate('/livreur');
-      } else if (data.email === "restaurant@restaurant.fr") {
+      } else if (data.username === "restaurant@restaurant.fr") {
         navigate('/restaurant');
       } else {
         setMessageLogin('Identifiant ou mot de passe incorrect.');
@@ -122,7 +125,7 @@ const LoginSignIn = () => {
           </div>
           <input type="password" name="password" placeholder="Entrez votre mot de passe" required />
           <div className="label-div">
-            <label htmlFor="password">Confirmer mot de passe</label>
+            <label htmlFor="password-confirm">Confirmer mot de passe</label>
           </div>
           <input type="password" name="password-confirm" placeholder="Confirmez votre mot de passe" required />
 
@@ -149,13 +152,18 @@ const LoginSignIn = () => {
       <div className="log-in-card">
         <form onSubmit={handleSubmitLogin}>
           <div className="label-div">
-            <label htmlFor="login">Identifiant</label>
+            <label htmlFor="username">Identifiant</label>
           </div>
-          <input type="email" name="email" placeholder="Entrez votre identifiant" required />
+          <input type="text" name="username" placeholder="Entrez votre identifiant" required />
           <div className="label-div">
             <label htmlFor="password">Mot de passe</label>
           </div>
           <input type="password" name="password" placeholder="Entrez votre mot de passe" required />
+
+          <div className="label-div">
+            <label htmlFor="role">Rôle</label>
+          </div>
+          <input type="text" name="role" placeholder="Entrez votre rôle" required />
 
           {/* Message box */}
           <div className="message-box">{messageLogin}</div>

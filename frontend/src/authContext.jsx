@@ -28,19 +28,21 @@ export const AuthProvider = ({ children }) => {
     return () => clearInterval(interval);
   }, [refreshToken]);
 
-  const login = async (username, password) => {
+  const login = async (username, password, role) => {
     try {
-      const response = await axios.post('http://localhost:3001/token', { username, password });
+      const response = await axios.post('http://localhost:3001/token', { username, password, role });
       setAccessToken(response.data.accessToken);
       setRefreshToken(response.data.refreshToken);
-      setRole(response.data.role)
+      setRole(response.data.role);
       localStorage.setItem('accessToken', response.data.accessToken);
       localStorage.setItem('refreshToken', response.data.refreshToken);
-      localStorage.setItem('role', response.data.setRole);
+      localStorage.setItem('role', response.data.role);
     } catch (error) {
       console.error('Login error:', error);
     }
   };
+  
+  
 
   const logout = () => {
     setAccessToken(null);

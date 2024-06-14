@@ -56,15 +56,14 @@ function authorizedRoles(...allowedRoles) {
 }
 
 app.post('/token', (req, res) => {
-  const { username, role, data } = req.body;
+  const { username, password, role } = req.body;
 
-
-  if (username && role) {
-    const accessToken = generateAccessJWT(username, data);
+  if (username && password && role) { 
+    const accessToken = generateAccessJWT(username, role);
     const refreshToken = generateRefreshToken(username);
-    res.json({ accessToken, refreshToken });
+    res.json({ accessToken, refreshToken, role });
   } else {
-    res.status(400).send('Username/Role are required');
+    res.status(400).send('Username, password, and role are required');
   }
 });
 
