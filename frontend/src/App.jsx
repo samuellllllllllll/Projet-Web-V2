@@ -15,6 +15,8 @@ import AuthenticationProcess from './pages/authenticationProcess.jsx';
 import { AuthProvider } from './authContext.jsx';
 import DeliverymanAccount from './pages/deliveryman/account.jsx';
 import RestaurantAccount from './pages/restaurant/accountRestaurant.jsx';
+import Order1 from './pages/consumer/order1.jsx';
+import Order2 from './pages/consumer/order2.jsx';
 
 const App = () => {
   return (
@@ -28,6 +30,8 @@ const App = () => {
           <Route path="/consommateur/compte" element={<AccountConsumer />} />
           <Route path="/consommateur/panier" element={<ShoppingBasket />} />
           <Route path="/consommateur/page_restaurant" element={<Restaurant_page />} />
+          <Route path="/consommateur/commande1" element={<Order1 />} />
+          <Route path="/consommateur/commande2" element={<Order2 />} />
           <Route path="/menuEdit" element={<MenuEdit />} />
           <Route path="/deliverymanOrder" element={<DeliverymanOrder />} />
           <Route path="/deliverymanOrder2" element={<DeliverymanOrder2 />} />
