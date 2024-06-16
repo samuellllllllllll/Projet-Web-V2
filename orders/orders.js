@@ -25,15 +25,17 @@ const ordersSchema = new mongoose.Schema({
         main : String,
         beverage : String,
         dessert : String,
-        quantity :Number
+        quantity_menu :Number
     }],
     status : Number,
     validation_code : Number,
     restaurant_id : Number,
     user_id : Number,
     price : Number,
-    article : Array,
-    
+    articles : [{
+        article : String,
+        quantity_article : Number
+    }] 
 });
 
 
@@ -50,15 +52,26 @@ app.post("/orders", (req, res)=>{
     console.log(req.query);
 
     const menus= [];
-    let index = 0;
-    while (req.query[`main${index}`]){
-        menus.push({
-            main: req.query[`main${index}`],
-            beverage: req.query[`beverage${index}`],
-            dessert: req.query[`dessert${index}`],
-            quantity : req.query[`quantity${index}`]
-        });
-        index++;
+    const articles = [];
+    let index_menus = 0;
+    let index_articles = 0;
+    while (req.query[`main${index_menus}`] || req.query[`article${index_articles}`]){
+        if (req.query[`main${index_menus}`]){
+            menus.push({
+                main: req.query[`main${index_menus}`],
+                beverage: req.query[`beverage${index_menus}`],
+                dessert: req.query[`dessert${index_menus}`],
+                quantity_menu : req.query[`quantity_menu${index_menus}`]
+            });
+            index_menus++;
+        }
+        if (req.query[`article${index_articles}`]){
+            articles.push({
+                article: req.query[`article${index_articles}`],
+                quantity_article: req.query[`quantity_article${index_articles}`]
+            });
+            index_articles++;
+        } 
     }
     var newOrder = {
         menus: menus,
@@ -72,7 +85,7 @@ app.post("/orders", (req, res)=>{
         restaurant_id : req.query.restaurant_id,
         user_id : req.query.user_id,
         price: req.query.price,
-        article: req.query.article
+        articles: articles
     }
 
     const order = new Orders(newOrder);
