@@ -21,12 +21,22 @@ app.listen(4545, ()=>{
 //liste de produits dans mongo
 
 const ordersSchema = new mongoose.Schema({
-    menu : String,
-    Status : Number,
+    menus : [{
+        main : String,
+        beverage : String,
+        dessert : String,
+        quantity :Number
+    }],
+    status : Number,
     validation_code : Number,
     restaurant_id : Number,
     user_id : Number,
+    price : Number,
+    article : Array,
+    
 });
+
+
 const Orders = mongoose.model('Orders', ordersSchema);
 
 app.get("/", (req, res)=> {
@@ -34,14 +44,35 @@ app.get("/", (req, res)=> {
 })
 
 app.post("/orders", (req, res)=>{
-    console.log(req.body);
+    //ajouter price
+    //ajouter quantity
+    //menu
+    console.log(req.query);
 
+    const menus= [];
+    let index = 0;
+    while (req.query[`main${index}`]){
+        menus.push({
+            main: req.query[`main${index}`],
+            beverage: req.query[`beverage${index}`],
+            dessert: req.query[`dessert${index}`],
+            quantity : req.query[`quantity${index}`]
+        });
+        index++;
+    }
     var newOrder = {
-        menu : req.body.menu,
-        Status : req.body.Status,
-        validation_code :req.body.validation_code,
-        restaurant_id : req.body.restaurant_id,
-        user_id : req.body.user_id
+        menus: menus,
+        // menu : {
+        //     plat : req.query.plat,
+        //     boisson : req.query.boisson,
+        //     dessert: req.query.dessert
+        // },
+        status : req.query.status,
+        validation_code :req.query.validation_code,
+        restaurant_id : req.query.restaurant_id,
+        user_id : req.query.user_id,
+        price: req.query.price,
+        article: req.query.article
     }
 
     const order = new Orders(newOrder);
@@ -53,81 +84,39 @@ app.post("/orders", (req, res)=>{
             throw err;
         }
     });
-
 })
 
 app.get("/orders", (req, res)=>{
-
+    Orders.find().then((orders)=>{
+        res.json(orders)
+    });
 })
 
-app.put("/orders", (req,res)=>{
-
+app.get("/orders/:id", (req,res)=>{
+    Orders.find({user_id : req.params.id}).then((orders)=>{
+        if (orders){
+            res.json(orders);
+        }else{
+            res.sendStatus(404);
+        }
+    });
 })
 
-// exports.getKittens = (req, res) =>{
-//     mongoose.connect('mongodb://user:mysecretpassword@0.0.0.0:8002/')
-//     .then(()=> {
-//         console.log('Connected to mongo');
-//     });
-    
-    
-//     Cats.find().then((cats) =>{
-//         console.log(cats);
-//         res.json(cats)
-//     });
+//Route only used by delivery person
+app.get("/orders/status/:status", (req,res)=>{
+    Orders.find({status : req.params.status}).then((orders)=>{
+        if (orders){
+            res.json(orders);
+        }
+        else{
+            res.sendStatus(404);
+        }
+    })
+})
 
 
+//Route used by restaurant & delivery person
+app.put("/orders/status/:status", (req,res)=>{
+    //TO DO
 
-
-
-    
-    //res.send(allCats);
-    // mongoose
-    // .disconnect()
-    // .then(()=>{
-    //     console.log('Disconnected');
-    // });
-
-//};
-//mongoose.connect('mongodb://user:mysecretpassword@0.0.0.0:8002/cesi_eats_mongo');
-
-// async function main(){
-//     await mongoose.connect('mongodb://user:mysecretpassword@0.0.0.0:8002/')
-//     .then(()=> {
-//         console.log('Connected to mongo');
-//     });
-
-//     const kittySchema = new mongoose.Schema({
-//         name :String,
-//         activity : String,
-//         rarity : String,
-//     });
-
-//     const Cats = mongoose.model('Cats', kittySchema);
-
-//     const MrFresh = new Cats(
-//         { 
-//             name: 'MrFresh', 
-//             activity : 'FoodCritic', 
-//             rarity : 'Common'
-//         }
-//     );
-//     const TheGluttonousBeast = new Cats(
-//         {
-//             name : 'TheGluttonousBeast',
-//             activity:'Eating',
-//             rarity:'Uncommon',
-//         }
-//     );
-
-//     //const AllKitten = [MrFresh, TheGluttonousBeast]
-//     await MrFresh.save();
-//     await TheGluttonousBeast.save();
-
-// }
-
-// const test= main();
-
-
-
-
+})
