@@ -29,7 +29,7 @@ const ordersSchema = new mongoose.Schema({
     }],
     status : Number,
     validation_code : Number,
-    restaurant_id : Number,
+    restaurant_name : String,
     user_id : Number,
     price : Number,
     courier_id : Number,
@@ -76,7 +76,7 @@ app.post("/orders", (req, res)=>{
         menus: menus,
         status : req.query.status,
         validation_code :req.query.validation_code,
-        restaurant_id : req.query.restaurant_id,
+        restaurant_name : req.query.restaurant_name,
         user_id : req.query.user_id,
         price: req.query.price,
         courier_id : req.query.courier_id,
@@ -100,8 +100,8 @@ app.get("/orders", (req, res)=>{
     });
 })
 
-app.get("/orders/:id", (req,res)=>{
-    Orders.find({user_id : req.params.id}).then((orders)=>{
+app.get("/orders/consumers/:user_id", (req,res)=>{
+    Orders.find({user_id : req.params.user_id}).then((orders)=>{
         if (orders){
             res.json(orders);
         }else{
@@ -110,7 +110,7 @@ app.get("/orders/:id", (req,res)=>{
     });
 })
 
-//Route only used by delivery person
+//Route only used by delivery person and restaurant
 app.get("/orders/status/:status", (req,res)=>{
     Orders.find({status : req.params.status}).then((orders)=>{
         if (orders){
@@ -122,9 +122,22 @@ app.get("/orders/status/:status", (req,res)=>{
     })
 })
 
+//app.get("/orders/")
 
 //Route used by restaurant & delivery person
-app.put("/orders/status/:status", (req,res)=>{
+app.put("/orders/status/:id/:new_status", (req,res)=>{
     //TO DO
+    const new_status = req.params.new_status;
+    const order_id = req.params.id;
+    Orders.findByIdAndUpdate(order_id,
+        {$set : {status :new_status}}
+    ).then(updateOrder=>{
+        if(!updateOrder){
+            res.status(400).send("Order not found.");
+        }
+        else{
+            res.status(200).send("Order status updated")
+        }
+    });
 
 })
