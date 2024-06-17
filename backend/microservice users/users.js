@@ -28,20 +28,7 @@ app.get("/users", (req, res) => {
     });
 })
 
-//typical syntax of documentation
-// app.post("/users", (req, res) => {
-//     const insert = 'INSERT INTO users(email, password, role, is_deleted) VALUES($1,$2,$3,$4)';
-//     const values_users = ['vincentverlaan33@gmail.com', '1234', 0, false];
-//     database_postgres.query(insert, values_users, (err, result) => {
-//         if (err){
-//             console.error('Error inserting data', err);
-//         }
-//         else{
-//             console.log("Data inserted");
-//             res.send(result.rows);
-//         }
-//     })
-// })
+
 
 app.post("/users", (req, res)=>{
     console.log(req.body)
@@ -60,6 +47,6 @@ app.post("/users", (req, res)=>{
     })
 })
 
-app.listen(3000, ()=>{
+app.listen(4547, ()=>{
     console.log("Up and running users");
 })

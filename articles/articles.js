@@ -15,7 +15,7 @@ app.get("/", (req,res)=>{
     res.send("Articles default route")
 })
 
-app.listen(3001, ()=>{
+app.listen(4548, ()=>{
     console.log("Up and running articles");
 })
 
