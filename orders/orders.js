@@ -32,6 +32,7 @@ const ordersSchema = new mongoose.Schema({
     restaurant_id : Number,
     user_id : Number,
     price : Number,
+    courier_id : Number,
     articles : [{
         article : String,
         quantity_article : Number
@@ -46,9 +47,7 @@ app.get("/", (req, res)=> {
 })
 
 app.post("/orders", (req, res)=>{
-    //ajouter price
-    //ajouter quantity
-    //menu
+    //ajouter livreur id
     console.log(req.query);
 
     const menus= [];
@@ -75,16 +74,12 @@ app.post("/orders", (req, res)=>{
     }
     var newOrder = {
         menus: menus,
-        // menu : {
-        //     plat : req.query.plat,
-        //     boisson : req.query.boisson,
-        //     dessert: req.query.dessert
-        // },
         status : req.query.status,
         validation_code :req.query.validation_code,
         restaurant_id : req.query.restaurant_id,
         user_id : req.query.user_id,
         price: req.query.price,
+        courier_id : req.query.courier_id,
         articles: articles
     }
 
