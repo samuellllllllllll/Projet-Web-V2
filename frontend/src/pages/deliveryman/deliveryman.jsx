@@ -1,12 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Order from '../../components/Order';
 import MenuDeliveryman from '../../components/menuDeliveryman';
 import '../../styles/deliveryman/deliveryman.css';
-import logo from '../../assets/logo.png';
-import menuIcon from '../../assets/menu.png';
 import MobileHeader from '../../components/MobileHeader';
 
 const Deliveryman = () => {
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    fetchOrders();
+  }, []);
+
+  const fetchOrders = async () => {
+    try {
+      const response = await axios.get('http://localhost:4545/orders');
+      setOrders(response.data);
+    } catch (error) {
+      console.error('Error fetching orders:', error);
+    }
+  };
+
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -37,12 +51,17 @@ const Deliveryman = () => {
           </tr>
         </thead>
         <tbody>
-          {[1, 2, 3, 4, 5].map((id) => (
+          {orders.map(order => (
             <Order
-              key={id}
-              order={{ id, distance: '700 m', restaurant: 'Aladdin Kebab - Ravezies', montant: '3,84 €' }}
-              isSelected={selectedOrder && selectedOrder.id === id}
-              onClick={handleOrderClick}
+              key={order._id}
+              order={{
+                id: order._id,
+                distance: '0 m',
+                restaurant: restaurant_name,
+                montant: `${order.price} €`
+              }}
+              isSelected={selectedOrder && selectedOrder.id === order._id}
+              onClick={() => handleOrderClick(order)}
             />
           ))}
         </tbody>

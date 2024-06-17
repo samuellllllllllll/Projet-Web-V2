@@ -17,14 +17,6 @@ import Autres from '../../assets/autres.png';
 const consumer = () => {
 
   const [restaurants, setRestaurants] = useState([]);
-  
-  // Active type change
-  // const activeType = (type) => {
-  //   const categories = document.querySelectorAll('.consumer-category');
-  //   categories.forEach((category) => {
-  //     category.classList.remove('active');
-  //   });
-  //   const activeCategory = document.querySelector(`.consumer-category p:contains(${type})`).parentNode;
 
   const handleTypeChange = async (restaurantType) => {
     try {
@@ -85,7 +77,7 @@ const consumer = () => {
             <img src={Autres} alt="autres" />
             <p>Autres</p>
           </div>
-         </div>
+        </div>
         <div className="consumer-restaurants">
           <div className="consumer-restaurants-map">
             {restaurants.map((restaurant) => (
@@ -101,7 +93,7 @@ const consumer = () => {
           </div>
         </div>
       </div>
-      <Footer className="footer"/>
+      <Footer className="footer" />
     </div>
   )
 }
