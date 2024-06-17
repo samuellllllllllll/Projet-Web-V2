@@ -58,19 +58,3 @@ app.get("/restaurants", (req, res) => {
         }
     });
 });
-
-// Get all the Menu of a restaurant
-app.get("/restaurants/menus", (req, res) => {
-
-    const query_sql = "SELECT * FROM menus WHERE id_user = $1;";
-    const values_sql = [req.query.id_user];
-
-    database_postgres.query(query_sql, values_sql, (err, result) => {
-        if (err) {
-            console.error('Error executing query', err);
-            res.status(500).send('Error executing query');
-        } else {
-            res.send(result.rows);
-        }
-    });
-});

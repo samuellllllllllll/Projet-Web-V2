@@ -7,7 +7,7 @@ npm install --save pg express body-parser nodemon mongoose dotenv cors
 ```
 
 ## Ports utilisés par chaque microservice
-users : 3000
-articles : 3001
+users : 4547
+articles : 4548
 orders : 4545
 restaurants : 4546
