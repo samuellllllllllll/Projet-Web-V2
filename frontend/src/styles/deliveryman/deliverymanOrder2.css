@@ -69,33 +69,36 @@
   font-size: 1.2em;
 }
 
-.progress-bar-2 {
+/* Exemple de correction CSS */
+.progress-bar-livreur-2 {
   width: 100%;
+  max-width: 400px;
   height: 10px;
-  background-color: #FF7B00;
-  border-radius: 10px;
-  margin-bottom: 20px;
+  display: flex;
+  margin: 20px 0;
+  justify-content: space-between;
 }
 
-.progress-bar-2 .step1 {
-  width: 50%; /* Première étape de la progression */
+.progress-segment-livreur-2 {
   height: 100%;
-  background-color: #FFE2CB;
-  border-radius: 10px 0 0 10px;
+  border-radius: 5px;
   transition: width 0.3s ease-in-out;
 }
 
-.progress-bar-2 .step2 {
-  width: 0%; /* Deuxième étape de la progression */
-  height: 100%;
-  background-color: #FF7B00;
-  border-radius: 0 10px 10px 0;
-  transition: width 0.3s ease-in-out;
+.step1-livreur-2,
+.step2-livreur-2 {
+    flex: 1; /* Pour qu'ils prennent le même espace */
 }
 
-.progress-bar .active {
-  width: 50%; /* Mettre en surbrillance la première étape lorsque active */
+.step1-livreur-2 {
+    background-color: #ff7b00;
+    margin-right: 4px;
 }
+
+.step2-livreur-2 {
+    background-color: #ff7b00;
+}
+
 
 .code-input {
   display: flex;

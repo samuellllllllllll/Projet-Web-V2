@@ -1,6 +1,7 @@
 .menu-page {
   font-family: Arial, sans-serif;
   text-align: center;
+  padding: 20px;
 }
 
 .menu-header {
@@ -11,26 +12,22 @@
   background-color: #fff;
 }
 
-.logo {
-  height: 40px;
-}
-
-.menuIcon {
-  height: 30px;
-}
-
 .menu-content {
   padding: 20px;
 }
 
 .Menu-bottom-button-box {
   margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .Menu-bottom-button {
   background-color: #ffe5cc;
   border-radius: 30px;
   width: 100%;
+  max-width: 300px;
   height: 50px;
   position: relative;
   display: flex;
@@ -76,6 +73,33 @@
   --leftButton: 50%;
 }
 
+.bouttons-commandes {
+  display: flex;
+  gap: 10px;
+}
+
+.accepter, .refuser {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  width: 20px;
+}
+
+.accepter:hover, .refuser:hover {
+  background: transparent;
+}
+
+.accepter-hover{
+  background: transparent;
+}
+
+.accepter-img,
+.refuser-img {
+  width: 20px;
+  height: 20px;
+}
+
 h1 {
   font-size: 24px;
   color: #333;
@@ -106,14 +130,18 @@ h1 {
   border-bottom: 2px solid #f3c5a8;
 }
 
-.table td {
-  border-bottom: 1px solid #f3c5a8;
-}
-
 .table-empty {
   padding: 20px;
   color: #666;
 }
 
+/* Media query for screens 768px et moins */
 @media (max-width: 768px) {
+  .menu-page {
+    padding: 10px;
+  }
+
+  .Menu-bottom-button {
+    max-width: 200px;
+  }
 }
