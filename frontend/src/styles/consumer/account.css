@@ -40,7 +40,17 @@
     align-items: flex-start;
     margin: 1rem 0;
     width: 150px;
+    height: 352px;
     font-weight: 700;
+}
+
+.account-details-right input.editing {
+    margin-bottom: 0px; /* Ajouter une marge en bas de chaque champ lorsque la classe editing est appliquée */
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
 }
 
 .account-details-right{

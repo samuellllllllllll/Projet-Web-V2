@@ -13,8 +13,8 @@ const Order2 = () => {
                     <h2>Suivi commande</h2>
                 </div>
                 <div className="progress-bar-consommateur-2">
-                    <div className="step1-comnsommateur-2 active-consommateur-2"></div>
-                    <div className="step2-consommateur-2"></div>
+                    <div className="progress-segment-2 step1-consommateur-2"></div>
+                    <div className="progress-segment-2 step2-consommateur-2"></div>
                 </div>
                 <p>Le livreur a récupéré votre commande.</p>
                 <p>Il sera bientôt là.</p>

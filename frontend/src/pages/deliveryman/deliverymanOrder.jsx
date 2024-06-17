@@ -22,9 +22,9 @@ const DeliverymanOrder = () => {
             <MobileHeader />
             <main className="order-details">
                 <h1>Récupérez la commande au restaurant</h1>
-                <div className="progress-bar">
-                    <div className="step1 active"></div>
-                    <div className="step2"></div>
+                <div className="progress-bar-livreur">
+                    <div className="progress-segment-livreur step1-livreur"></div>
+                    <div className="progress-segment-livreur step2-livreur"></div>
                 </div>
                 <div className="order-location">
                     <img src={locationIcon} alt="Location Icon" className="locationIcon" />

@@ -13,8 +13,8 @@ const Order1 = () => {
                     <h2>Suivi commande</h2>
                 </div>
                 <div className="progress-bar-consommateur">
-                    <div className="step1-consommateur active-consommateur"></div>
-                    <div className="step2-consommateur"></div>
+                    <div className="progress-segment step1-consommateur"></div>
+                    <div className="progress-segment step2-consommateur"></div>
                 </div>
                 <p>Le restaurant prépare votre commande</p>
                 <img src={preparation} alt="Preparation Icon" className="preparIcon" />
