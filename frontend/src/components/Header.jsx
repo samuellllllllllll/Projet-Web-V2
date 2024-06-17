@@ -9,11 +9,18 @@ const Header = () => {
     // Function to update the countOrder from localStorage
     const updateCountOrder = () => {
         const products = localStorage.getItem('products');
-        if (products !== null) {
-            setCountOrder(JSON.parse(products).length);
-        } else {
-            setCountOrder(0);
+        const menus = localStorage.getItem('menus');
+        let count = 0;
+
+        if (products) {
+            count += JSON.parse(products).length;
         }
+
+        if (menus) {
+            count += JSON.parse(menus).length;
+        }
+
+        setCountOrder(count);
     };
 
     // useEffect to update the countOrder whenever the component mounts

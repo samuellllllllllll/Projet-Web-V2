@@ -159,7 +159,10 @@ const Restaurant_page = () => {
                 "name_dessert": name_dessert,
                 "name_drink": name_drink,
                 "id_restaurant": id,
-                "price": price
+                "name_restaurant": name,
+                "image": image,
+                "price": price,
+                "id_menu_panier": menuId + id + id_starter + id_main_dish + id_dessert + id_drink
             });
             localStorage.setItem('menus', JSON.stringify(menus));
 
