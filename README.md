@@ -3,7 +3,7 @@
 ## Commandes à installer dans un microservice
 ```bash
 npm init -y
-npm install --save pg express body-parser nodemon mongoose dotenv cors mongodb
+npm install --save pg express body-parser nodemon mongoose dotenv cors
 ```
 
 ## Ports utilisés par chaque microservice
