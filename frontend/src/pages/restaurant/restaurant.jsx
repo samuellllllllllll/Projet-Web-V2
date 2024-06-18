@@ -35,11 +35,6 @@ const Restaurant = () => {
   }, []);
 
 
-
-  const [demandesCommandes, setDemandesCommandes] = useState([
-    { details: "1 Kebab", heure: "10 h 00", id: "6648" },
-    { details : "Victor", heure : "09 h 00", id : "idjfenfdovn"}
-  ]);
   const [commandesAFaire, setCommandesAFaire] = useState([]);
 
   const toggleButton = () => {
@@ -48,8 +43,11 @@ const Restaurant = () => {
 
   const handleAccept = (index) => {
     const acceptedCommande = testOrders[index];
-    setDemandesCommandes(testOrders.filter((_, i) => i !== index));
+    setOrders(testOrders.filter((_, i) => i !== index));
     setCommandesAFaire([...commandesAFaire, acceptedCommande]);
+    const putOrders = async () => {
+      //TO DO
+    }
   };
 
   const handleDeny = (index) => {
@@ -131,9 +129,9 @@ const Restaurant = () => {
             {commandesAFaire.length > 0 ? (
               commandesAFaire.map((commande, index) => (
                 <tr key={index}>
-                  <td>{commande.details}</td>
-                  <td>{commande.heure}</td>
-                  <td>{commande.id}</td>
+                  <td>{commande.menus.map(menu=> `${menu.quantity} ${menu.name_starter} ${menu.name_main_dish} ${menu.name_drink} ${menu.name_dessert}`).join(', ')}</td>
+                  <td>{commande.articles.map(article => `${article.quantity} ${article.name_article}`).join(', ')}</td>
+                  <td>{commande.order_number}</td>
                 </tr>
               ))
             ) : (
