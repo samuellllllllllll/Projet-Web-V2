@@ -17,14 +17,6 @@ import Autres from '../../assets/autres.png';
 const consumer = () => {
 
   const [restaurants, setRestaurants] = useState([]);
-  
-  // Active type change
-  // const activeType = (type) => {
-  //   const categories = document.querySelectorAll('.consumer-category');
-  //   categories.forEach((category) => {
-  //     category.classList.remove('active');
-  //   });
-  //   const activeCategory = document.querySelector(`.consumer-category p:contains(${type})`).parentNode;
 
   const handleTypeChange = async (restaurantType) => {
     try {
@@ -46,7 +38,7 @@ const consumer = () => {
     <div className="consumer">
       <Header />
       <div className="consumer-container">
-        <div className="consumer-title">Hello Victor !</div>
+        <div className="consumer-title">Hello !</div>
         <div className="consumer-text">Que veux tu commander ?</div>
         <div className="consumer-categories">
           <div className="consumer-category sandwich" onClick={() => handleTypeChange("Sandwich")}>
@@ -95,7 +87,7 @@ const consumer = () => {
                   {restaurant.name}
                 </div>
               ) : (
-                <Restaurant_card id={restaurant["id"]} image={restaurant["url_logo"]} title={restaurant["name"]} />
+                <Restaurant_card key={restaurant["id"]} id={restaurant["id"]} image={restaurant["url_logo"]} title={restaurant["name"]} />
               )
             ))}
           </div>

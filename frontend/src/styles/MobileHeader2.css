@@ -1,0 +1,37 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.mobile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 95%;
+    padding: 10px 20px;
+    position: relative;
+    z-index: 100;
+    background-color: #fff;
+}
+
+.menu-icon {
+    width: 30px;
+    cursor: pointer;
+    margin-left: auto;
+}
+
+.logo-header-2 {
+    width: 140px;
+    height: auto;
+    margin-right: auto;
+}
+
+/* Media query pour les petits écrans */
+@media (max-width: 600px) {
+    .mobile-header {
+        padding: 10px; /* Réduire le padding pour les petits écrans */
+        width: 105%;
+        margin-left: -20px;
+    }
+}
