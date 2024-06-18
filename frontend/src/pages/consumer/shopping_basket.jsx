@@ -160,18 +160,19 @@ const ShoppingBasket = () => {
                             articles: (products === null ? [] : newProducts),
                         },
                     });
-                    console.log('Order sent:', response);
                 } catch (error) {
                     console.error('Error sending order:', error);
                 }
-
+                
+                document.querySelector('.shopping-basket-checkout-alert').textContent = 'Commande envoyée';
+                
                 // Display a message for 3 seconds
                 setTimeout(() => {
-                    document.querySelector('.shopping-basket-checkout-alert').textContent = 'Commande envoyée';
+                    document.querySelector('.shopping-basket-checkout-alert').textContent = '';
+                    localStorage.removeItem('products');
+                    localStorage.removeItem('menus');
+                    window.location.reload();
                 }, 3000);
-                localStorage.removeItem('products');
-                localStorage.removeItem('menus');
-                //window.location.reload();
             }
         }
     }
