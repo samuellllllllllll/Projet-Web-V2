@@ -7,22 +7,30 @@ import MobileHeader from '../../components/MobileHeader';
 
 const Deliveryman = () => {
   const [orders, setOrders] = useState([]);
-
-  useEffect(() => {
-    fetchOrders();
-  }, []);
-
-  const fetchOrders = async () => {
-    try {
-      const response = await axios.get('http://localhost:4545/orders');
-      setOrders(response.data);
-    } catch (error) {
-      console.error('Error fetching orders:', error);
-    }
-  };
-
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await axios.get('http://localhost:4545/orders/status/:status', {
+          params: {
+            status: 1
+          }
+        }
+        );
+        setOrders(response.data);
+      } catch (error) {
+        console.error('Error fetching orders:', error);
+      }
+    };
+
+    fetchOrders();
+
+    const intervalId = setInterval(fetchOrders, 15000); // Fetch orders every 15 seconds
+
+    return () => clearInterval(intervalId); // Cleanup interval on component unmount
+  }, []);
 
   const handleOrderClick = (order) => {
     setSelectedOrder(order);
@@ -57,10 +65,10 @@ const Deliveryman = () => {
               order={{
                 id: order._id,
                 distance: '0 m',
-                restaurant: restaurant_name,
+                restaurant: order.restaurant_name,
                 montant: `${order.price} €`
               }}
-              isSelected={selectedOrder && selectedOrder.id === order._id}
+              isSelected={selectedOrder && selectedOrder._id === order._id}
               onClick={() => handleOrderClick(order)}
             />
           ))}
