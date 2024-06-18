@@ -10,39 +10,46 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const refreshAccessToken = async () => {
-      if (refreshToken) {
+      const storedRefreshToken = localStorage.getItem('refreshToken');
+      if (storedRefreshToken) {
         try {
-          const response = await axios.post('http://localhost:3001/token/auth', { refreshToken });
+          const response = await axios.post('/api/token/auth', { refreshToken: storedRefreshToken }, {
+            headers: {
+              'Content-Type': 'application/json',
+              'Cache-Control': 'no-cache',
+            },
+          });
           setAccessToken(response.data.accessToken);
           localStorage.setItem('accessToken', response.data.accessToken);
         } catch (error) {
           console.error('Error refreshing access token:', error);
+          logout();
         }
       }
     };
 
     const interval = setInterval(() => {
       refreshAccessToken();
-    }, 30 * 60 * 1000); // Taux rafraichissement du token set à 30 minutes pour l'instant
+    }, 15 * 60 * 1000); // Refresh the token every 15 minutes
 
     return () => clearInterval(interval);
-  }, [refreshToken]);
+  }, []);
 
   const login = async (username, password, role) => {
     try {
-      const response = await axios.post('http://localhost:3001/token', { username, password, role });
+      const response = await axios.post('/api/token', { username, password, role });
       setAccessToken(response.data.accessToken);
       setRefreshToken(response.data.refreshToken);
       setRole(response.data.role);
       localStorage.setItem('accessToken', response.data.accessToken);
       localStorage.setItem('refreshToken', response.data.refreshToken);
       localStorage.setItem('role', response.data.role);
+      return true;
     } catch (error) {
       console.error('Login error:', error);
+      return false;
     }
   };
-  
-  
 
   const logout = () => {
     setAccessToken(null);
