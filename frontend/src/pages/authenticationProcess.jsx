@@ -3,15 +3,23 @@ import useAPI from '../api.js';
 
 const authenticationProcess = () => {
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const API = useAPI();
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
+      setError(null);
+
       try {
         const response = await API.get('/protected');
         setData(response.data);
       } catch (error) {
+        setError('Error fetching protected data');
         console.error('Error fetching protected data:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -20,7 +28,13 @@ const authenticationProcess = () => {
 
   return (
     <div>
-      {data ? <p>{data}</p> : <p>Loading...</p>}
+      {loading ? (
+        <p>Loading...</p>
+      ) : error ? (
+        <p>{error}</p>
+      ) : (
+        <p>{data}</p>
+      )}
     </div>
   );
 };

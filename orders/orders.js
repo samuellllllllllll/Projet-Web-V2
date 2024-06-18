@@ -25,7 +25,7 @@ const ordersSchema = new mongoose.Schema({
         main : String,
         beverage : String,
         dessert : String,
-        quantity_menu :Number
+        quantity_menu : Number
     }],
     status : Number,
     validation_code : Number,
