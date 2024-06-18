@@ -117,7 +117,7 @@ app.get("/orders/:id", (req,res)=>{
     });
 })
 
-// Route only used by delivery person
+//Route only used by delivery person and restaurant
 app.get("/orders/status/:status", (req,res)=>{
     Orders.find({status : req.params.status}).then((orders)=>{
         if (orders){
@@ -129,8 +129,20 @@ app.get("/orders/status/:status", (req,res)=>{
     })
 })
 
-// Route used by restaurant & delivery person
-app.put("/orders/status/:status", (req,res)=>{
+//Route used by restaurant & delivery person
+app.put("/orders/status/:id/:new_status", (req,res)=>{
     //TO DO
+    const new_status = req.params.new_status;
+    const order_id = req.params.id;
+    Orders.findByIdAndUpdate(order_id,
+        {$set : {status :new_status}}
+    ).then(updateOrder=>{
+        if(!updateOrder){
+            res.status(400).send("Order not found.");
+        }
+        else{
+            res.status(200).send("Order status updated")
+        }
+    });
 
 })
