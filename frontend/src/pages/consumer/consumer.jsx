@@ -17,14 +17,6 @@ import Autres from '../../assets/autres.png';
 const consumer = () => {
 
   const [restaurants, setRestaurants] = useState([]);
-  
-  // Active type change
-  // const activeType = (type) => {
-  //   const categories = document.querySelectorAll('.consumer-category');
-  //   categories.forEach((category) => {
-  //     category.classList.remove('active');
-  //   });
-  //   const activeCategory = document.querySelector(`.consumer-category p:contains(${type})`).parentNode;
 
   const handleTypeChange = async (restaurantType) => {
     try {

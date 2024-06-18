@@ -47,15 +47,11 @@
     a:hover{
         color: var(--second-color);
     }
-}
 
-.footer-bottom{
-    width: 98%;
-    display: flex;
-    justify-content: flex-end;
-    color: var(--primary-color);
-    font-weight: 600;
-    font-size: 0.9rem;
+    p{
+        font-size: 0.8rem;
+        color: var(--primary-color);
+    }
 }
 
 /* RESPONSIVE */
@@ -71,9 +67,5 @@
         a{
             font-size: 0.9rem;
         }
-    }
-
-    .footer-bottom{
-        font-size: 0.7rem;
     }
 }

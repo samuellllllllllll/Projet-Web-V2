@@ -11,6 +11,8 @@
     width: 300px;
     height: 200px;
     position: relative;
+    text-align: start;
+    margin-bottom: 2rem;
 }
     
 .cover-image {
@@ -222,11 +224,12 @@
         width: 200px;
         height: 120px;
         padding-bottom: 40px;
+        margin-bottom: 4rem;
     } 
     
     .card-item{
         width: 200px; 
-        height: 120px;
+        height: 140px;
 
         img{
             width: 200px; 

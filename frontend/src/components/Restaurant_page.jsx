@@ -200,7 +200,7 @@ const Restaurant_page = () => {
                             </div>
                             <div className="restaurant-page-container-product-cards">
                                 {menus.map((menu) => (
-                                    <div key={menu.id} onClick={ () => handleInterface(menu.id) }>
+                                    <div className="restaurant-page-container-product-card" key={menu.id} onClick={ () => handleInterface(menu.id) }>
                                         <Menu_card_consumer key={menu.id} id={menu.id} name={menu.name} price={menu.price} image={image} restaurant_id={id} restaurant_name={name}/>
                                     </div>
                                 ))}
@@ -214,7 +214,9 @@ const Restaurant_page = () => {
                                 {/* Only products with category=0 */}
                                 {/* If products is empty show a message */}
                                 {products.filter(product => product.category === 0).length === 0 ? <div className="restaurant-page-container-product-cards-empty">Ce restaurant n'a pas d'entrée</div> : products.filter(product => product.category === 0).map((product) => (
-                                    <Product_card_consumer key={product.id} id={product.id} name={product.name} price={product.price} image={product.image} restaurant_id={id} restaurant_name={name} />
+                                    <div className="restaurant-page-container-product-card" key={product.id}>
+                                        <Product_card_consumer key={product.id} id={product.id} name={product.name} price={product.price} image={product.image} restaurant_id={id} restaurant_name={name} />
+                                    </div>
                                 ))}
                             </div>
                         </div>
@@ -226,7 +228,7 @@ const Restaurant_page = () => {
                                 {/* Only products with category=1 */}
                                 {/* If products is empty show a message */}
                                 {products.filter(product => product.category === 1).length === 0 ? <div className="restaurant-page-container-product-cards-empty">Ce restaurant n'a pas de plat</div> : products.filter(product => product.category === 1).map((product) => (
-                                    <Product_card_consumer key={product.id} id={product.id} name={product.name} price={product.price} image={product.url_picture} restaurant_id={id} restaurant_name={name} />
+                                    <Product_card_consumer key={product.id} id={product.id} name={product.name} price={product.price} image={product.url_picture} restaurant_id={id} restaurant_name={name} className="restaurant-page-container-product-card" />
                                 ))}
                             </div>
                         </div>
@@ -238,7 +240,7 @@ const Restaurant_page = () => {
                                 {/* Only products with category=2 */}
                                 {/* If products is empty show a message */}
                                 {products.filter(product => product.category === 2).length === 0 ? <div className="restaurant-page-container-product-cards-empty">Ce restaurant n'a pas de dessert</div> : products.filter(product => product.category === 2).map((product) => (
-                                    <Product_card_consumer key={product.id} id={product.id} name={product.name} price={product.price} image={product.url_picture} restaurant_id={id} restaurant_name={name} />
+                                    <Product_card_consumer key={product.id} id={product.id} name={product.name} price={product.price} image={product.url_picture} restaurant_id={id} restaurant_name={name} className="restaurant-page-container-product-card" />
                                 ))}
                             </div>
                         </div>
@@ -250,7 +252,7 @@ const Restaurant_page = () => {
                                 {/* Only products with category=3 */}
                                 {/* If products is empty show a message */}
                                 {products.filter(product => product.category === 3).length === 0 ? <div className="restaurant-page-container-product-cards-empty">Ce restaurant n'a pas de boisson</div> : products.filter(product => product.category === 3).map((product) => (
-                                    <Product_card_consumer key={product.id} id={product.id} name={product.name} price={product.price} image={product.url_picture} restaurant_id={id} restaurant_name={name} />
+                                    <Product_card_consumer key={product.id} id={product.id} name={product.name} price={product.price} image={product.url_picture} restaurant_id={id} restaurant_name={name} className="restaurant-page-container-product-card" />
                                 ))}
                             </div>
                         </div>

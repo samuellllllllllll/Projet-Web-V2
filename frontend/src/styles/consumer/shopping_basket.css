@@ -112,16 +112,19 @@
             .shopping-basket-details-order-item-left-restaurant-name{
                 font-size: 0.8rem;
                 font-weight: 600;
+                text-align: start;
             }
 
             .shopping-basket-details-order-item-left-name{
                 font-size: 1.1rem;
                 font-weight: 600;
+                text-align: start;
             }
 
             .shopping-basket-details-order-item-left-price{
                 font-size: 0.9rem;
-                font-weight: 500;            
+                font-weight: 500; 
+                text-align: start;          
             }
 
             .shopping-basket-details-order-item-left-items{
@@ -130,6 +133,7 @@
                 display: flex;
                 flex-direction: column;
                 align-items: flex-start;
+                text-align: start;
 
                 .shopping-basket-details-order-item-left-item{
                     font-size: 0.7rem;
@@ -154,6 +158,7 @@
     #delete-product, #add-product, #delete-menu, #add-menu{
         font-size: 1.4rem;
         cursor: pointer;
+        padding: 0;
     }
 
     #delete:hover, #add:hover{
@@ -179,5 +184,40 @@
         font-weight: 600;
         color: var(--primary-color);
         margin-top: 1rem;
+    }
+}
+
+/* RESPONSIVE */
+@media (max-width: 1400px){
+    
+    .shopping-basket-details-order{
+        width: 50%
+    }
+    
+    .shopping-basket-details-price{
+        width: 30%;
+    }
+    
+    .shopping-basket-details-order{
+        margin-right: 5%;
+    }
+    
+    .shopping-basket-details-price{
+        margin-left: 5%;
+    }
+    
+    .shopping-basket-checkout{
+        margin-top: 4rem;
+    
+        .shopping-basket-checkout-button{
+            font-size: 0.9rem;
+        }
+    
+        .shopping-basket-checkout-alert{
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-top: 1rem;
+        }
     }
 }

@@ -1,15 +1,29 @@
 const express = require("express");
 const app = express();
-const mongoose = require('mongoose');
 const bodyParser = require("body-parser");
+const dotenv = require('dotenv');
+const cors = require('cors');
+const mongoose = require('mongoose');
+
+// Load environment variables
+dotenv.config();
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://user:mysecretpassword@0.0.0.0:8002/', {
-    dbName : 'cesi_eats_mongo'
+// Enable CORS
+app.use(cors({
+    origin: 'http://localhost:5173'
+}));
+
+// Connect to the database
+const uri = process.env.MONGO_DB_URI;
+mongoose.connect(uri)
+.then(() => {
+    console.log("Connected to MongoDB");
 })
-.then(()=>{
-    console.log("Connected to mongo")
-})
+.catch((err) => {
+    console.log("Error", err);
+});
 
 app.get("/", (req,res)=>{
     res.send("Orders default route")
@@ -18,27 +32,35 @@ app.get("/", (req,res)=>{
 app.listen(4545, ()=>{
     console.log("Up and running orders");
 })
-//liste de produits dans mongo
 
+// Liste de produits dans mongo
 const ordersSchema = new mongoose.Schema({
-    menus : [{
-        main : String,
-        beverage : String,
-        dessert : String,
-        quantity_menu :Number
-    }],
+    consumer_id : Number,
+    restaurant_id : Number,
+    restaurant_name : String,
+    delivery_person_id : Number,
     status : Number,
     validation_code : Number,
-    restaurant_name : String,
-    user_id : Number,
     price : Number,
-    courier_id : Number,
+    menus : [{
+        id_menu : Number,
+        name_menu : String,
+        id_starter : Number,
+        name_starter : String,
+        id_main_dish : Number,
+        name_main_dish : String,
+        id_dessert : Number,
+        name_dessert : String,
+        id_drink : Number,
+        name_drink : String,
+        quantity : Number
+    }],
     articles : [{
-        article : String,
-        quantity_article : Number
-    }] 
+        id_article : Number,
+        name_article : String,
+        quantity : Number
+    }]
 });
-
 
 const Orders = mongoose.model('Orders', ordersSchema);
 
@@ -47,40 +69,17 @@ app.get("/", (req, res)=> {
 })
 
 app.post("/orders", (req, res)=>{
-    //ajouter livreur id
-    console.log(req.query);
 
-    const menus= [];
-    const articles = [];
-    let index_menus = 0;
-    let index_articles = 0;
-    while (req.query[`main${index_menus}`] || req.query[`article${index_articles}`]){
-        if (req.query[`main${index_menus}`]){
-            menus.push({
-                main: req.query[`main${index_menus}`],
-                beverage: req.query[`beverage${index_menus}`],
-                dessert: req.query[`dessert${index_menus}`],
-                quantity_menu : req.query[`quantity_menu${index_menus}`]
-            });
-            index_menus++;
-        }
-        if (req.query[`article${index_articles}`]){
-            articles.push({
-                article: req.query[`article${index_articles}`],
-                quantity_article: req.query[`quantity_article${index_articles}`]
-            });
-            index_articles++;
-        } 
-    }
     var newOrder = {
-        menus: menus,
-        status : req.query.status,
-        validation_code :req.query.validation_code,
-        restaurant_name : req.query.restaurant_name,
-        user_id : req.query.user_id,
-        price: req.query.price,
-        courier_id : req.query.courier_id,
-        articles: articles
+        consumer_id: req.body.params.id_consumer,
+        restaurant_id: req.body.params.id_restaurant,
+        restaurant_name: req.body.params.restaurant_name,
+        delivery_person_id: req.body.params.id_delivery_person,
+        status: 0,
+        validation_code: Math.floor(1000 + Math.random() * 9000),
+        price: req.body.params.price,
+        menus: req.body.params.menus,
+        articles: req.body.params.articles
     }
 
     const order = new Orders(newOrder);
@@ -121,8 +120,6 @@ app.get("/orders/status/:status", (req,res)=>{
         }
     })
 })
-
-//app.get("/orders/")
 
 //Route used by restaurant & delivery person
 app.put("/orders/status/:id/:new_status", (req,res)=>{
