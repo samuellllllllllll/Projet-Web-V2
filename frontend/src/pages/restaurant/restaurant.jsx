@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../styles/restaurant/restaurant.css';
 import logo from '../../assets/logo.png';
 import menuIcon from '../../assets/menu.png';
@@ -7,11 +7,38 @@ import CommandesAFaire from '../../components/CommandesAFaire';
 import MobileHeader2 from '../../components/MobileHeader2';
 import accept from '../../assets/valid.png';
 import deny from "../../assets/croix.png";
+import axios from 'axios';
 
 const Restaurant = () => {
   const [isOpen, setIsOpen] = useState(true);
+  const [testOrders, setOrders] = useState([]);
+
+
+  const fetchOrders = async () => {
+    try {
+      const response = await axios.get('http://localhost:4545/orders/status/0'
+      );
+      setOrders(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error fetching orders:', error);
+    }
+  };
+  useEffect(() => {
+
+
+    fetchOrders();
+
+    const intervalId = setInterval(fetchOrders, 15000); // Fetch orders every 15 seconds
+
+    return () => clearInterval(intervalId); // Cleanup interval on component unmount
+  }, []);
+
+
+
   const [demandesCommandes, setDemandesCommandes] = useState([
-    { details: "1 Kebab", heure: "10 h 00", id: "6648" }
+    { details: "1 Kebab", heure: "10 h 00", id: "6648" },
+    { details : "Victor", heure : "09 h 00", id : "idjfenfdovn"}
   ]);
   const [commandesAFaire, setCommandesAFaire] = useState([]);
 
@@ -20,13 +47,13 @@ const Restaurant = () => {
   };
 
   const handleAccept = (index) => {
-    const acceptedCommande = demandesCommandes[index];
-    setDemandesCommandes(demandesCommandes.filter((_, i) => i !== index));
+    const acceptedCommande = testOrders[index];
+    setDemandesCommandes(testOrders.filter((_, i) => i !== index));
     setCommandesAFaire([...commandesAFaire, acceptedCommande]);
   };
 
   const handleDeny = (index) => {
-    setDemandesCommandes(demandesCommandes.filter((_, i) => i !== index));
+    setOrders(testOrders.filter((_, i) => i !== index));
   };
 
   return (
@@ -68,11 +95,12 @@ const Restaurant = () => {
             </tr>
           </thead>
           <tbody>
-            {demandesCommandes.length > 0 ? (
-              demandesCommandes.map((commande, index) => (
+            {testOrders.length > 0 ? (
+              testOrders.map((commande, index) => (
                 <tr key={index}>
-                  <td>{commande.details}</td>
-                  <td>{commande.heure}</td>
+                  <td>{commande.menus.map(menu=> `${menu.quantity} ${menu.name_starter} ${menu.name_main_dish} ${menu.name_drink} ${menu.name_dessert}`).join(', ')}</td>
+                  <td>{commande.articles.map(article => `${article.quantity} ${article.name_article}`).join(', ')}</td>
+                  <td></td>
                   <td className="bouttons-commandes">
                     <button className="accepter" onClick={() => handleAccept(index)}>
                       <img src={accept} alt="Accept" className="accepter-img" />

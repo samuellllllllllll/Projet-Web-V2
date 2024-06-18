@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 
 // Enable CORS
 app.use(cors({
-    origin: 'http://localhost:5173'
+    origin: 'http://127.0.0.1:5173'
 }));
 
 // Connect to the database
