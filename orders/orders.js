@@ -37,6 +37,7 @@ app.listen(4545, ()=>{
 const ordersSchema = new mongoose.Schema({
     consumer_id : Number,
     restaurant_id : Number,
+    restaurant_name : String,
     delivery_person_id : Number,
     status : Number,
     validation_code : Number,
