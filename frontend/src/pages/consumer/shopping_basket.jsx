@@ -109,6 +109,7 @@ const ShoppingBasket = () => {
             else {
                 const id_consumer = 1; /// TO BE CHANGED
                 const price = (products === null || products.length === 0 ? 0 : products.reduce((acc, product) => acc + product.price, 0)) + (menus === null || menus.length === 0 ? 0 : menus.reduce((acc, menu) => acc + menu.price, 0));
+                const restaurant_name = (menus === null || menus.length === 0 ? products[0].restaurant_name : menus[0].name_restaurant);
                 
                 // Modify the menus to match the format of the server
                 // If menu not null
@@ -151,7 +152,8 @@ const ShoppingBasket = () => {
                     const response = axios.post('http://localhost:4545/orders', {
                         params: {
                             id_consumer: id_consumer,
-                            id_restaurant: (menus === null || menus.length === 0 ? products[0].id_restaurant : menus[0].id_restaurant),                                                                                               
+                            id_restaurant: (menus === null || menus.length === 0 ? products[0].id_restaurant : menus[0].id_restaurant),
+                            restaurant_name: restaurant_name,                                                                                            
                             id_delivery_person: null,
                             price: price,
                             menus: (menus === null ? [] : newMenus),

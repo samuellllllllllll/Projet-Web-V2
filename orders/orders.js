@@ -72,6 +72,7 @@ app.post("/orders", (req, res)=>{
     var newOrder = {
         consumer_id: req.body.params.id_consumer,
         restaurant_id: req.body.params.id_restaurant,
+        restaurant_name: req.body.params.restaurant_name,
         delivery_person_id: req.body.params.id_delivery_person,
         status: 0,
         validation_code: Math.floor(1000 + Math.random() * 9000),
