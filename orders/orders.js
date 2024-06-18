@@ -35,6 +35,7 @@ app.listen(4545, ()=>{
 
 // Liste de produits dans mongo
 const ordersSchema = new mongoose.Schema({
+    order_number : Number,
     consumer_id : Number,
     restaurant_id : Number,
     restaurant_name : String,
@@ -42,6 +43,7 @@ const ordersSchema = new mongoose.Schema({
     status : Number,
     validation_code : Number,
     price : Number,
+    date_and_time : Date,
     menus : [{
         id_menu : Number,
         name_menu : String,
@@ -70,7 +72,12 @@ app.get("/", (req, res)=> {
 
 app.post("/orders", (req, res)=>{
 
+    // Get the current date and time
+    var current_datetime = new Date();
+    var formatted_date = current_datetime.getUTCFullYear() + "-" + (current_datetime.getUTCMonth() + 1) + "-" + current_datetime.getUTCDate() + " " + (current_datetime.getUTCHours() + 2) + ":" + current_datetime.getUTCMinutes() + ":" + current_datetime.getUTCSeconds();
+
     var newOrder = {
+        order_number: Math.floor(1000 + Math.random() * 9000),
         consumer_id: req.body.params.id_consumer,
         restaurant_id: req.body.params.id_restaurant,
         restaurant_name: req.body.params.restaurant_name,
@@ -78,6 +85,7 @@ app.post("/orders", (req, res)=>{
         status: 0,
         validation_code: Math.floor(1000 + Math.random() * 9000),
         price: req.body.params.price,
+        date_and_time: formatted_date,
         menus: req.body.params.menus,
         articles: req.body.params.articles
     }
@@ -99,8 +107,8 @@ app.get("/orders", (req, res)=>{
     });
 })
 
-app.get("/orders/consumers/:user_id", (req,res)=>{
-    Orders.find({user_id : req.params.user_id}).then((orders)=>{
+app.get("/orders/:id", (req,res)=>{
+    Orders.find({consumer_id : req.query.consumer_id}).then((orders)=>{
         if (orders){
             res.json(orders);
         }else{
