@@ -1,20 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 import '../../styles/deliveryman/deliverymanOrder.css';
-import logo from '../../assets/logo.png';
-import menuIcon from '../../assets/menu.png';
 import MenuDeliveryman from '../../components/menuDeliveryman';
 import locationIcon from '../../assets/localisateur.png';
 import MobileHeader from '../../components/MobileHeader';
 
 const DeliverymanOrder = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [orderDetails, setOrderDetails] = useState(null);
+    const [restaurantDetails, setRestaurantDetails] = useState(null);
 
-    const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen);
-    };
-
+    const location = useLocation();
+    const params = new URLSearchParams(location.search);
+    const orderId = params.get('orderId');
     const deliverOrder = () => {
         window.location.href = "/deliverymanOrder2";
+    }
+
+    useEffect(() => {
+        const fetchOrderDetails = async () => {
+            try {
+                const orderResponse = await axios.get(`http://localhost:4545/orders/${orderId}`);
+                setOrderDetails(orderResponse.data);
+
+                const restaurantResponse = await axios.get(`http://localhost:4546/restaurants/address`, {
+                    params: {
+                        restaurant_id: orderResponse.data.restaurant_id
+                    }
+                });
+                setRestaurantDetails(restaurantResponse.data);
+            } catch (error) {
+                console.error('Error fetching order or restaurant details:', error);
+            }
+        };
+
+        if (orderId) {
+            fetchOrderDetails();
+        }
+    }, []);
+
+    if (!orderDetails || !restaurantDetails) {
+        return <div>Loading...</div>;
     }
 
     return (
@@ -28,18 +55,18 @@ const DeliverymanOrder = () => {
                 </div>
                 <div className="order-location">
                     <img src={locationIcon} alt="Location Icon" className="locationIcon" />
-                    <p>2 Pl. Ravezies, 33300 Bordeaux</p>
+                    <p>{restaurantDetails.address}</p>
                 </div>
                 <div className="order-id">
                     <h2>ID commande</h2>
-                    <p className="id-number">6245</p>
+                    <p className="id-number">{orderDetails.order_number}</p>
                 </div>
                 <div className="confirm-section">
                     <h3>Avez-vous récupéré la commande ?</h3>
                     <button className="confirm-button" onClick={deliverOrder}>Confirmer</button>
                 </div>
             </main>
-            <MenuDeliveryman isOpen={isMenuOpen} onClose={toggleMenu} activeMenu="deliver" />
+            <MenuDeliveryman isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} activeMenu="deliver" />
         </div>
     );
 }

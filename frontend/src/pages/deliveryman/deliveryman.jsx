@@ -17,8 +17,7 @@ const Deliveryman = () => {
           params: {
             status: 1
           }
-        }
-        );
+        });
         setOrders(response.data);
       } catch (error) {
         console.error('Error fetching orders:', error);
@@ -42,7 +41,7 @@ const Deliveryman = () => {
 
   const deliverOrder = () => {
     if (selectedOrder) {
-      window.location.href = "/deliverymanOrder";
+      window.location.href = `/deliverymanOrder?orderId=${selectedOrder._id}`;
     }
   };
 
@@ -63,12 +62,12 @@ const Deliveryman = () => {
             <Order
               key={order._id}
               order={{
-                id: order._id,
+                id: order.order_number,
                 distance: '0 m',
                 restaurant: order.restaurant_name,
                 montant: `${order.price} €`
               }}
-              isSelected={selectedOrder && selectedOrder._id === order._id}
+              isSelected={selectedOrder && selectedOrder._id === order.order_number}
               onClick={() => handleOrderClick(order)}
             />
           ))}

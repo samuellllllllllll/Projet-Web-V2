@@ -99,6 +99,16 @@ app.get("/orders", (req, res) => {
     });
 })
 
+app.get("/orders/:order_number", (req, res) => {
+    Orders.findById(req.params.order_number).then((orders) => {
+        if (orders) {
+            res.json(orders);
+        } else {
+            res.sendStatus(404);
+        }
+    });
+});
+
 
 app.get("/orders/consumers/:user_id", (req, res) => {
     Orders.find({ user_id: req.params.user_id }).then((orders) => {
