@@ -58,13 +58,11 @@ const OrderTracking = () => {
                                         <div className="order-tracking-container-content-item-top-case" id="refused"></div>
                                         <div className="order-tracking-container-content-item-top-case" id="refused"></div>
                                         <div className="order-tracking-container-content-item-top-case" id="refused"></div>
-                                        <div className="order-tracking-container-content-item-top-case" id="refused"></div>
                                     </div>
                                 )}
                                 {/* If status=0 <=> basket validated */}
                                 {order.status === 0 && (
                                     <div className="order-tracking-container-content-item-top-cases">
-                                        <div className="order-tracking-container-content-item-top-case" id="done"></div>
                                         <div className="order-tracking-container-content-item-top-case" id="in-progress"></div>
                                         <div className="order-tracking-container-content-item-top-case" id="to-do"></div>
                                         <div className="order-tracking-container-content-item-top-case" id="to-do"></div>
@@ -73,7 +71,6 @@ const OrderTracking = () => {
                                 {/* If status=1 <=> order validated by restaurant */}
                                 {order.status === 1 && (
                                     <div className="order-tracking-container-content-item-top-cases">
-                                        <div className="order-tracking-container-content-item-top-case" id="done"></div>
                                         <div className="order-tracking-container-content-item-top-case" id="done"></div>
                                         <div className="order-tracking-container-content-item-top-case" id="in-progress"></div>
                                         <div className="order-tracking-container-content-item-top-case" id="to-do"></div>
@@ -84,14 +81,12 @@ const OrderTracking = () => {
                                     <div className="order-tracking-container-content-item-top-cases">
                                         <div className="order-tracking-container-content-item-top-case" id="done"></div>
                                         <div className="order-tracking-container-content-item-top-case" id="done"></div>
-                                        <div className="order-tracking-container-content-item-top-case" id="done"></div>
                                         <div className="order-tracking-container-content-item-top-case" id="in-progress"></div>
                                     </div>
                                 )}
                                 {/* If status=3 <=> order delivered */}
                                 {order.status === 3 && (
                                     <div className="order-tracking-container-content-item-top-cases">
-                                        <div className="order-tracking-container-content-item-top-case" id="done"></div>
                                         <div className="order-tracking-container-content-item-top-case" id="done"></div>
                                         <div className="order-tracking-container-content-item-top-case" id="done"></div>
                                         <div className="order-tracking-container-content-item-top-case" id="done"></div>
