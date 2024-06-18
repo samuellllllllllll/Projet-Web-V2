@@ -2,6 +2,7 @@ import React from "react";
 import "../../styles/consumer/shopping_basket.css";
 import Footer from '../../components/Footer.jsx';
 import Header from '../../components/Header.jsx';
+import axios from "axios";
 
 const ShoppingBasket = () => {
 
@@ -62,18 +63,114 @@ const ShoppingBasket = () => {
     }
 
     const sendOrder = () => {
-        const order = JSON.parse(localStorage.getItem('products'));
-        if (order === null || order.length === 0) {
-            // If the order is empty we display a message for 3 seconds
+        const menus = JSON.parse(localStorage.getItem('menus'));
+        const products = JSON.parse(localStorage.getItem('products'));
+        
+        // If the order is empty we display a message for 3 seconds
+        if ((menus === null || menus.length === 0) && (products === null || products.length === 0)) {
             document.querySelector('.shopping-basket-checkout-alert').textContent = 'Votre panier est vide';
             setTimeout(() => {
                 document.querySelector('.shopping-basket-checkout-alert').textContent = '';
             }, 3000);
         }
         else {
-            document.querySelector('.shopping-basket-checkout-alert').textContent = 'Commande envoyée';
-            localStorage.removeItem('products');
-            window.location.reload();
+            // We check if all the menus and products are from the same restaurant
+            // If not we display a message for 3 seconds
+            let restaurant = null;
+            if (menus !== null && menus.length !== 0) {
+                restaurant = menus[0].name_restaurant;
+            }
+            else if (products !== null && products.length !== 0) {
+                restaurant = products[0].restaurant_name;
+            }
+            let sameRestaurant = true;
+            if (menus !== null) {
+                for (let i = 0; i < menus.length; i++) {
+                    if (menus[i].name_restaurant !== restaurant) {
+                        sameRestaurant = false;
+                        break;
+                    }
+                }
+            }
+            if (products !== null) {
+                for (let i = 0; i < products.length; i++) {
+                    if (products[i].restaurant_name !== restaurant) {
+                        sameRestaurant = false;
+                        break;
+                    }
+                }
+            }
+            if (!sameRestaurant) {
+                document.querySelector('.shopping-basket-checkout-alert').textContent = 'Les produits ne sont pas du même restaurant';
+                setTimeout(() => {
+                    document.querySelector('.shopping-basket-checkout-alert').textContent = '';
+                }, 3000);
+            }
+            else {
+                const id_consumer = 1; /// TO BE CHANGED
+                const price = (products === null || products.length === 0 ? 0 : products.reduce((acc, product) => acc + product.price, 0)) + (menus === null || menus.length === 0 ? 0 : menus.reduce((acc, menu) => acc + menu.price, 0));
+                
+                // Modify the menus to match the format of the server
+                // If menu not null
+                if (menus !== null) {
+                    var newMenus = menus.map(menu => {
+                        return {
+                            id_menu: menu.menu_id,
+                            name_menu: menu.name,
+                            id_starter: menu.id_starter,
+                            name_starter: menu.name_starter,
+                            id_main_dish: menu.id_main_dish,
+                            name_main_dish: menu.name_main_dish,
+                            id_dessert: menu.id_dessert,
+                            name_dessert: menu.name_dessert,
+                            id_drink: menu.id_drink,
+                            name_drink: menu.name_drink,
+                            quantity: 1,
+                        }
+                    });
+                }
+
+                // Modify the products to match the format of the server
+                if (products !== null) {
+                    var newProducts = products.map(product => {
+                        return {
+                            id_article: product.id,
+                            name_article: product.name,
+                            quantity: 1,
+                        }
+                    });
+                }
+
+                // Wait for 30 seconds
+                setTimeout(() => {
+                    document.querySelector('.shopping-basket-checkout-alert').textContent = 'Commande en cours';
+                }, 30000);
+
+                // Send the order to the server
+                try {
+                    const response = axios.post('http://localhost:4545/orders', {
+                        params: {
+                            id_consumer: id_consumer,
+                            id_restaurant: (menus === null || menus.length === 0 ? products[0].id_restaurant : menus[0].id_restaurant),                                                                                               
+                            id_delivery_person: null,
+                            price: price,
+                            menus: (menus === null ? [] : newMenus),
+                            articles: (products === null ? [] : newProducts),
+                        },
+                    });
+                    console.log('Order sent:', response);
+                } catch (error) {
+                    console.error('Error sending order:', error);
+                }
+
+                // Display a message for 3 seconds
+                setTimeout(() => {
+                    document.querySelector('.shopping-basket-checkout-alert').textContent = 'Commande envoyée';
+                }, 3000);
+                localStorage.removeItem('products');
+                localStorage.removeItem('menus');
+                //window.location.reload();
+            }
         }
     }
 
@@ -173,14 +270,15 @@ const ShoppingBasket = () => {
                         <div className="shopping-basket-details-price-title">Total</div>
                         <div className="shopping-basket-details-price-value">
                             {/* If products and menus are empty we display 0 */}
-                            {(products === null || products.length === 0) && (menus === null || menus.length === 0) ? 0 : 
-                                // Otherwise we display the total price of the order
-                                (products === null ? 0 : products.reduce((acc, product) => acc + product.price, 0)) + 
-                                (menus === null ? 0 : menus.reduce((acc, menu) => acc + menu.price, 0)
-                            )} €
+                            {// Otherwise we display the total price of the order
+                            (products === null || products.length === 0) && (menus === null || menus.length === 0) ? 0 : 
+                                (products === null || products.length === 0 ? 0 : products.reduce((acc, product) => acc + product.price, 0)) + 
+                                (menus === null || menus.length === 0 ? 0 : menus.reduce((acc, menu) => acc + menu.price, 0))
+                            } €
                         </div>
                         <div className="shopping-basket-checkout">
-                            <button className="shopping-basket-checkout-button" onClick={ () => sendOrder() }>Commander</button>
+                            <button className="shopping-basket-checkout-button" 
+                                onClick={ () => sendOrder() }>Commander</button>
                             <div className="shopping-basket-checkout-alert"></div>
                         </div>
                     </div>
