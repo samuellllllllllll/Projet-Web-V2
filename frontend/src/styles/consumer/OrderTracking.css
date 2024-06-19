@@ -64,6 +64,11 @@
                         background-color: var(--primary-color);
                     }
 
+                    #done-done{
+                        background-color: var(--second-color);
+                        border: 1.5px solid var(--second-color);
+                    }
+
                     #in-progress{
                         border: none;
                         animation-name: pending-animation;
@@ -72,16 +77,20 @@
                     }
                 }
 
-                .order-tracking-container-content-item-top-states{
+                .order-tracking-container-content-item-top-state{
+                    color: var(--primary-color);
+                    font-weight: 600;
+                    font-size: 1.2rem;
+                    margin: 0.5rem 0;
                     width: 100%;
+                }
 
-                    .order-tracking-container-content-item-top-state{
-                        color: var(--primary-color);
-                        font-weight: 600;
-                        font-size: 1.2rem;
-                        margin: 0.5rem 0;
-                        width: 100%;
-                    }
+                #alert-refused{
+                    color: rgb(130, 130, 130);
+                }
+
+                #alert-done{
+                    color: var(--second-color);
                 }
             }
 

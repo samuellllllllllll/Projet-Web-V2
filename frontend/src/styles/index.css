@@ -20,6 +20,10 @@ a {
   text-decoration: none;
 }
 
+p{
+  color: var(--second-color)
+}
+
 body {
   margin: 0;
   display: flex;
