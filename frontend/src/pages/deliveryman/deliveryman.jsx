@@ -36,11 +36,7 @@ const Deliveryman = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get('http://localhost:4545/orders/status/:status', {
-          params: {
-            status: 1
-          }
-        });
+        const response = await axios.get('http://localhost:4545/orders/status/1');
         setOrders(response.data);
       } catch (error) {
         console.error('Error fetching orders:', error);
