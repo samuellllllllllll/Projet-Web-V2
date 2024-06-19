@@ -3,6 +3,7 @@ const { Client } = require('pg');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const bcrypt = require('bcrypt');
 const { generateAccessJWT, generateRefreshToken } = require('../tokenUltils/token.js');
 
 dotenv.config();
@@ -33,6 +34,12 @@ database_postgres.connect()
 
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
+  const passwordvincent = bcrypt.hash("vincent2024", 10);
+  const passwordsamuel = bcrypt.hash("samuel2024", 10);
+  const passwordaladin = bcrypt.hash("aladdin2024", 10);
+  console.log(passwordvincent);
+  console.log(passwordsamuel);
+  console.log(passwordaladin);
   if (!email || !password) {
     return res.status(400).json({ message: 'Email & password are required' });
   }
@@ -41,7 +48,7 @@ app.post('/login', async (req, res) => {
     const query_sql = 'SELECT * FROM users WHERE email = $1';
     const values_sql = [email];
 
-    database_postgres.query(query_sql, values_sql, (err, result) => {
+    database_postgres.query(query_sql, values_sql, async (err, result) => {
       if (err) {
         console.error('Error executing query', err);
         return res.status(500).json({ message: 'Error executing query' });
@@ -53,7 +60,8 @@ app.post('/login', async (req, res) => {
 
       const user = result.rows[0];
 
-      if (password !== user.password) {
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
         return res.status(401).json({ message: 'Invalid password' });
       }
 
@@ -69,7 +77,7 @@ app.post('/login', async (req, res) => {
     });
   } catch (error) {
     console.error('Error executing query', error);
-    return res.status(500).json({ message: 'Server error fermetagueule' });
+    return res.status(500).json({ message: 'Server error' });
   }
 });
 
