@@ -16,6 +16,9 @@ const MenuEdit = () => {
         { id: 4, images: tacos, name: "Tacos", price: "8€", category: "Plats" },
     ]);
 
+    const [showModal, setShowModal] = useState(false);
+    const [newFood, setNewFood] = useState({ images: '', name: '', price: '', category: '' });
+
     const toggleEditMode = () => {
         setIsEditing(!isEditing);
     };
@@ -38,6 +41,22 @@ const MenuEdit = () => {
         ));
     };
 
+    const handleAddFood = (category) => {
+        setNewFood({ ...newFood, category });
+        setShowModal(true);
+    };
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setNewFood({ ...newFood, [name]: value });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setFoods([...foods, { ...newFood, id: foods.length + 1 }]);
+        setShowModal(false);
+    };
+
     return (
         <div className="menu-page">
             <MobileHeader2 />
@@ -45,14 +64,43 @@ const MenuEdit = () => {
                 <h1 className="menu-title">Menu</h1>
                 <button className="edit-button" onClick={toggleEditMode}>Modifier</button>
             </nav>
-            <h2 className="section-title">Boissons</h2>
+            <div className="section-header">
+                <h2 className="section-title">Boissons</h2>
+                {isEditing && <button className="add-button" onClick={() => handleAddFood("Boissons")}>+</button>}
+            </div>
             <section className="card-row">
                 {renderFoodCards("Boissons")}
             </section>
-            <h2 className="section-title">Plats</h2>
+            <div className="section-header">
+                <h2 className="section-title">Plats</h2>
+                {isEditing && <button className="add-button" onClick={() => handleAddFood("Plats")}>+</button>}
+            </div>
             <section className="card-row">
                 {renderFoodCards("Plats")}
             </section>
+            {showModal && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <h2>Ajouter un nouveau plat</h2>
+                        <form onSubmit={handleSubmit}>
+                            <label>
+                                Nom :
+                                <input type="text" name="name" value={newFood.name} onChange={handleInputChange} />
+                            </label>
+                            <label>
+                                Prix :
+                                <input type="text" name="price" value={newFood.price} onChange={handleInputChange} />
+                            </label>
+                            <label>
+                                Image URL :
+                                <input type="text" name="images" value={newFood.images} onChange={handleInputChange} />
+                            </label>
+                            <button type="submit">Ajouter</button>
+                            <button type="button" onClick={() => setShowModal(false)}>Annuler</button>
+                        </form>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

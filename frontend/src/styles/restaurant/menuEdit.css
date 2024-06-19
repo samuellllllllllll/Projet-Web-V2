@@ -52,6 +52,12 @@ margin-left: 50px;
 color: #FF7B00;
 }
 
+.section-header{
+  display: flex;
+  flex-direction: row;
+  margin-right: 200px;
+}
+
 .card-row{
   display: flex;
   flex-direction: row;
@@ -64,6 +70,73 @@ color: #FF7B00;
 
 .card-left{
 margin-left: 150px;
+}
+
+.add-button {
+    background-color: #FF7B00;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 1.2em;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-content label {
+    margin-bottom: 10px;
+}
+
+.modal-content input {
+    padding: 5px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.modal-content button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #FF7B00;
+    color: white;
+    margin-top: 10px;
+}
+
+.modal-content button[type="button"] {
+    background-color: #ccc;
 }
 
 @media screen and (max-width: 768px) {
