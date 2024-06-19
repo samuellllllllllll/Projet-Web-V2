@@ -25,10 +25,7 @@ const database_postgres = new Client({
 
 database_postgres.connect()
   .then(() => {
-    console.log('Connected to PostgreSQL databaseaezrngvkqehrognqeingr');
-    console.log(process.env.TOKEN_SECRET);
-    console.log(process.env.TOKEN_SECRET);
-    console.log(process.env.POSTGRE_DB_DATABASE);
+    console.log('Connected to PostgreSQL database');
   })
   .catch(err => {
     console.error('Connection error', err.stack);
@@ -36,15 +33,12 @@ database_postgres.connect()
 
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
-  console.log(req.body);
   if (!email || !password) {
     return res.status(400).json({ message: 'Email & password are required' });
   }
 
   try {
-    console.log("test query");
     const query_sql = 'SELECT * FROM users WHERE email = $1';
-    console.log("sa a marshé ???");
     const values_sql = [email];
 
     database_postgres.query(query_sql, values_sql, (err, result) => {
@@ -64,7 +58,6 @@ app.post('/login', async (req, res) => {
       }
 
       try {
-        console.log("faire JWT");
         const accessToken = generateAccessJWT(user.email, user.role);
         const refreshToken = generateRefreshToken(user.email);
 

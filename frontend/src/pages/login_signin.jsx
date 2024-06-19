@@ -29,7 +29,6 @@ const LoginSignIn = () => {
     try {
       const success = await login(data.email, data.password);
       if (success) {
-        console.log("logged in");
                 if (data.email === "vincent@vincent.fr") {
           navigate('/consommateur');
         } else if (data.email === "samuel@samuel.fr") {

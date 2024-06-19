@@ -7,7 +7,6 @@ dotenv.config();
 let refreshTokens = [];
 
 function generateAccessJWT(email, role) {
-    console.log(process.env.TOKEN_SECRET);
   return jwt.sign(
     { email, role },
     process.env.TOKEN_SECRET,
