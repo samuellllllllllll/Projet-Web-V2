@@ -130,7 +130,7 @@ app.get("/orders/consumers/:user_id", (req, res) => {
 
 //Route only used by delivery person and restaurant
 app.get("/orders/status/:status", (req, res) => {
-    Orders.find({ status: req.query.status }).then((orders) => {
+    Orders.find({ status: req.params.status }).then((orders) => {
         if (orders) {
             res.json(orders);
         }
