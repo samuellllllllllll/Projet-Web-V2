@@ -41,17 +41,33 @@ const Restaurant = () => {
     setIsOpen(prevIsOpen => !prevIsOpen);
   };
 
-  const handleAccept = (index) => {
+  const handleAccept = (index, order_id) => {
     const acceptedCommande = testOrders[index];
     setOrders(testOrders.filter((_, i) => i !== index));
     setCommandesAFaire([...commandesAFaire, acceptedCommande]);
     const putOrders = async () => {
-      //TO DO
-    }
+      try{
+        await axios.put(`http://localhost:4545/orders/status/${order_id}/1`);
+      }
+      catch(error){
+        console.log("Error fetching error", error);
+      }
+    };
+    putOrders();
   };
+  
 
-  const handleDeny = (index) => {
+  const handleDeny = (index, order_id) => {
     setOrders(testOrders.filter((_, i) => i !== index));
+    const denyOrders = async ()=>{
+      try{
+        await axios.put(`http://localhost:4545/orders/status/${order_id}/-1`);
+      }
+      catch (error){
+        console.log("Error fetching error", error);
+      }
+    };
+    denyOrders();
   };
 
   return (
@@ -98,12 +114,12 @@ const Restaurant = () => {
                 <tr key={index}>
                   <td>{commande.menus.map(menu=> `${menu.quantity} ${menu.name_starter} ${menu.name_main_dish} ${menu.name_drink} ${menu.name_dessert}`).join(', ')}</td>
                   <td>{commande.articles.map(article => `${article.quantity} ${article.name_article}`).join(', ')}</td>
-                  <td></td>
+                  <td>{commande._id}</td>
                   <td className="bouttons-commandes">
-                    <button className="accepter" onClick={() => handleAccept(index)}>
+                    <button className="accepter" onClick={() => handleAccept(index, commande._id)}>
                       <img src={accept} alt="Accept" className="accepter-img" />
                     </button>
-                    <button className="refuser" onClick={() => handleDeny(index)}>
+                    <button className="refuser" onClick={() => handleDeny(index, commande._id)}>
                       <img src={deny} alt="Deny" className="refuser-img" />
                     </button>
                   </td>
