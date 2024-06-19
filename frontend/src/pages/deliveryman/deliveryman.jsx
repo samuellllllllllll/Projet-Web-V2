@@ -11,6 +11,18 @@ const Deliveryman = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedOrderId, setSelectedOrderId] = useState(null);
 
+  const checkOrderStatus = async () => {
+    try {
+      const response = await axios.get(`http://localhost:4545/orders/status2/${selectedOrder._id}`);
+      const currentStatus = response.data;
+      console.log(response.data)
+      return currentStatus;
+    } catch (error) {
+      console.error('Error checking order status:', error);
+      return false;
+    }
+  };
+
   const putOrders = async () => {
     try {
       await axios.put(`http://localhost:4545/orders/status/${selectedOrder._id}/2`);
@@ -43,8 +55,8 @@ const Deliveryman = () => {
   }, []);
 
   const handleOrderClick = (order) => {
-    setSelectedOrderId(order.order_number); // Met à jour l'ID de la commande sélectionnée
-    setSelectedOrder(order); // Met à jour l'objet de commande sélectionné
+    setSelectedOrderId(order.order_number);
+    setSelectedOrder(order);
   };
 
 
@@ -52,11 +64,18 @@ const Deliveryman = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const deliverOrder = () => {
+  const deliverOrder = async () => {
     if (selectedOrder) {
-      console.log(selectedOrder.status);
-      putOrders();
-      console.log(selectedOrder.status);
+      try {
+        const currentStatus = await checkOrderStatus();
+        if (currentStatus.status === 1) {
+          await putOrders();
+        } else {
+          alert("La commande n'est plus disponible");
+        }
+      } catch (error) {
+        console.error('Error delivering order:', error);
+      }
     }
   };
 
