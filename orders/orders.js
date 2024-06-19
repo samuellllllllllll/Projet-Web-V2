@@ -139,6 +139,22 @@ app.put("/orders/status/:id/:new_status", (req,res)=>{
 
 })
 
+//Route used by restaurant & delivery person
+app.get("/orders/status2/:id", (req, res) => {
+    console.log("hello");
+    console.log(req.params.id);
+    Orders.findById(req.params.id).then((orders) => {
+        if (orders) {
+            res.json(orders);
+            console.log("item received")
+        }
+        else {
+            res.sendStatus(404);
+        }
+    })
+})
+
+
 app.get("/orders/restaurants/status/:restaurant_id/:status", (req,res)=>{
     Orders.find({
         restaurant_id: req.params.restaurant_id, 
