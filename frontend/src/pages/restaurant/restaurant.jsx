@@ -14,6 +14,19 @@ const Restaurant = () => {
   const [testOrders, setOrders] = useState([]);
   const [commandesAFaire, setCommandesAFaire] = useState([]);
 
+  const convertDate = (timestamp) => {
+    const date = new Date(timestamp);
+    const year = date.getUTCFullYear();
+    const month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
+    const day = date.getUTCDate().toString().padStart(2, '0');
+    const hours = (date.getUTCHours() + 2).toString().padStart(2, '0');
+    const minutes = date.getUTCMinutes().toString().padStart(2, '0');
+    const seconds = date.getUTCSeconds().toString().padStart(2, '0');
+
+    const formattedDate = `${hours}:${minutes}`;
+    return formattedDate;
+}
+
 
   const fetchOrders = async () => {
     try {
@@ -119,8 +132,10 @@ const Restaurant = () => {
         <table className="table">
           <thead>
             <tr>
-              <th>Détail</th>
-              <th>Heure récupération</th>
+              <th>Menus</th>
+              <th>Articles</th>
+              <th>ID</th>
+              <th>Heure de récupération</th>
               <th></th>
             </tr>
           </thead>
@@ -131,6 +146,7 @@ const Restaurant = () => {
                   <td>{commande.menus.map(menu=> `${menu.quantity} ${menu.name_starter} ${menu.name_main_dish} ${menu.name_drink} ${menu.name_dessert}`).join(', ')}</td>
                   <td>{commande.articles.map(article => `${article.quantity} ${article.name_article}`).join(', ')}</td>
                   <td>{commande.order_number}</td>
+                  <td>{convertDate(commande.date_and_time)}</td>
                   <td className="bouttons-commandes">
                     <button className="accepter" onClick={() => handleAccept(index, commande._id)}>
                       <img src={accept} alt="Accept" className="accepter-img" />
@@ -152,9 +168,10 @@ const Restaurant = () => {
         <table className="table">
           <thead>
             <tr>
-              <th>Détail</th>
-              <th>Heure récupération</th>
+              <th>Menus</th>
+              <th>Articles</th>
               <th>ID</th>
+              <th>Heure de récupération</th>
             </tr>
           </thead>
           <tbody>
@@ -164,6 +181,7 @@ const Restaurant = () => {
                   <td>{commande.menus.map(menu=> `${menu.quantity} ${menu.name_starter} ${menu.name_main_dish} ${menu.name_drink} ${menu.name_dessert}`).join(', ')}</td>
                   <td>{commande.articles.map(article => `${article.quantity} ${article.name_article}`).join(', ')}</td>
                   <td>{commande.order_number}</td>
+                  <td>{convertDate(commande.date_and_time)}</td>
                 </tr>
               ))
             ) : (
