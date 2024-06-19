@@ -18,18 +18,18 @@ app.use(cors({
 // Connect to the database
 const uri = process.env.MONGO_DB_URI;
 mongoose.connect(uri)
-.then(() => {
-    console.log("Connected to MongoDB");
-})
-.catch((err) => {
-    console.log("Error", err);
-});
+    .then(() => {
+        console.log("Connected to MongoDB");
+    })
+    .catch((err) => {
+        console.log("Error", err);
+    });
 
-app.get("/", (req,res)=>{
+app.get("/", (req, res) => {
     res.send("Orders default route")
 })
 
-app.listen(4545, ()=>{
+app.listen(4545, () => {
     console.log("Up and running orders");
 })
 
@@ -57,20 +57,20 @@ const ordersSchema = new mongoose.Schema({
         name_drink : String,
         quantity : Number
     }],
-    articles : [{
-        id_article : Number,
-        name_article : String,
-        quantity : Number
+    articles: [{
+        id_article: Number,
+        name_article: String,
+        quantity: Number
     }]
 });
 
 const Orders = mongoose.model('Orders', ordersSchema);
 
-app.get("/", (req, res)=> {
+app.get("/", (req, res) => {
     res.send("Orders default route.")
 })
 
-app.post("/orders", (req, res)=>{
+app.post("/orders", (req, res) => {
 
     // Get the current date and time
     var current_datetime = new Date();
@@ -91,58 +91,101 @@ app.post("/orders", (req, res)=>{
     }
 
     const order = new Orders(newOrder);
-    order.save().then(()=>{
+    order.save().then(() => {
         console.log("Succeful order !");
         res.send("Successful order");
-    }).catch((err)=>{
-        if (err){
+    }).catch((err) => {
+        if (err) {
             throw err;
         }
     });
 })
 
-app.get("/orders", (req, res)=>{
-    Orders.find().then((orders)=>{
+app.get("/orders", (req, res) => {
+    Orders.find().then((orders) => {
         res.json(orders)
     });
 })
 
-app.get("/orders/:id", (req,res)=>{
-    Orders.find({consumer_id : req.query.consumer_id}).then((orders)=>{
-        if (orders){
+app.get("/orders/:order_number", (req, res) => {
+    Orders.findById(req.params.order_number).then((orders) => {
+        if (orders) {
             res.json(orders);
-        }else{
+        } else {
+            res.sendStatus(404);
+        }
+    });
+});
+
+
+app.get("/orders/consumers/:user_id", (req, res) => {
+    Orders.find({ user_id: req.params.user_id }).then((orders) => {
+        if (orders) {
+            res.json(orders);
+        } else {
             res.sendStatus(404);
         }
     });
 })
 
 //Route only used by delivery person and restaurant
-app.get("/orders/status/:status", (req,res)=>{
-    Orders.find({status : req.params.status}).then((orders)=>{
-        if (orders){
+app.get("/orders/status/:status", (req, res) => {
+    Orders.find({ status: req.query.status }).then((orders) => {
+        if (orders) {
             res.json(orders);
         }
-        else{
+        else {
             res.sendStatus(404);
         }
     })
 })
 
 //Route used by restaurant & delivery person
-app.put("/orders/status/:id/:new_status", (req,res)=>{
+app.put("/orders/status/:id/:new_status", (req, res) => {
     //TO DO
     const new_status = req.params.new_status;
     const order_id = req.params.id;
     Orders.findByIdAndUpdate(order_id,
-        {$set : {status :new_status}}
-    ).then(updateOrder=>{
-        if(!updateOrder){
+        { $set: { status: new_status } }
+    ).then(updateOrder => {
+        if (!updateOrder) {
             res.status(400).send("Order not found.");
         }
-        else{
+        else {
             res.status(200).send("Order status updated")
         }
     });
 
+})
+
+//Route used by restaurant & delivery person
+app.get("/orders/status2/:id", (req, res) => {
+    console.log("hello");
+    console.log(req.params.id);
+    Orders.findById(req.params.id).then((orders) => {
+        if (orders) {
+            res.json(orders);
+            console.log("item received")
+        }
+        else {
+            res.sendStatus(404);
+        }
+    })
+})
+
+app.get("/orders/restaurants/status/:restaurant_id/:status", (req, res) => {
+    Orders.find({
+        restaurant_id: req.params.restaurant_id,
+        status: req.params.status
+    }).then((orders) => {
+        if (orders) {
+            res.json(orders);
+        } else {
+            console.log("No orders found");
+            res.status(404).send("No orders found");
+        }
+    }).catch(err => {
+        console.error('Error retrieving orders:', err);
+        res.status(500).send("Server error");
+    });
 })
