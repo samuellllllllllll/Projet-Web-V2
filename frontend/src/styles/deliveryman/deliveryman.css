@@ -20,6 +20,11 @@
   background-color: #fff;
 }
 
+.order-row.selected {
+  background-color: #ffcc99; /* Couleur de fond pour les lignes sélectionnées */
+  border: 1px solid #ff7b00; /* Bordure pour les lignes sélectionnées */
+}
+
 .logo {
   width: 10%;
 }

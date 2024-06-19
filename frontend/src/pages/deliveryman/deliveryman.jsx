@@ -9,6 +9,7 @@ const Deliveryman = () => {
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [selectedOrderId, setSelectedOrderId] = useState(null);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -32,8 +33,10 @@ const Deliveryman = () => {
   }, []);
 
   const handleOrderClick = (order) => {
-    setSelectedOrder(order);
+    setSelectedOrderId(order.order_number); // Met à jour l'ID de la commande sélectionnée
+    setSelectedOrder(order); // Met à jour l'objet de commande sélectionné
   };
+
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -67,7 +70,7 @@ const Deliveryman = () => {
                 restaurant: order.restaurant_name,
                 montant: `${order.price} €`
               }}
-              isSelected={selectedOrder && selectedOrder._id === order.order_number}
+              isSelected={selectedOrderId === order.order_number} // Vérifie si cette commande est sélectionnée
               onClick={() => handleOrderClick(order)}
             />
           ))}
