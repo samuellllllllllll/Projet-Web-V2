@@ -138,3 +138,20 @@ app.put("/orders/status/:id/:new_status", (req,res)=>{
     });
 
 })
+
+app.get("/orders/restaurants/status/:restaurant_id/:status", (req,res)=>{
+    Orders.find({
+        restaurant_id: req.params.restaurant_id, 
+        status: req.params.status
+      }).then((orders) => {
+        if (orders) {  
+          res.json(orders);
+        } else {
+          console.log("No orders found");  
+          res.status(404).send("No orders found");  
+        }
+      }).catch(err => {
+        console.error('Error retrieving orders:', err);
+        res.status(500).send("Server error");  
+      });
+})

@@ -12,6 +12,7 @@ import axios from 'axios';
 const Restaurant = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [testOrders, setOrders] = useState([]);
+  const [commandesAFaire, setCommandesAFaire] = useState([]);
 
 
   const fetchOrders = async () => {
@@ -24,18 +25,33 @@ const Restaurant = () => {
       console.error('Error fetching orders:', error);
     }
   };
+
+  const fetchOrdersToMake = async () => {
+    try {
+      const response = await axios.get('http://localhost:4545/orders/status/1');
+      setCommandesAFaire(response.data);
+      console.log(response.data);
+    }
+    catch (error){
+      console.log("Error retrieving orders to make", error);
+    }
+  }
   useEffect(() => {
 
-
     fetchOrders();
+    fetchOrdersToMake();
 
     const intervalId = setInterval(fetchOrders, 15000); // Fetch orders every 15 seconds
+    const intervalIdToMake = setInterval(fetchOrdersToMake, 15000);
 
-    return () => clearInterval(intervalId); // Cleanup interval on component unmount
+    return () => {
+      clearInterval(intervalId);
+      clearInterval(intervalIdToMake);
+    }; // Cleanup interval on component unmount
   }, []);
 
 
-  const [commandesAFaire, setCommandesAFaire] = useState([]);
+
 
   const toggleButton = () => {
     setIsOpen(prevIsOpen => !prevIsOpen);
@@ -114,7 +130,7 @@ const Restaurant = () => {
                 <tr key={index}>
                   <td>{commande.menus.map(menu=> `${menu.quantity} ${menu.name_starter} ${menu.name_main_dish} ${menu.name_drink} ${menu.name_dessert}`).join(', ')}</td>
                   <td>{commande.articles.map(article => `${article.quantity} ${article.name_article}`).join(', ')}</td>
-                  <td>{commande._id}</td>
+                  <td>{commande.order_number}</td>
                   <td className="bouttons-commandes">
                     <button className="accepter" onClick={() => handleAccept(index, commande._id)}>
                       <img src={accept} alt="Accept" className="accepter-img" />
