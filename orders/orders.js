@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 
 // Enable CORS
 app.use(cors({
-    origin: 'http://localhost:5173'
+    origin: 'http://127.0.0.1:5173'
 }));
 
 // Connect to the database
@@ -173,19 +173,21 @@ app.get("/orders/status2/:id", (req, res) => {
     })
 })
 
-app.get("/orders/restaurants/status/:restaurant_id/:status", (req, res) => {
+
+app.get("/orders/restaurants/status/:restaurant_id/:status", (req,res)=>{
     Orders.find({
-        restaurant_id: req.params.restaurant_id,
+        restaurant_id: req.params.restaurant_id, 
         status: req.params.status
-    }).then((orders) => {
-        if (orders) {
-            res.json(orders);
+      }).then((orders) => {
+        if (orders) {  
+          res.json(orders);
         } else {
-            console.log("No orders found");
-            res.status(404).send("No orders found");
+          console.log("No orders found");  
+          res.status(404).send("No orders found");  
         }
-    }).catch(err => {
+      }).catch(err => {
         console.error('Error retrieving orders:', err);
-        res.status(500).send("Server error");
-    });
+        res.status(500).send("Server error");  
+      });
 })
+
