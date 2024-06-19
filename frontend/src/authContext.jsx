@@ -30,20 +30,21 @@ export const AuthProvider = ({ children }) => {
 
     const interval = setInterval(() => {
       refreshAccessToken();
-    }, 15 * 60 * 1000); // Refresh the token every 15 minutes
+    }, 15 * 60 * 1000);
 
     return () => clearInterval(interval);
   }, []);
 
-  const login = async (username, password, role) => {
+  const login = async (email, password) => {
     try {
-      const response = await axios.post('/api/token', { username, password, role });
+      console.log('Sending login request:', { email, password });
+      const response = await axios.post('http://localhost:3002/login', { email, password });
+      console.log('Login response:', response.data);
       setAccessToken(response.data.accessToken);
       setRefreshToken(response.data.refreshToken);
-      setRole(response.data.role);
       localStorage.setItem('accessToken', response.data.accessToken);
       localStorage.setItem('refreshToken', response.data.refreshToken);
-      localStorage.setItem('role', response.data.role);
+      setRole(response.data.role);
       return true;
     } catch (error) {
       console.error('Login error:', error);

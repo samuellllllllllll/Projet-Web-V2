@@ -27,13 +27,14 @@ const LoginSignIn = () => {
     formData.forEach((value, key) => data[key] = value);
 
     try {
-      const success = await login(data.username, data.password, data.role);
+      const success = await login(data.email, data.password);
       if (success) {
-        if (data.username === "consommateur@consommateur.fr") {
+        console.log("logged in");
+                if (data.email === "vincent@vincent.fr") {
           navigate('/consommateur');
-        } else if (data.username === "livreur@livreur.fr") {
+        } else if (data.email === "samuel@samuel.fr") {
           navigate('/livreur');
-        } else if (data.username === "restaurant@restaurant.fr") {
+        } else if (data.email === "aladdin@aladdin.fr") {
           navigate('/restaurant');
         } else {
           setMessageLogin('Identifiant ou mot de passe incorrect.');
@@ -128,17 +129,13 @@ const LoginSignIn = () => {
       <div className="log-in-card">
         <form onSubmit={handleSubmitLogin}>
           <div className="label-div">
-            <label htmlFor="username">Identifiant</label>
+            <label htmlFor="email">Identifiant</label>
           </div>
-          <input type="text" name="username" placeholder="Entrez votre identifiant" required />
+          <input type="text" name="email" placeholder="Entrez votre identifiant" required />
           <div className="label-div">
             <label htmlFor="password">Mot de passe</label>
           </div>
           <input type="password" name="password" placeholder="Entrez votre mot de passe" required />
-          <div className="label-div">
-            <label htmlFor="role">Rôle</label>
-          </div>
-          <input type="text" name="role" placeholder="Entrez votre rôle" required />
           <div className="message-box">{messageLogin}</div>
           <button type="submit" id="log_in">S'identifier</button>
         </form>
