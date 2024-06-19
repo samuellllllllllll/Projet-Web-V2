@@ -14,8 +14,19 @@ const DeliverymanOrder = () => {
     const location = useLocation();
     const params = new URLSearchParams(location.search);
     const orderId = params.get('orderId');
-    const deliverOrder = () => {
+
+    const putOrders = async () => {
+        try {
+            await axios.put(`http://localhost:4545/orders/status/${orderId}/3`);
+        }
+        catch (error) {
+            console.log("Error fetching error", error);
+        }
         window.location.href = `/deliverymanOrder2?orderId=${orderId}`;
+    };
+
+    const deliverOrder = () => {
+        putOrders();
     }
 
     const fetchOrderDetails = async () => {

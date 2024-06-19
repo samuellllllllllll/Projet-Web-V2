@@ -12,6 +12,16 @@ const DeliverymanOrder2 = () => {
     const params = new URLSearchParams(location.search);
     const orderId = params.get('orderId');
 
+    const putOrders = async () => {
+        try {
+            await axios.put(`http://localhost:4545/orders/status/${orderId}/4`);
+        }
+        catch (error) {
+            console.log("Error fetching error", error);
+        }
+        window.location.href = "/deliverymanOrder3";
+    };
+
     const fetchOrderDetails = async () => {
         try {
             const orderResponse = await axios.get(`http://localhost:4545/orders/${orderId}`);
@@ -63,7 +73,7 @@ const DeliverymanOrder2 = () => {
                 // Check if the entered code matches the expected code from orderDetails
                 if (enteredCode === orderDetails.validation_code.toString().trim()) {
                     // Navigate to the next page if the codes match
-                    window.location.href = "/deliverymanOrder3";
+                    putOrders();
                 } else {
                     alert("Le code entré ne correspond pas. Veuillez réessayer.");
                 }

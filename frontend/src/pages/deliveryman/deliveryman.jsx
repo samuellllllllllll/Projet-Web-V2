@@ -11,6 +11,16 @@ const Deliveryman = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedOrderId, setSelectedOrderId] = useState(null);
 
+  const putOrders = async () => {
+    try {
+      await axios.put(`http://localhost:4545/orders/status/${selectedOrder._id}/2`);
+    }
+    catch (error) {
+      console.log("Error fetching error", error);
+    }
+    window.location.href = `/deliverymanOrder?orderId=${selectedOrder._id}`;
+  };
+
   useEffect(() => {
     const fetchOrders = async () => {
       try {
@@ -44,7 +54,9 @@ const Deliveryman = () => {
 
   const deliverOrder = () => {
     if (selectedOrder) {
-      window.location.href = `/deliverymanOrder?orderId=${selectedOrder._id}`;
+      console.log(selectedOrder.status);
+      putOrders();
+      console.log(selectedOrder.status);
     }
   };
 
