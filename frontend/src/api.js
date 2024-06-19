@@ -3,9 +3,9 @@ import AuthContext from './authContext.jsx';
 import { useContext } from 'react';
 
 const useAPI = () => {
-  const { accessToken, login, logout } = useContext(AuthContext);
+  const { accessToken, refreshToken, logout } = useContext(AuthContext);
 
-  const API = axios.create({ baseURL: 'http://localhost:3001' });
+  const API = axios.create({ baseURL: '/api' });
 
   API.interceptors.request.use(config => {
     if (accessToken) {
@@ -20,14 +20,16 @@ const useAPI = () => {
     return response;
   }, async error => {
     const originalRequest = error.config;
-    if (error.response.status === 401 && !originalRequest._retry) {
+
+    if (error.response.status === 401 && !originalRequest._retry && refreshToken) {
       originalRequest._retry = true;
       try {
-        const refreshToken = localStorage.getItem('refreshToken');
-        const response = await axios.post('http://localhost:3001/token/auth', { refreshToken });
+        const storedRefreshToken = localStorage.getItem('refreshToken');
+        const response = await axios.post('/api/token/auth', { refreshToken: storedRefreshToken });
         const newAccessToken = response.data.accessToken;
         localStorage.setItem('accessToken', newAccessToken);
         API.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
+        originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
         return API(originalRequest);
       } catch (err) {
         logout();

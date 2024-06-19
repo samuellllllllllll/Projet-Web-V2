@@ -41,6 +41,7 @@ function authenticateToken(req, res, next) {
 
   jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
     if (err) return res.sendStatus(403);
+    console.log("user:", user);
     req.user = user;
     next();
   });
@@ -49,6 +50,7 @@ function authenticateToken(req, res, next) {
 function authorizedRoles(...allowedRoles) {
   return (req, res, next) => {
     const { role } = req.user;
+    console.log('User role:', role);
     if (!role || !allowedRoles.includes(role)) {
       return res.status(403).send('Access denied');
     }
@@ -70,6 +72,8 @@ app.post('/token', (req, res) => {
 
 app.post('/token/auth', (req, res) => {
   const { refreshToken } = req.body;
+  console.log(req.body);
+  console.log({refreshToken});
 
   if (!refreshToken) return res.sendStatus(401);
   const storedToken = refreshTokens.find(token => token.refreshToken === refreshToken);
@@ -77,25 +81,23 @@ app.post('/token/auth', (req, res) => {
   if (!storedToken) return res.sendStatus(403);
 
   const user = storedToken.username;
+  const role = storedToken.role;
 
-  const newAccessToken = generateAccessJWT(user);
+  const newAccessToken = generateAccessJWT(user, role);
+  console.log(newAccessToken);
   res.json({ accessToken: newAccessToken });
 });
 
-app.get('/protected', authenticateToken, authorizedRoles('superuser', 'customer'), (req, res) => {
+app.get('/auth/customer', authenticateToken, authorizedRoles('superuser', 'customer'), (req, res) => {
   res.send(`Hello, ${req.user.username}. You are authenticated and have access as ${req.user.role}!`);
 });
 
-app.get('/restaurant', authenticateToken, authorizedRoles('superuser', 'restaurant'), (req, res) => {
+app.get('/auth/restaurant', authenticateToken, authorizedRoles('superuser', 'restaurant'), (req, res) => {
   res.send(`Hello, ${req.user.username}. You have restaurant access!`);
 });
 
-app.get('/delivery', authenticateToken, authorizedRoles('superuser', 'delivery'), (req, res) => {
+app.get('/auth/delivery', authenticateToken, authorizedRoles('superuser', 'livreur'), (req, res) => {
   res.send(`Hello, ${req.user.username}. You have delivery access!`);
-});
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public', 'index.html'));
 });
 
 const port = process.env.PORT || 3001;
