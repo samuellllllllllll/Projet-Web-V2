@@ -1,11 +1,12 @@
 .card-section {
-display: flex;
-flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .card-item {
-display: flex;
-flex-direction: column;
+    display: flex;
+    flex-direction: column;
+    position: relative; /* Assure que les éléments positionnés absolument se réfèrent à cet élément */
 }
 
 .card-item img {
@@ -16,19 +17,27 @@ flex-direction: column;
     margin-bottom: -5px;
 }
 
-.item-name{
-margin-right: auto;
-margin-bottom: -10px;
+.item-name {
+    margin-right: auto;
+    margin-bottom: -10px;
 }
 
-.item-price{
-margin-right: auto;
+.item-price {
+    margin-right: auto;
+}
+
+.delete-icon-restaurant {
+    position: absolute;
+    top: 5px;
+    left: 170px;
+    width: 30px !important;
+    height: 30px !important;
+    cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {
-    
     .card-item img {
-    width: 150px; /* ou toute autre largeur désirée */
-    height: 100px;
+        width: 150px;
+        height: 100px;
     }
 }
