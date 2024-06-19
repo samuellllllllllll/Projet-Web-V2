@@ -10,8 +10,9 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    min-height: 80vh;
+    min-height: 70vh;
     margin-top: 10vh;
+    margin-bottom: 10vh;
 }
 
 .account-title{
@@ -27,11 +28,28 @@
 
 .account-details{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: fit-content;
+
+    .delete-button-div{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+
+        button{
+            font-size: 1.1rem;
+        }
+    }
+}
+
+.account-details-bottom{
+    display: flex;
+    flex-direction: row;
     margin: 1rem 0;
-    padding: 0 5rem;   
+    padding: 0 5rem;
+    min-height: 60vh;
 }
 
 .account-details-left{
@@ -39,43 +57,56 @@
     flex-direction: column;
     align-items: flex-start;
     margin: 1rem 0;
-    width: 150px;
+    width: 200px;
     height: 352px;
     font-weight: 700;
+    text-align: start;
 }
 
-.account-details-right input.editing {
+.account-details-right input{
     margin-bottom: 0px; /* Ajouter une marge en bas de chaque champ lorsque la classe editing est appliquée */
     padding: 8px;
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 5px;
     width: 100%;
+    margin: 14.5px 0;
 }
 
 .account-details-right{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    text-align: start;
     margin: 1rem 0;
     width: 200px;
+    height: 352px;
 }
 
-.account-button{
-    color: var(--background-color);
-    font-size: 1.1rem;
-    text-decoration: none;
-    font-weight: 500;
-    padding: 8px 40px;
-    border-radius: 30px;
-    transition: all 0.3s ease-in-out;
-    width: 300px;
+.disabled-input{
+    background-color: var(--background-color);
+    border: none;
+    margin: 15.7px 0;
+}
+
+.delete-button-div{
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    width: 100%;
 }
 
 /* RESPONSIVE */
 @media screen and (max-width: 1400px){
 
-    .account-button{
-        font-size: 0.9rem;
+    .account-details{
+    
+        .delete-button-div{
+    
+            button{
+                font-size: 0.9rem;
+    
+            }
+        }
     }
 }
