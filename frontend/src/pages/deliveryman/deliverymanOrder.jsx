@@ -18,22 +18,24 @@ const DeliverymanOrder = () => {
         window.location.href = "/deliverymanOrder2";
     }
 
-    useEffect(() => {
-        const fetchOrderDetails = async () => {
-            try {
-                const orderResponse = await axios.get(`http://localhost:4545/orders/${orderId}`);
-                setOrderDetails(orderResponse.data);
+    const fetchOrderDetails = async () => {
+        try {
+            const orderResponse = await axios.get(`http://localhost:4545/orders/${orderId}`);
+            setOrderDetails(orderResponse.data);
 
-                const restaurantResponse = await axios.get(`http://localhost:4546/restaurants/address`, {
-                    params: {
-                        restaurant_id: orderResponse.data.restaurant_id
-                    }
-                });
-                setRestaurantDetails(restaurantResponse.data);
-            } catch (error) {
-                console.error('Error fetching order or restaurant details:', error);
-            }
-        };
+            const restaurantResponse = await axios.get(`http://localhost:4546/restaurants/address`, {
+                params: {
+                    restaurant_id: orderResponse.data.restaurant_id
+                }
+            });
+            setRestaurantDetails(restaurantResponse.data[0]);
+            console.log(restaurantResponse.data)
+        } catch (error) {
+            console.error('Error fetching order or restaurant details:', error);
+        }
+    };
+
+    useEffect(() => {
 
         if (orderId) {
             fetchOrderDetails();
@@ -55,7 +57,7 @@ const DeliverymanOrder = () => {
                 </div>
                 <div className="order-location">
                     <img src={locationIcon} alt="Location Icon" className="locationIcon" />
-                    <p>{restaurantDetails.address}</p>
+                    <p>{restaurantDetails.number} {restaurantDetails.street}, {restaurantDetails.city}</p>
                 </div>
                 <div className="order-id">
                     <h2>ID commande</h2>

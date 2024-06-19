@@ -86,6 +86,7 @@ app.get("/restaurants/address", (req, res) => {
             console.error('Error executing query', err);
             res.status(500).send('Error executing query');
         } else {
+            console.log(result.rows);
             res.send(result.rows);
         }
     });
