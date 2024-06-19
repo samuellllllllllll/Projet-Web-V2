@@ -26,12 +26,12 @@ const database_postgres = new Client({
 });
 
 database_postgres.connect()
-.then(() => {
-    console.log('Connected to PostgreSQL database');
-})
-.catch(err => {
-    console.error('Connection error', err.stack);
-});
+    .then(() => {
+        console.log('Connected to PostgreSQL database');
+    })
+    .catch(err => {
+        console.error('Connection error', err.stack);
+    });
 
 app.get("/", (req, res) => {
     res.send("Restaurants default route");
@@ -70,6 +70,23 @@ app.get("/restaurants/menus", (req, res) => {
             console.error('Error executing query', err);
             res.status(500).send('Error executing query');
         } else {
+            res.send(result.rows);
+        }
+    });
+});
+
+// Get the adress of a restaurant
+app.get("/restaurants/address", (req, res) => {
+
+    const query_sql = "SELECT * FROM users WHERE id = $1;";
+    const values_sql = [req.query.restaurant_id];
+
+    database_postgres.query(query_sql, values_sql, (err, result) => {
+        if (err) {
+            console.error('Error executing query', err);
+            res.status(500).send('Error executing query');
+        } else {
+            console.log(result.rows);
             res.send(result.rows);
         }
     });

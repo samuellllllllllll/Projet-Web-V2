@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "../styles/header.css";
 import logo from '../assets/logo.png';
+import axios from 'axios';
 
 const Header = () => {
     // State to track the number of products in the cart
     const [countOrder, setCountOrder] = useState(0);
+    const [orderTracking, setOrderTracking] = useState([]);
 
     // Function to update the countOrder from localStorage
     const updateCountOrder = () => {
@@ -23,9 +25,25 @@ const Header = () => {
         setCountOrder(count);
     };
 
+    // Function to update order tracking
+    const updateOrderTracking = async () => {
+        try {
+            const response = await axios.get('http://localhost:4545/orders/:id', {
+                params: {
+                    consumer_id: 1, // TO BE CHANGED
+                }
+            });
+            setOrderTracking(response.data);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    };
+
     // useEffect to update the countOrder whenever the component mounts
     useEffect(() => {
         updateCountOrder();
+        updateOrderTracking();
 
         // Add event listeners for both storage changes and custom event
         const handleStorageChange = (event) => {
@@ -46,7 +64,15 @@ const Header = () => {
 
     return (
         <header className="header">
-            <a href="/consommateur"><img className="logo-header" src={logo} alt="logo CESI'Eats" /></a>
+            <div className="header-left-part">
+                <a href="/consommateur"><img className="logo-header" src={logo} alt="logo CESI'Eats" /></a>
+                {/* Order tracking */}
+                {orderTracking.length > 0 && (
+                    <div className="header-order-tracking">
+                        <a href="/consommateur/suivi_commande" id="tracking">Commande en cours</a>
+                    </div>
+                )}
+            </div>
             <div className="header-right-part">
                 <div className="header-text">
                     <a href="/consommateur/panier" id="order">Panier | {countOrder} </a>
