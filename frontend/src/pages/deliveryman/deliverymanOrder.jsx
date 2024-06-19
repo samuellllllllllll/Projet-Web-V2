@@ -15,7 +15,7 @@ const DeliverymanOrder = () => {
     const params = new URLSearchParams(location.search);
     const orderId = params.get('orderId');
     const deliverOrder = () => {
-        window.location.href = "/deliverymanOrder2";
+        window.location.href = `/deliverymanOrder2?orderId=${orderId}`;
     }
 
     const fetchOrderDetails = async () => {

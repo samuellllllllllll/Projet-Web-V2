@@ -1,12 +1,33 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import '../../styles/deliveryman/deliverymanOrder2.css';
 import locationIcon from '../../assets/localisateur.png';
 import MenuDeliveryman from '../../components/menuDeliveryman';
 import MobileHeader from '../../components/MobileHeader';
+import axios from 'axios';
 
 const DeliverymanOrder2 = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [code, setCode] = useState(["", "", "", ""]);
+    const [orderDetails, setOrderDetails] = useState(null);
+    const params = new URLSearchParams(location.search);
+    const orderId = params.get('orderId');
+
+    const fetchOrderDetails = async () => {
+        try {
+            const orderResponse = await axios.get(`http://localhost:4545/orders/${orderId}`);
+            setOrderDetails(orderResponse.data);
+            console.log(orderResponse.data);
+        } catch (error) {
+            console.error('Error fetching order or restaurant details:', error);
+        }
+    };
+
+    useEffect(() => {
+
+        if (orderId) {
+            fetchOrderDetails();
+        }
+    }, []);
 
     // Refs for each input field
     const inputRefs = [
@@ -32,11 +53,26 @@ const DeliverymanOrder2 = () => {
         }
     };
 
-    const deliverOrder = () => {
-        if (code.every(digit => digit !== "")) {
-            window.location.href = "/deliverymanOrder3";
-        } else {
-            alert("Veuillez entrer un code valide à 4 chiffres");
+    const deliverOrder = async () => {
+        try {
+            // Check if all digits are entered
+            if (code.every(digit => digit !== "")) {
+                // Construct the entered code as a string
+                const enteredCode = code.join("");
+
+                // Check if the entered code matches the expected code from orderDetails
+                if (enteredCode === orderDetails.validation_code.toString().trim()) {
+                    // Navigate to the next page if the codes match
+                    window.location.href = "/deliverymanOrder3";
+                } else {
+                    alert("Le code entré ne correspond pas. Veuillez réessayer.");
+                }
+            } else {
+                alert("Veuillez entrer un code valide à 4 chiffres.");
+            }
+        } catch (error) {
+            console.error('Error delivering order:', error);
+            alert("Une erreur s'est produite lors de la livraison de la commande.");
         }
     };
 
