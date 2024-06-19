@@ -11,7 +11,7 @@ dotenv.config();
 
 // Enable CORS
 app.use(cors({
-    origin: 'http://localhost:5173'
+    origin: process.env.CORS_ORIGIN
 }));
 
 app.use(bodyParser.json());
@@ -85,3 +85,17 @@ app.get("/articles/restaurant", (req, res) => {
         }
     });
 });
+
+
+app.get("/articles/restaurants/menu/:category_food", (req, res)=> {
+    const query_sql = "SELECT * FROM articles WHERE category = $1";
+    const values_sql = [req.params.category_food];
+    database_postgres.query(query_sql, values_sql, (err, result) => {
+        if (err) {
+            console.error('Error executing the query');
+            res.status(500).send('Error executing query');
+        } else{
+            res.json(result);
+        }
+    })
+})

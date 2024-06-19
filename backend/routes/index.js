@@ -1,47 +1,28 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const path = require('path');
-const crypto = require('crypto');
-
+const cors = require('cors');
+const { generateAccessJWT, validateRefreshToken } = require('../tokenUltils/token.js'); 
+const loginRouter = require('../microservice login/login.js'); 
 
 dotenv.config();
 const app = express();
 
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, '../../public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
-let refreshTokens = [];
-
-function generateAccessJWT(username, role, data) {
-  return jwt.sign(
-    {
-      username,
-      role,
-      data
-    },
-    process.env.TOKEN_SECRET,
-    { expiresIn: '1800s' }
-  );
-}
-
-function generateRefreshToken(username) {
-  const refreshToken = crypto.randomBytes(64).toString('hex');
-  refreshTokens.push({ refreshToken, username });
-  return refreshToken;
-}
+app.use(cors({
+  origin: 'http://localhost:5173'
+}));
 
 function authenticateToken(req, res, next) {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
-
   if (token == null) return res.sendStatus(401);
 
   jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
     if (err) return res.sendStatus(403);
-    console.log("user:", user);
     req.user = user;
     next();
   });
@@ -50,7 +31,6 @@ function authenticateToken(req, res, next) {
 function authorizedRoles(...allowedRoles) {
   return (req, res, next) => {
     const { role } = req.user;
-    console.log('User role:', role);
     if (!role || !allowedRoles.includes(role)) {
       return res.status(403).send('Access denied');
     }
@@ -58,45 +38,31 @@ function authorizedRoles(...allowedRoles) {
   };
 }
 
-app.post('/token', (req, res) => {
-  const { username, password, role } = req.body;
+app.use('/api', loginRouter); // Use login router with prefix /api
 
-  if (username && password && role) { 
-    const accessToken = generateAccessJWT(username, role);
-    const refreshToken = generateRefreshToken(username);
-    res.json({ accessToken, refreshToken, role });
-  } else {
-    res.status(400).send('Username, password, and role are required');
-  }
-});
-
-app.post('/token/auth', (req, res) => {
+app.post('/api/token/auth', (req, res) => {
   const { refreshToken } = req.body;
-  console.log(req.body);
-  console.log({refreshToken});
-
   if (!refreshToken) return res.sendStatus(401);
-  const storedToken = refreshTokens.find(token => token.refreshToken === refreshToken);
 
+  const storedToken = validateRefreshToken(refreshToken);
   if (!storedToken) return res.sendStatus(403);
 
   const user = storedToken.username;
   const role = storedToken.role;
 
   const newAccessToken = generateAccessJWT(user, role);
-  console.log(newAccessToken);
   res.json({ accessToken: newAccessToken });
 });
 
-app.get('/auth/customer', authenticateToken, authorizedRoles('superuser', 'customer'), (req, res) => {
+app.get('/api/auth/customer', authenticateToken, authorizedRoles('superuser', 'customer'), (req, res) => {
   res.send(`Hello, ${req.user.username}. You are authenticated and have access as ${req.user.role}!`);
 });
 
-app.get('/auth/restaurant', authenticateToken, authorizedRoles('superuser', 'restaurant'), (req, res) => {
+app.get('/api/auth/restaurant', authenticateToken, authorizedRoles('superuser', 'restaurant'), (req, res) => {
   res.send(`Hello, ${req.user.username}. You have restaurant access!`);
 });
 
-app.get('/auth/delivery', authenticateToken, authorizedRoles('superuser', 'livreur'), (req, res) => {
+app.get('/api/auth/delivery', authenticateToken, authorizedRoles('superuser', 'livreur'), (req, res) => {
   res.send(`Hello, ${req.user.username}. You have delivery access!`);
 });
 
