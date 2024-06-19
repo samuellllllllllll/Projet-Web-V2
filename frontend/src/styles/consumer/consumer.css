@@ -58,7 +58,7 @@ body, html {
 }
 
 .consumer-category:hover{
-    background-color: #e4e4e4;
+    background-color: var(--third-color);
     border-radius: 10px;
 }
 

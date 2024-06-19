@@ -17,6 +17,7 @@ import DeliverymanAccount from './pages/deliveryman/account.jsx';
 import RestaurantAccount from './pages/restaurant/accountRestaurant.jsx';
 import Order1 from './pages/consumer/order1.jsx';
 import Order2 from './pages/consumer/order2.jsx';
+import OrderTracking from './pages/consumer/OrderTracking.jsx';
 
 const App = () => {
   return (
@@ -30,6 +31,7 @@ const App = () => {
           <Route path="/consommateur/compte" element={<AccountConsumer />} />
           <Route path="/consommateur/panier" element={<ShoppingBasket />} />
           <Route path="/consommateur/page_restaurant" element={<Restaurant_page />} />
+          <Route path="/consommateur/suivi_commande" element={< OrderTracking />} />
           <Route path="/consommateur/commande1" element={<Order1 />} />
           <Route path="/consommateur/commande2" element={<Order2 />} />
           <Route path="/menuEdit" element={<MenuEdit />} />
