@@ -1,19 +1,16 @@
-.menu-page {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  padding: 20px;
-}
-
-.menu-header {
+.menu-content-restaurant {
+  width: 100%;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: none;
   align-items: center;
-  padding: 10px 20px;
-  background-color: #fff;
-}
+  color: var(--second-color);
 
-.menu-content {
-  padding: 20px;
+    h1{
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
 }
 
 .Menu-bottom-button-box {
@@ -21,10 +18,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  .Menu-bottom-button-box-text{
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
 }
 
 .Menu-bottom-button {
-  background-color: #ffe5cc;
+  background-color: var(--third-color);
   border-radius: 30px;
   width: 100%;
   max-width: 300px;
@@ -43,7 +46,7 @@
   position: absolute;
   width: 50%;
   height: 100%;
-  background: orange;
+  background: var(--primary-color);
   border-radius: 30px;
   transition: 0.5s;
 }
@@ -55,10 +58,11 @@
   background: transparent;
   border: 0;
   outline: none;
-  color: #fff;
+  color: var(--second-color);
   font-size: 18px;
   z-index: 1;
   transition: none;
+  font-weight: 600;
 }
 
 .Toggle-button:hover {
@@ -102,7 +106,7 @@
 
 h1 {
   font-size: 24px;
-  color: #333;
+  color: var(--primary-color);
   margin: 20px 0;
 }
 
@@ -112,7 +116,8 @@ h1 {
 
 .menu-footer p {
   font-size: 14px;
-  color: #aaa;
+  font-weight: 300;
+  color: var(--second-color);
 }
 
 .table {
@@ -127,7 +132,7 @@ h1 {
 }
 
 .table th {
-  border-bottom: 2px solid #f3c5a8;
+  border-bottom: 2px solid var(--third-color);
 }
 
 .table-empty {
@@ -137,9 +142,6 @@ h1 {
 
 /* Media query for screens 768px et moins */
 @media (max-width: 768px) {
-  .menu-page {
-    padding: 10px;
-  }
 
   .Menu-bottom-button {
     max-width: 200px;

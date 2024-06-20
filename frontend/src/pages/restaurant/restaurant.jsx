@@ -63,9 +63,6 @@ const Restaurant = () => {
     }; // Cleanup interval on component unmount
   }, []);
 
-
-
-
   const toggleButton = () => {
     setIsOpen(prevIsOpen => !prevIsOpen);
   };
@@ -103,9 +100,9 @@ const Restaurant = () => {
 
     <div className="menu-page">
       <MobileHeader2 />
-      <main className="menu-content">
+      <main className="menu-content-restaurant">
         <div className="Menu-bottom-button-box">
-          Mon restaurant est ...
+          <div className="Menu-bottom-button-box-text">Mon restaurant est ...</div>
           <div className={`Menu-bottom-button ${isOpen ? 'open' : 'closed'}`}>
             <div className="Button"></div>
             <button
@@ -192,9 +189,6 @@ const Restaurant = () => {
           </tbody>
         </table>
       </main>
-      <footer className="menu-footer">
-        <p>&copy; 2024 CESI'Eats. Tous droits réservés.</p>
-      </footer>
     </div>
   );
 };
