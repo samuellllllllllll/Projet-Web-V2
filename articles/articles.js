@@ -99,3 +99,16 @@ app.get("/articles/restaurants/menu/:category_food", (req, res)=> {
         }
     })
 })
+
+app.delete("/articles/restaurants/menu/:id", (req, res)=>{
+    const query_sql = "DELETE FROM articles WHERE id = $1";
+    const values_sql = [req.params.id];
+    database_postgres.query(query_sql, values_sql, (err, result)=> {
+        if (err) {
+            console.error('Error executing the query ', err)
+        } else {
+            res.send("Succesfully deleted");
+
+        }
+    })
+})
