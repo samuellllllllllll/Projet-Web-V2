@@ -3,9 +3,21 @@ import AuthContext from './authContext.jsx';
 import { useContext } from 'react';
 
 const useAPI = () => {
-  const { accessToken, refreshToken, logout } = useContext(AuthContext);
+  const { accessToken, refreshToken, logout, refreshAccessToken } = useContext(AuthContext);
 
-  const API = axios.create({ baseURL: '/api' });
+  const API = axios.create({ baseURL: 'http://localhost:3001/api' });
+
+  let isRefreshing = false;
+  let refreshSubscribers = [];
+
+  const onRrefreshed = (token) => {
+    console.log("on hold");
+    refreshSubscribers.map((callback) => callback(token));
+  };
+
+  const addRefreshSubscriber = (callback) => {
+    refreshSubscribers.push(callback);
+  };
 
   API.interceptors.request.use(config => {
     if (accessToken) {
@@ -19,22 +31,33 @@ const useAPI = () => {
   API.interceptors.response.use(response => {
     return response;
   }, async error => {
+    const { response } = error;
     const originalRequest = error.config;
 
-    if (error.response.status === 401 && !originalRequest._retry && refreshToken) {
-      originalRequest._retry = true;
-      try {
-        const storedRefreshToken = localStorage.getItem('refreshToken');
-        const response = await axios.post('/api/token/auth', { refreshToken: storedRefreshToken });
-        const newAccessToken = response.data.accessToken;
-        localStorage.setItem('accessToken', newAccessToken);
-        API.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
-        originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
-        return API(originalRequest);
-      } catch (err) {
-        logout();
+    if (response.status === 401 && !originalRequest._retry && refreshToken) {
+      if (!isRefreshing) {
+        isRefreshing = true;
+        try {
+          const newAccessToken = await refreshAccessToken();
+          isRefreshing = false;
+          onRrefreshed(newAccessToken);
+          refreshSubscribers = [];
+        } catch (err) {
+          logout();
+          return Promise.reject(error);
+        }
       }
+
+      const retryOriginalRequest = new Promise((resolve) => {
+        addRefreshSubscriber((token) => {
+          originalRequest.headers['Authorization'] = 'Bearer ' + token;
+          resolve(API(originalRequest));
+        });
+      });
+
+      return retryOriginalRequest;
     }
+
     return Promise.reject(error);
   });
 
