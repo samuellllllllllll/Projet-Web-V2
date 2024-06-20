@@ -11,6 +11,8 @@ const MenuEdit = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [newFood, setNewFood] = useState({ images: '', name: '', price: '', category: '' });
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
 
     useEffect(() => {
         const fetchArticles = async () => {
@@ -61,6 +63,7 @@ const MenuEdit = () => {
     const handleAddFood = (category) => {
         setNewFood({ ...newFood, category });
         setShowModal(true);
+        setIsModalOpen(true);
     };
 
     const handleInputChange = (e) => {
@@ -78,11 +81,12 @@ const MenuEdit = () => {
             setDesserts([...desserts, { ...newFood, id: desserts.length + 1 }]);
         }
         setShowModal(false);
+        setIsModalOpen(false);
     };
 
     return (
         <div className="menu-page">
-            <MobileHeader2 />
+            <MobileHeader2 className={`header-black ${isModalOpen ? 'modal-open' : ''}`} />
             <nav className="menu-nav">
                 <h1 className="menu-title">Menu</h1>
                 <button className="edit-button" onClick={toggleEditMode}>Modifier</button>

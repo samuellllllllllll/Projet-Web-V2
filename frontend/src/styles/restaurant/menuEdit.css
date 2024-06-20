@@ -57,6 +57,12 @@
     margin: 20px;
 }
 
+.header-black.modal-open {
+    /* Styles pour le header en mode modal */
+    background: rgba(0, 0, 0, 0.5);
+}
+
+
 .add-button {
     position: relative;
     background-color: #FF7B00;
