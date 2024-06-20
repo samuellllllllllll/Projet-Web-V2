@@ -113,15 +113,15 @@ const MenuEdit = () => {
                     <div className="modal-content">
                         <h2>Ajouter un nouvel article</h2>
                         <form onSubmit={handleSubmit}>
-                            <label>
+                            <label className="form-label">
                                 Nom :
                                 <input type="text" name="name" value={newFood.name} onChange={handleInputChange} />
                             </label>
-                            <label>
+                            <label className="form-label">
                                 Prix :
                                 <input type="text" name="price" value={newFood.price} onChange={handleInputChange} />
                             </label>
-                            <label>
+                            <label className="form-label">
                                 Image URL :
                                 <input type="text" name="images" value={newFood.images} onChange={handleInputChange} />
                             </label>

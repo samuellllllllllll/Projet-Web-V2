@@ -95,13 +95,23 @@
     text-align: center;
 }
 
+.modal-content .form-label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.modal-content .form-label > input {
+    width: 100%; /* Utilise toute la largeur disponible */
+    padding: 5px;
+    margin-top: 5px; /* Ajustement du margin-top si nécessaire */
+}
+
+
 .modal-content form {
     display: flex;
     flex-direction: column;
-}
-
-.modal-content label {
-    margin-bottom: 10px;
 }
 
 .modal-content input {
