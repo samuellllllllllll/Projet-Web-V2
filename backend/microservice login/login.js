@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
-const { generateAccessJWT, generateRefreshToken } = require('../tokenUltils/token.js');
+const { generateAccessJWT, generateRefreshToken } = require('../tokenUtils/token.js');
 
 dotenv.config();
 const app = express();
