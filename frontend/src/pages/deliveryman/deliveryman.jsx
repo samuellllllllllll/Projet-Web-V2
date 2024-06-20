@@ -76,7 +76,7 @@ const Deliveryman = () => {
   };
 
   return (
-    <div className="menu-page">
+    <div className="menu-page-delivery">
       <MobileHeader />
       <h1>Choisissez une commande à livrer</h1>
       <table>
