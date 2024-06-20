@@ -30,7 +30,7 @@ const Product_card_consumer = (props) => {
     }
 
     return (
-        <section className="card-section">
+        <section className="card-section-product">
             <div className="card-item" onClick={() => orderProduct(props.id)}>
                 <div className="card-item-overlay" id={`product-overlay-${props.id}`}>
                     <div className="card-item-overlay-text" id={`product-text-${props.id}`}>Ajouter au panier</div>
@@ -43,7 +43,7 @@ const Product_card_consumer = (props) => {
                         </div>
                     </div>
                 </div>
-                <div className="cover-image">
+                <div className="cover-image-product">
                     <img src={props.image} />
                 </div>
                 <p className="item-name">{props.name}</p>

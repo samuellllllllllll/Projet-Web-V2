@@ -69,6 +69,21 @@ const LoginSignIn = () => {
       return;
     }
 
+    // Create user
+    try {
+      axios.post('http://localhost:4547/users', {
+        params : {
+          email: data.email,
+          password: data.password,
+          role: data.choice,
+          is_deleted: false
+        }
+      });
+    } catch (error) {
+      setMessageSignIn('Erreur lors de la création du compte.');
+      return;
+    }
+
     setMessageSignIn('Compte créé avec succès. Vous pouvez maintenant vous connecter.');
     form.reset();
   };

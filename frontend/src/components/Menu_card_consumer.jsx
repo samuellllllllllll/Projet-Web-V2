@@ -4,7 +4,7 @@ import "../styles/Menu_card_consumer.css";
 const Menu_card_consumer = (props) => {
 
     return (
-        <section className="card-section">
+        <section className="card-section-menu">
             <div className="card-item">
                 <div className="card-item-overlay">
                     <div className="card-item-overlay-text">Ajouter au panier</div>

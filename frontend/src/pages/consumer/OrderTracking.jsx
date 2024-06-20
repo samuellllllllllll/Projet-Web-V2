@@ -12,7 +12,11 @@ const OrderTracking = () => {
         try {
             const consumer_id = 1;
             const response = await axios.get(`http://localhost:4545/orders/consumers/${consumer_id}`);
+            
+            // Sort orders by date in descending order
+            response.data.sort((a, b) => new Date(b.date_and_time) - new Date(a.date_and_time));
             setOrder(response.data);
+
         } catch (error) {
             console.error(error);
         }
@@ -31,12 +35,21 @@ const OrderTracking = () => {
         return formattedDate;
     }
 
-    const intervalId = setInterval(getOrder, 15000); // Fetch orders every 15 seconds
-
     useEffect(() => {
         getOrder();
+
         return () => {
-            clearInterval(intervalId);
+            try{
+                const intervalId = setInterval(() => {
+                    getOrder();
+                }, 10000);
+            } catch (error) {
+                // Wait 30 seconds before trying again
+                setTimeout(() => {
+                    clearInterval(intervalId);
+                }, 30000);
+                console.error(error);
+            }
         };
     }, []);
 

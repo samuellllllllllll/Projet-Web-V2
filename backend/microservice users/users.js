@@ -44,9 +44,8 @@ app.get("/users", (req, res) => {
     });
 })
 
-
-
 app.post("/users", (req, res)=>{
+    console.log("Request body : ", req.body);
     const insert_test = 'INSERT INTO users(email, password, role, is_deleted) VALUES($1,$2,$3,$4)';
     const values_test = [req.body.email, req.body.password, req.body.role, req.body.is_deleted];
     

@@ -63,7 +63,7 @@ app.post('/login', async (req, res) => {
         const accessToken = generateAccessJWT(user.email, user.role);
         const refreshToken = generateRefreshToken(user.email);
 
-        return res.json({ accessToken, refreshToken, role: user.role });
+        return res.json({ accessToken, refreshToken, role: user.role, id: user.id});
       } catch (error) {
         console.error('Error generating tokens', error);
         return res.status(500).json({ message: 'Server error' });

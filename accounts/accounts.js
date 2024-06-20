@@ -4,6 +4,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const dotenv = require('dotenv');
 const cors = require('cors');
+const bcrypt = require('bcrypt');
 
 // Load environment variables
 dotenv.config();
@@ -58,7 +59,7 @@ app.get("/account/consumer", (req, res) => {
 });
 
 // Update account informations for consumers
-app.put("/account/consumer/update", (req, res) => {
+app.put("/account/consumer/update_info", (req, res) => {
     const query_sql = "UPDATE users SET phone = $1, email = $2, city = $3, postal_code = $4, street = $5, number = $6, country = $7 WHERE id = $8;";
     const values_sql = [req.body.params.phone, req.body.params.email, req.body.params.address_city, req.body.params.address_postal_code, req.body.params.address_street, req.body.params.address_number, req.body.params.adresse_country, req.body.params.id];
 
@@ -68,6 +69,23 @@ app.put("/account/consumer/update", (req, res) => {
             res.status(500).send('Error executing query');
         } else {
             res.send("Account updated");
+        }
+    });
+});
+
+// Update account password for consumers
+app.put("/account/consumer/update_password", (req, res) => {
+
+    password_hashed = bcrypt.hashSync(req.body.params.password, 10);
+    const query_sql = "UPDATE users SET password = $1 WHERE id = $2;";
+    const values_sql = [password_hashed, req.body.params.id];
+
+    database_postgres.query(query_sql, values_sql, (err, result) => {
+        if (err) {
+            console.error('Error executing query', err);
+            res.status(500).send('Error executing query');
+        } else {
+            res.send("Password updated");
         }
     });
 });
