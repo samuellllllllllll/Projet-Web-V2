@@ -16,7 +16,6 @@
 }
 
 .account-title{
-    margin-left: 200px;
     font-size: 2rem;
     font-weight: bold;
 }
@@ -28,23 +27,60 @@
 
 .account-details{
     display: flex;
-    flex-direction: column;
+    flex-direction: row-reverse;
     align-items: center;
     justify-content: center;
     height: fit-content;
+}
 
-    .delete-button-div{
+.account-details-top{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem 0;
+    padding: 0 5rem;
+    min-height: 60vh;
+    width: 300px;
+
+    .account-button{
         display: flex;
-        justify-content: center;
+        flex-direction: column;
         width: 100%;
-
+        margin-top: 2.5rem;
+        
         button{
             font-size: 1.1rem;
+            width: 100%;
         }
+    }
+
+    .account-alert{
+        display: flex;
+        flex-direction: column;
+        margin-top: 2.5rem;
+        font-size: 1.1rem;
+        color: var(--primary-color);
+        font-weight: 600;
+        width: 60%;
     }
 }
 
-.account-details-bottom{
+.account-details-password{
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 0;
+    padding: 0 5rem;
+    min-height: 60vh;
+    margin-top: 2rem;
+
+    p{
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+    
+}
+
+.account-details-info{
     display: flex;
     flex-direction: row;
     margin: 1rem 0;
@@ -87,13 +123,6 @@
     background-color: var(--background-color);
     border: none;
     margin: 15.7px 0;
-}
-
-.delete-button-div{
-    display: flex;
-    justify-content: center;
-    margin-top: 1rem;
-    width: 100%;
 }
 
 /* RESPONSIVE */
