@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import AuthContext from './authContext';
 
@@ -9,8 +9,27 @@ const roleMapping = {
 };
 
 const ProtectedRoute = ({ element: Component, allowedRoles }) => {
-  const { accessToken, role } = useContext(AuthContext);
+  const { accessToken, role, isTokenExpired, refreshAccessToken, isLoading } = useContext(AuthContext);
   const userRole = roleMapping[role];
+  const [isTokenChecked, setIsTokenChecked] = useState(false);
+
+  useEffect(() => {
+    const checkToken = async () => {
+      if (isTokenExpired(accessToken)) {
+        console.log('Token expired, attempting to refresh...');
+        await refreshAccessToken();
+      } else {
+        console.log('Token is valid.');
+      }
+      setIsTokenChecked(true);
+    };
+    checkToken();
+  }, [accessToken, isTokenExpired, refreshAccessToken]);
+
+  if (isLoading || !isTokenChecked) {
+    console.log('Loading or checking token...');
+    return <div>Loading...</div>; // Show a loading indicator while checking and refreshing the token
+  }
 
   if (!accessToken) {
     console.log('No access token, redirecting to login');
@@ -22,6 +41,7 @@ const ProtectedRoute = ({ element: Component, allowedRoles }) => {
     return <Navigate to="/" />;
   }
 
+  console.log('Access token and role valid, rendering component.');
   return <Component />;
 };
 
