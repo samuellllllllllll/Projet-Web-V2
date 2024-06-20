@@ -160,8 +160,6 @@ app.put("/orders/status/:id/:new_status", (req, res) => {
 
 //Route used by restaurant & delivery person
 app.get("/orders/status2/:id", (req, res) => {
-    console.log("hello");
-    console.log(req.params.id);
     Orders.findById(req.params.id).then((orders) => {
         if (orders) {
             res.json(orders);

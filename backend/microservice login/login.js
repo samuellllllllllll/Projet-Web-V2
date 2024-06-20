@@ -34,12 +34,6 @@ database_postgres.connect()
 
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
-  const passwordvincent = bcrypt.hash("vincent2024", 10);
-  const passwordsamuel = bcrypt.hash("samuel2024", 10);
-  const passwordaladin = bcrypt.hash("aladdin2024", 10);
-  console.log(passwordvincent);
-  console.log(passwordsamuel);
-  console.log(passwordaladin);
   if (!email || !password) {
     return res.status(400).json({ message: 'Email & password are required' });
   }

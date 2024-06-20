@@ -39,7 +39,6 @@ app.post("/users", (req, res)=>{
             console.error('Error inserting data', err);
         }
         else {
-            console.log("Great success !");
             res.send("Inserted User")
         }
         
