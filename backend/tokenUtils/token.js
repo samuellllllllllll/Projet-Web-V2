@@ -10,7 +10,7 @@ function generateAccessJWT(email, role) {
   return jwt.sign(
     { email, role },
     process.env.TOKEN_SECRET,
-    { expiresIn: '1500s' }
+    { expiresIn: '3000s' }
   );
 }
 

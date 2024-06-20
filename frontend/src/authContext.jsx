@@ -8,13 +8,13 @@ export const AuthProvider = ({ children }) => {
   const [accessToken, setAccessToken] = useState(localStorage.getItem('accessToken'));
   const [refreshToken, setRefreshToken] = useState(localStorage.getItem('refreshToken'));
   const [role, setRole] = useState(localStorage.getItem('role'));
+  const [id, setId] = useState(localStorage.getItem('id'));
   const [isLoading, setIsLoading] = useState(true);
 
   const refreshAccessToken = async () => {
     const storedRefreshToken = localStorage.getItem('refreshToken');
     if (storedRefreshToken) {
       try {
-        console.log('Attempting to refresh access token...');
         const response = await axios.post('http://localhost:3001/api/token/auth', { refreshToken: storedRefreshToken }, {
           headers: {
             'Content-Type': 'application/json',
@@ -22,7 +22,6 @@ export const AuthProvider = ({ children }) => {
           },
         });
         const newAccessToken = response.data.accessToken;
-        console.log('Access token refreshed successfully:', newAccessToken);
         setAccessToken(newAccessToken);
         localStorage.setItem('accessToken', newAccessToken);
         return newAccessToken;
@@ -32,7 +31,6 @@ export const AuthProvider = ({ children }) => {
         return null;
       }
     }
-    console.log('No refresh token found in local storage.');
     return null;
   };
 
@@ -42,7 +40,6 @@ export const AuthProvider = ({ children }) => {
         console.log('Access token is expired, attempting to refresh...');
         await refreshAccessToken();
       } else {
-        console.log('Access token is valid.');
       }
       setIsLoading(false);
     };
@@ -51,16 +48,16 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      console.log('Attempting to log in with email:', email);
       const response = await axios.post('http://localhost:3002/login', { email, password });
-      console.log('Login successful, setting tokens and role...');
       setAccessToken(response.data.accessToken);
       setRefreshToken(response.data.refreshToken);
       setRole(response.data.role);
+      setId(response.data.id);
       localStorage.setItem('accessToken', response.data.accessToken);
       localStorage.setItem('refreshToken', response.data.refreshToken);
       localStorage.setItem('role', response.data.role);
-      console.log('Tokens and role set in state and local storage.');
+      localStorage.setItem('id', response.data.id);
+      console.log(response.data.id);
       return true;
     } catch (error) {
       console.error('Login error:', error);
@@ -69,14 +66,15 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    console.log('Logging out, clearing tokens and role...');
     setAccessToken(null);
     setRefreshToken(null);
     setRole(null);
+    setId(null);
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('role');
-    console.log('Tokens and role cleared from state and local storage.');
+    localStorage.removeItem('id');
+    console.log('Logged out');
   };
 
   const isTokenExpired = (token) => {
@@ -88,7 +86,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ accessToken, login, logout, role, isTokenExpired, refreshAccessToken, isLoading }}>
+    <AuthContext.Provider value={{ accessToken, login, logout, role, id, isTokenExpired, refreshAccessToken, isLoading}}>
       {children}
     </AuthContext.Provider>
   );
