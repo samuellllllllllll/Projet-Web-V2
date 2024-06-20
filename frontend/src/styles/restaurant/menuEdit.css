@@ -127,6 +127,10 @@
     border: 1px solid #ccc;
 }
 
+.yapa{
+    margin-right: -150px;
+}
+
 .modal-content button {
     padding: 10px;
     border: none;
@@ -140,6 +144,18 @@
 .modal-content button[type="button"] {
     background-color: #ccc;
 }
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    margin-right: 20px; 
+}
+
+.checkbox-label .checkbox-input {
+    margin-left: 8px; 
+}
+
 
 @media screen and (max-width: 768px) {
     .menu-title {
@@ -170,4 +186,9 @@
         gap: 10px;
         margin: 10px;
     }
+
+    .yapa{
+    margin-right: -100px;
+}
+
 }
