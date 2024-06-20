@@ -127,6 +127,10 @@
     border: 1px solid #ccc;
 }
 
+.yapa{
+    margin-right: -150px;
+}
+
 .modal-content button {
     padding: 10px;
     border: none;
@@ -170,4 +174,9 @@
         gap: 10px;
         margin: 10px;
     }
+
+    .yapa{
+    margin-right: -100px;
+}
+
 }

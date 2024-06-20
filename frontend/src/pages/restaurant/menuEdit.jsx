@@ -16,12 +16,14 @@ const MenuEdit = () => {
     const [selectedFood, setSelectedFood] = useState(null);
     const [addCategory, setAddCategory] = useState(null);
     const [menus, setMenus] = useState([]);
+    const [entrées, setEntrées] = useState([]);
 
     const fetchArticles = async () => {
         try {
             const responsePlats = await axios.get('http://localhost:4548/articles/restaurants/menu/1');
             const responseBoissons = await axios.get('http://localhost:4548/articles/restaurants/menu/3');
             const responseDesserts = await axios.get('http://localhost:4548/articles/restaurants/menu/2');
+            const responseEntrees = await axios.get('http://localhost:4548/articles/restaurants/menu/4');
             const responseMenus = await axios.get('http://localhost:4546/restaurants/menus', {
                 params: {
                     id_user: 2,
@@ -30,6 +32,7 @@ const MenuEdit = () => {
             setPlats(responsePlats.data.rows);
             setBoissons(responseBoissons.data.rows);
             setDesserts(responseDesserts.data.rows);
+            setEntrées(responseEntrees.data.rows);
             setMenus(responseMenus.data);
         } catch (error) {
             console.error('Error fetching articles:', error);
@@ -50,6 +53,9 @@ const MenuEdit = () => {
     };
 
     const renderFoodCards = (category, items, isMenu = false) => {
+        if (items.length === 0) {
+            return <p className='yapa'>Il n'y a pas de {category}</p>;
+        }
         return Array.isArray(items) && items.map(item => (
             <FoodCard
                 key={item.id}
@@ -156,28 +162,34 @@ const MenuEdit = () => {
                 {isEditing && <button className="add-button" onClick={() => handleAddFood("3")}>+</button>}
             </div>
             <section className="card-row">
-                {renderFoodCards("2", boissons)}
+                {renderFoodCards("boissons", boissons)}
+            </section>
+            <div className="section-header">
+                <h2 className="section-title">Entrées</h2>
+                {isEditing && <button className="add-button" onClick={() => handleAddFood("4")}>+</button>}
+            </div>
+            <section className="card-row">
+                {renderFoodCards("entrées", entrées)}
             </section>
             <div className="section-header">
                 <h2 className="section-title">Plats</h2>
                 {isEditing && <button className="add-button" onClick={() => handleAddFood("1")}>+</button>}
             </div>
             <section className="card-row">
-                {renderFoodCards("1", plats)}
+                {renderFoodCards("plats", plats)}
             </section>
             <div className="section-header">
                 <h2 className="section-title">Desserts</h2>
                 {isEditing && <button className="add-button" onClick={() => handleAddFood("2")}>+</button>}
             </div>
             <section className="card-row">
-                {renderFoodCards("3", desserts)}
+                {renderFoodCards("desserts", desserts)}
             </section>
             <div className="section-header">
                 <h2 className="section-title">Menus</h2>
-                {isEditing && <button className="add-button" onClick={() => handleAddFood("4")}>+</button>}
             </div>
             <section className="card-row">
-                {renderFoodCards("4", menus, true)}  // Passer "true" pour indiquer que c'est un menu
+                {renderFoodCards("menus", menus, true)}
             </section>
             {showModal && (
                 <div className="modal">
