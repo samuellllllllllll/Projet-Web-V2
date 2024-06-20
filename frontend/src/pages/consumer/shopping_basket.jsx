@@ -142,17 +142,12 @@ const ShoppingBasket = () => {
                     });
                 }
 
-                // Wait for 30 seconds
-                setTimeout(() => {
-                    document.querySelector('.shopping-basket-checkout-alert').textContent = 'Commande en cours';
-                }, 30000);
-
                 // Send the order to the server
                 try {
                     const response = axios.post('http://localhost:4545/orders', {
                         params: {
                             id_consumer: id_consumer,
-                            id_restaurant: (menus === null || menus.length === 0 ? products[0].id_restaurant : menus[0].id_restaurant),
+                            id_restaurant: (menus === null || menus.length === 0 ? products[0].restaurant_id : menus[0].id_restaurant),
                             restaurant_name: restaurant_name,                                                                                            
                             id_delivery_person: null,
                             price: price,
@@ -160,6 +155,7 @@ const ShoppingBasket = () => {
                             articles: (products === null ? [] : newProducts),
                         },
                     });
+                    console.log('Order sent:', response);
                 } catch (error) {
                     console.error('Error sending order:', error);
                 }

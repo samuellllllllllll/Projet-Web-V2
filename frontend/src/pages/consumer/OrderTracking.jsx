@@ -49,71 +49,82 @@ const OrderTracking = () => {
             <div className="order-tracking-container">
                 <div className="order-tracking-container-title">Suivi commandes</div>
                 <div className="order-tracking-container-content">
-                    {order.map((order) => (
+                    {/* Displau orders in descending date order*/}
+                    {order.map(order => (
                         <div key={order._id} className="order-tracking-container-content-items">
                             <div className="order-tracking-container-content-item-top">
                                 {/* If status=-1 <=> order refused by restaurant */}
                                 {order.status === -1 && (
-                                    <div className="order-tracking-container-content-item-top-cases">
-                                        <div className="order-tracking-container-content-item-top-case" id="refused"></div>
-                                        <div className="order-tracking-container-content-item-top-case" id="refused"></div>
-                                        <div className="order-tracking-container-content-item-top-case" id="refused"></div>
+                                    <div>
+                                        <div className="order-tracking-container-content-item-top-cases">
+                                            <div className="order-tracking-container-content-item-top-case" id="refused"></div>
+                                            <div className="order-tracking-container-content-item-top-case" id="refused"></div>
+                                            <div className="order-tracking-container-content-item-top-case" id="refused"></div>
+                                            <div className="order-tracking-container-content-item-top-case" id="refused"></div>
+                                        </div>
+                                        <div className="order-tracking-container-content-item-top-state" id="alert-refused">Commande refusée</div>
                                     </div>
                                 )}
                                 {/* If status=0 <=> basket validated */}
                                 {order.status === 0 && (
-                                    <div className="order-tracking-container-content-item-top-cases">
-                                        <div className="order-tracking-container-content-item-top-case" id="in-progress"></div>
-                                        <div className="order-tracking-container-content-item-top-case" id="to-do"></div>
-                                        <div className="order-tracking-container-content-item-top-case" id="to-do"></div>
+                                    <div>
+                                        <div className="order-tracking-container-content-item-top-cases">
+                                            <div className="order-tracking-container-content-item-top-case" id="in-progress"></div>
+                                            <div className="order-tracking-container-content-item-top-case" id="to-do"></div>
+                                            <div className="order-tracking-container-content-item-top-case" id="to-do"></div>
+                                            <div className="order-tracking-container-content-item-top-case" id="to-do"></div>
+                                        </div>
+                                        <div className="order-tracking-container-content-item-top-state">En attente de confirmation de la part du restaurant</div>
                                     </div>
                                 )}
                                 {/* If status=1 <=> order validated by restaurant */}
                                 {order.status === 1 && (
-                                    <div className="order-tracking-container-content-item-top-cases">
-                                        <div className="order-tracking-container-content-item-top-case" id="done"></div>
-                                        <div className="order-tracking-container-content-item-top-case" id="in-progress"></div>
-                                        <div className="order-tracking-container-content-item-top-case" id="to-do"></div>
-                                    </div>
-                                )}
-                                {/* If status=2 <=>  delivery in progress */}
-                                {order.status === 2 && (
-                                    <div className="order-tracking-container-content-item-top-cases">
-                                        <div className="order-tracking-container-content-item-top-case" id="done"></div>
-                                        <div className="order-tracking-container-content-item-top-case" id="done"></div>
-                                        <div className="order-tracking-container-content-item-top-case" id="in-progress"></div>
-                                    </div>
-                                )}
-                                {/* If status=3 <=> order delivered */}
-                                {order.status === 3 && (
-                                    <div className="order-tracking-container-content-item-top-cases">
-                                        <div className="order-tracking-container-content-item-top-case" id="done"></div>
-                                        <div className="order-tracking-container-content-item-top-case" id="done"></div>
-                                        <div className="order-tracking-container-content-item-top-case" id="done"></div>
-                                    </div>
-                                )}
-                                <div className="order-tracking-container-content-item-top-states">
-                                    {/* If status=-1 <=> order refused by restaurant */}
-                                    {order.status === -1 && (
-                                        <div className="order-tracking-container-content-item-top-state">Commande refusée par le restaurant</div>
-                                    )}
-                                    {/* If status=0 <=> basket validated */}
-                                    {order.status === 0 && (
-                                        <div className="order-tracking-container-content-item-top-state">En attente de confirmation de la part du restaurant</div>
-                                    )}
-                                    {/* If status=1 <=> order validated by restaurant */}
-                                    {order.status === 1 && (
+                                    <div>
+                                        <div className="order-tracking-container-content-item-top-cases">
+                                            <div className="order-tracking-container-content-item-top-case" id="done"></div>
+                                            <div className="order-tracking-container-content-item-top-case" id="in-progress"></div>
+                                            <div className="order-tracking-container-content-item-top-case" id="to-do"></div>
+                                            <div className="order-tracking-container-content-item-top-case" id="to-do"></div>
+                                        </div>
                                         <div className="order-tracking-container-content-item-top-state">En cours de préparation</div>
-                                    )}
-                                    {/* If status=2 <=>  delivery in progress */}
-                                    {order.status === 2 && (
-                                        <div className="order-tracking-container-content-item-top-state">En cours de livraison</div>
-                                    )}
-                                    {/* If status=3 <=> order delivered */}
-                                    {order.status === 3 && (
-                                        <div className="order-tracking-container-content-item-top-state">Commande livrée</div>
-                                    )}
-                                </div>
+                                    </div>
+                                )}
+                                {/* If status=2 <=> the delivery person is on his way to the restaurant */}
+                                {order.status === 2 && (
+                                    <div>
+                                        <div className="order-tracking-container-content-item-top-cases">
+                                            <div className="order-tracking-container-content-item-top-case" id="done"></div>
+                                            <div className="order-tracking-container-content-item-top-case" id="done"></div>
+                                            <div className="order-tracking-container-content-item-top-case" id="in-progress"></div>
+                                            <div className="order-tracking-container-content-item-top-case" id="to-do"></div>
+                                        </div>
+                                        <div className="order-tracking-container-content-item-top-state">Le livreur va récupérer votre commande</div>
+                                    </div>
+                                )}
+                                {/* If status=3 <=> the delivery person is on his way to the point of delivery */}
+                                {order.status === 3 && (
+                                    <div>
+                                        <div className="order-tracking-container-content-item-top-cases">
+                                            <div className="order-tracking-container-content-item-top-case" id="done"></div>
+                                            <div className="order-tracking-container-content-item-top-case" id="done"></div>
+                                            <div className="order-tracking-container-content-item-top-case" id="done"></div>
+                                            <div className="order-tracking-container-content-item-top-case" id="in-progress"></div>
+                                        </div>
+                                        <div className="order-tracking-container-content-item-top-state">Le livreur se dirige vers le point de livraison</div>
+                                    </div>
+                                )}
+                                {/* If status=4 <=> order delivered */}
+                                {order.status === 4 && (
+                                    <div>
+                                        <div className="order-tracking-container-content-item-top-cases">
+                                            <div className="order-tracking-container-content-item-top-case" id="done-done"></div>
+                                            <div className="order-tracking-container-content-item-top-case" id="done-done"></div>
+                                            <div className="order-tracking-container-content-item-top-case" id="done-done"></div>
+                                            <div className="order-tracking-container-content-item-top-case" id="done-done"></div>
+                                        </div>
+                                        <div className="order-tracking-container-content-item-top-state" id="alert-done">Commande livrée</div>
+                                    </div>
+                                )}
                             </div>
                             <div className="order-tracking-container-content-item-bottom">
                                 <div className="order-tracking-container-content-item-bottom-title">Commande #{order._id}</div>
