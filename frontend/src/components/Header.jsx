@@ -28,11 +28,8 @@ const Header = () => {
     // Function to update order tracking
     const updateOrderTracking = async () => {
         try {
-            const response = await axios.get('http://localhost:4545/orders/:id', {
-                params: {
-                    consumer_id: 1, // TO BE CHANGED
-                }
-            });
+            const consumer_id = 1;
+            const response = await axios.get(`http://localhost:4545/orders/consumers/${consumer_id}`);
             setOrderTracking(response.data);
         }
         catch (error) {

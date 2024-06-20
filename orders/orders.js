@@ -117,9 +117,8 @@ app.get("/orders/:order_number", (req, res) => {
     });
 });
 
-
-app.get("/orders/consumers/:user_id", (req, res) => {
-    Orders.find({ user_id: req.params.user_id }).then((orders) => {
+app.get("/orders/consumers/:consumer_id", (req, res) => {
+    Orders.find({ consumer_id: req.params.consumer_id }).then((orders) => {
         if (orders) {
             res.json(orders);
         } else {
