@@ -1,42 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import '../../styles/restaurant/menuEdit.css';
-import coca from '../../assets/coca.jpg';
-import fanta from '../../assets/fanta.jpg';
-import tacos from '../../assets/tacos.jpg';
-import kebab from '../../assets/Kebab.jpeg';
 import FoodCard from '../../components/FoodCard';
 import MobileHeader2 from '../../components/MobileHeader2.jsx';
 
 const MenuEdit = () => {
+    const [plats, setPlats] = useState([]);
+    const [boissons, setBoissons] = useState([]);
+    const [desserts, setDesserts] = useState([]);
     const [isEditing, setIsEditing] = useState(false);
-    const [foods, setFoods] = useState([
-        { id: 1, images: coca, name: "Coca Cola", price: "1€", category: "Boissons" },
-        { id: 2, images: fanta, name: "Fanta", price: "1€", category: "Boissons" },
-        { id: 3, images: kebab, name: "Kebab", price: "8€", category: "Plats" },
-        { id: 4, images: tacos, name: "Tacos", price: "8€", category: "Plats" },
-    ]);
-
     const [showModal, setShowModal] = useState(false);
     const [newFood, setNewFood] = useState({ images: '', name: '', price: '', category: '' });
+
+    useEffect(() => {
+        const fetchArticles = async () => {
+            try {
+                const responsePlats = await axios.get('http://localhost:4548/articles/restaurants/menu/1');
+                const responseBoissons = await axios.get('http://localhost:4548/articles/restaurants/menu/3');
+                const responseDesserts = await axios.get('http://localhost:4548/articles/restaurants/menu/2');
+
+                setPlats(responsePlats.data.rows);
+                setBoissons(responseBoissons.data.rows);
+                setDesserts(responseDesserts.data.rows);
+            } catch (error) {
+                console.error('Error fetching articles:', error);
+            }
+        };
+
+        fetchArticles();
+    }, []);
 
     const toggleEditMode = () => {
         setIsEditing(!isEditing);
     };
 
-    const removeFoodCard = (id) => {
-        setFoods(foods.filter(food => food.id !== id));
+    const removeFoodCard = (category, id) => {
+        if (category === '1') {
+            setPlats(plats.filter(plat => plat.id !== id));
+        } else if (category === '2') {
+            setBoissons(boissons.filter(boisson => boisson.id !== id));
+        } else if (category === '3') {
+            setDesserts(desserts.filter(dessert => dessert.id !== id));
+        }
     };
 
-    const renderFoodCards = (category) => {
-        return foods.filter(food => food.category === category).map(food => (
+    const renderFoodCards = (category, items) => {
+        return Array.isArray(items) && items.map(item => (
             <FoodCard
-                key={food.id}
-                id={food.id}
-                images={food.images}
-                name={food.name}
-                price={food.price}
+                key={item.id}
+                id={item.id}
+                images={item.url_picture}
+                name={item.name}
+                price={`${item.price}€`}
                 isEditing={isEditing}
-                onDelete={removeFoodCard}
+                onDelete={() => removeFoodCard(category, item.id)}
             />
         ));
     };
@@ -53,7 +70,13 @@ const MenuEdit = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setFoods([...foods, { ...newFood, id: foods.length + 1 }]);
+        if (newFood.category === '1') {
+            setPlats([...plats, { ...newFood, id: plats.length + 1 }]);
+        } else if (newFood.category === '2') {
+            setBoissons([...boissons, { ...newFood, id: boissons.length + 1 }]);
+        } else if (newFood.category === '3') {
+            setDesserts([...desserts, { ...newFood, id: desserts.length + 1 }]);
+        }
         setShowModal(false);
     };
 
@@ -66,22 +89,29 @@ const MenuEdit = () => {
             </nav>
             <div className="section-header">
                 <h2 className="section-title">Boissons</h2>
-                {isEditing && <button className="add-button" onClick={() => handleAddFood("Boissons")}>+</button>}
+                {isEditing && <button className="add-button" onClick={() => handleAddFood("2")}>+</button>}
             </div>
             <section className="card-row">
-                {renderFoodCards("Boissons")}
+                {renderFoodCards("2", boissons)}
             </section>
             <div className="section-header">
                 <h2 className="section-title">Plats</h2>
-                {isEditing && <button className="add-button" onClick={() => handleAddFood("Plats")}>+</button>}
+                {isEditing && <button className="add-button" onClick={() => handleAddFood("1")}>+</button>}
             </div>
             <section className="card-row">
-                {renderFoodCards("Plats")}
+                {renderFoodCards("1", plats)}
+            </section>
+            <div className="section-header">
+                <h2 className="section-title">Desserts</h2>
+                {isEditing && <button className="add-button" onClick={() => handleAddFood("3")}>+</button>}
+            </div>
+            <section className="card-row">
+                {renderFoodCards("3", desserts)}
             </section>
             {showModal && (
                 <div className="modal">
                     <div className="modal-content">
-                        <h2>Ajouter un nouveau plat</h2>
+                        <h2>Ajouter un nouvel article</h2>
                         <form onSubmit={handleSubmit}>
                             <label>
                                 Nom :
