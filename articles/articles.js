@@ -59,7 +59,7 @@ app.get("/articles", (req, res) => {
 app.post("/articles", (req, res) => {
 
     const insert_test = 'INSERT INTO articles(category, name, price, availability, url_picture, user_id) VALUES($1,$2,$3,$4,$5,$6)';
-    const values_test = [req.query.category, req.query.name, req.query.price, req.query.availability, req.query.url_picture, req.query.user_id];
+    const values_test = [req.body.params.category, req.body.params.name, req.body.params.price, req.body.params.availability, req.body.params.url_picture, req.body.params.user_id];
 
     database_postgres.query(insert_test, values_test, (err, result) => {
         if (err) {

@@ -3,6 +3,7 @@ import axios from 'axios';
 import '../../styles/restaurant/menuEdit.css';
 import FoodCard from '../../components/FoodCard';
 import MobileHeader2 from '../../components/MobileHeader2.jsx';
+import AladinMenu from '../../assets/aladin.jpg';  // Importer l'image
 
 const MenuEdit = () => {
     const [plats, setPlats] = useState([]);
@@ -16,17 +17,20 @@ const MenuEdit = () => {
     const [addCategory, setAddCategory] = useState(null);
     const [menus, setMenus] = useState([]);
 
-
     const fetchArticles = async () => {
         try {
             const responsePlats = await axios.get('http://localhost:4548/articles/restaurants/menu/1');
             const responseBoissons = await axios.get('http://localhost:4548/articles/restaurants/menu/3');
             const responseDesserts = await axios.get('http://localhost:4548/articles/restaurants/menu/2');
-            const responseMenus = await axios.get('http://localhost:4548/articles/restaurants/menu/4');
+            const responseMenus = await axios.get('http://localhost:4546/restaurants/menus', {
+                params: {
+                    id_user: 2,
+                }
+            });
             setPlats(responsePlats.data.rows);
             setBoissons(responseBoissons.data.rows);
             setDesserts(responseDesserts.data.rows);
-            setMenus(responseMenus.data.rows);
+            setMenus(responseMenus.data);
         } catch (error) {
             console.error('Error fetching articles:', error);
         }
@@ -45,12 +49,12 @@ const MenuEdit = () => {
         }
     };
 
-    const renderFoodCards = (category, items) => {
+    const renderFoodCards = (category, items, isMenu = false) => {
         return Array.isArray(items) && items.map(item => (
             <FoodCard
                 key={item.id}
                 id={item.id}
-                images={item.url_picture}
+                images={isMenu ? AladinMenu : item.url_picture}  // Utiliser l'image AladinMenu pour les menus
                 name={item.name}
                 price={`${item.price}€`}
                 isEditing={isEditing}
@@ -85,12 +89,15 @@ const MenuEdit = () => {
                 console.log('Response from server:', response.data);
             } else {
                 // Ajout d'un nouvel article
+                console.log(addCategory);
                 const response = await axios.post('http://localhost:4548/articles', {
                     params: {
                         name: newFood.name,
                         price: newFood.price,
                         url_picture: newFood.images,
-                        category: addCategory
+                        category: addCategory,
+                        user_id: 2,
+                        availability: true
                     }
                 });
                 console.log('Response from server:', response.data);
@@ -137,7 +144,6 @@ const MenuEdit = () => {
         setSelectedFood(null);
     };
 
-
     return (
         <div className="menu-page">
             <MobileHeader2 className={`header-black ${isModalOpen ? 'modal-open' : ''}`} />
@@ -147,7 +153,7 @@ const MenuEdit = () => {
             </nav>
             <div className="section-header">
                 <h2 className="section-title">Boissons</h2>
-                {isEditing && <button className="add-button" onClick={() => handleAddFood("2")}>+</button>}
+                {isEditing && <button className="add-button" onClick={() => handleAddFood("3")}>+</button>}
             </div>
             <section className="card-row">
                 {renderFoodCards("2", boissons)}
@@ -161,7 +167,7 @@ const MenuEdit = () => {
             </section>
             <div className="section-header">
                 <h2 className="section-title">Desserts</h2>
-                {isEditing && <button className="add-button" onClick={() => handleAddFood("3")}>+</button>}
+                {isEditing && <button className="add-button" onClick={() => handleAddFood("2")}>+</button>}
             </div>
             <section className="card-row">
                 {renderFoodCards("3", desserts)}
@@ -171,7 +177,7 @@ const MenuEdit = () => {
                 {isEditing && <button className="add-button" onClick={() => handleAddFood("4")}>+</button>}
             </div>
             <section className="card-row">
-                {renderFoodCards("4", menus)}
+                {renderFoodCards("4", menus, true)}  // Passer "true" pour indiquer que c'est un menu
             </section>
             {showModal && (
                 <div className="modal">
