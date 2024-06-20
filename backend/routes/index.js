@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const path = require('path');
 const cors = require('cors');
-const { generateAccessJWT, validateRefreshToken } = require('../tokenUtils/token.js'); 
+const { generateAccessJWT, generateRefreshToken, validateRefreshToken } = require('../tokenUtils/token.js'); 
 const loginRouter = require('../microservice login/login.js'); 
 
 dotenv.config();
@@ -25,11 +25,18 @@ app.post('/api/token/auth', (req, res) => {
   const storedToken = validateRefreshToken(refreshToken);
   if (!storedToken) return res.sendStatus(403);
 
-  const user = storedToken.username;
+  const email = storedToken.email;
   const role = storedToken.role;
+  const id = storedToken.id;
 
-  const newAccessToken = generateAccessJWT(user, role);
-  res.json({ accessToken: newAccessToken });
+  const newAccessToken = generateAccessJWT(email, role);
+  const newRefreshToken = generateRefreshToken(email, id, role);
+
+  // Remove the old refresh token and store the new one
+  refreshTokens = refreshTokens.filter(token => token.refreshToken !== refreshToken);
+  refreshTokens.push({ refreshToken: newRefreshToken, email, id, role });
+
+  res.json({ accessToken: newAccessToken, refreshToken: newRefreshToken, id, role });
 });
 
 const port = process.env.PORT || 3001;

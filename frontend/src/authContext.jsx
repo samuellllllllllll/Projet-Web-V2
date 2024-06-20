@@ -22,8 +22,13 @@ export const AuthProvider = ({ children }) => {
           },
         });
         const newAccessToken = response.data.accessToken;
+        const newRefreshToken = response.data.refreshToken;
         setAccessToken(newAccessToken);
+        setRefreshToken(newRefreshToken);
+        setId(response.data.id); // Set the user ID
         localStorage.setItem('accessToken', newAccessToken);
+        localStorage.setItem('refreshToken', newRefreshToken);
+        localStorage.setItem('id', response.data.id); // Store the user ID
         return newAccessToken;
       } catch (error) {
         console.error('Error refreshing access token:', error);
@@ -40,6 +45,7 @@ export const AuthProvider = ({ children }) => {
         console.log('Access token is expired, attempting to refresh...');
         await refreshAccessToken();
       } else {
+        console.log('Access token is valid.');
       }
       setIsLoading(false);
     };
@@ -79,14 +85,14 @@ export const AuthProvider = ({ children }) => {
 
   const isTokenExpired = (token) => {
     if (!token) return true;
-    const { exp } = jwtDecode(token); // Decode the token to get the expiration time
-    const isExpired = Date.now() >= exp * 1000; // Check if the current time is past the expiration time
+    const { exp } = jwtDecode(token);
+    const isExpired = Date.now() >= exp * 1000;
     console.log('Token expiration check:', isExpired ? 'expired' : 'valid');
     return isExpired;
   };
 
   return (
-    <AuthContext.Provider value={{ accessToken, login, logout, role, id, isTokenExpired, refreshAccessToken, isLoading}}>
+    <AuthContext.Provider value={{ accessToken, login, logout, role, id, isTokenExpired, refreshAccessToken, isLoading }}>
       {children}
     </AuthContext.Provider>
   );

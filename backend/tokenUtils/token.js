@@ -10,13 +10,13 @@ function generateAccessJWT(email, role) {
   return jwt.sign(
     { email, role },
     process.env.TOKEN_SECRET,
-    { expiresIn: '3000s' }
+    { expiresIn: '3000s' } // 30 minutes
   );
 }
 
-function generateRefreshToken(email) {
+function generateRefreshToken(email, id, role) {
   const refreshToken = crypto.randomBytes(64).toString('hex');
-  refreshTokens.push({ refreshToken, email });
+  refreshTokens.push({ refreshToken, email, id, role });
   return refreshToken;
 }
 
