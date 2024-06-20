@@ -10,7 +10,7 @@ dotenv.config();
 
 // Enable CORS
 app.use(cors({
-    origin: 'http://localhost:5173'
+    origin: process.env.CORS_ORIGIN
 }));
 
 app.use(bodyParser.json());
@@ -91,3 +91,48 @@ app.get("/restaurants/address", (req, res) => {
         }
     });
 });
+
+//app post
+app.post("/restaurants/menus/:name/:price/:starter/:main_dish/:dessert/:drink/:id_user", (req, res)=>{
+    const insert_test = 'INSERT INTO menus(name, price, starter, main_dish, dessert, drink, id_user) VALUES($1,$2,$3,$4,$5,$6,$7)';
+    const values_test = [req.params.name,req.params.price, req.params.starter, req.params.main_dish, req.params.dessert, req.params.drink, req.params.id_user];
+    
+    database_postgres.query(insert_test, values_test, (err, result) =>{
+        if (err){
+            console.error('Error inserting data', err);
+            console.log("Careful this request is using parameters");
+        }
+        else {
+            console.log("Great success !");
+            res.send("success");
+        }
+    })
+});
+
+//app put
+app.put("/restaurants/menus/modify/:name/:price/:starter/:main_dish/:dessert/:drink/:id", (req, res)=>{
+    const query_sql = "UPDATE menus SET name = $1, price = $2, starter = $3, main_dish = $4, dessert = $5, drink = $6 WHERE id = $7";
+    const values_sql = [req.params.name, req.params.price, req.params.starter, req.params.main_dish, req.params.dessert, req.params.drink, req.params.id];
+    database_postgres.query(query_sql, values_sql, (err, result)=>{
+        if (err) {
+            console.error('Error executing the query', err);
+            console.log("Careful this route is using params instead of query");
+        }
+        else {
+            res.send("Succesfully modified");
+        }
+    })
+});
+
+app.delete("/restaurants/menus/:id", (req, res)=>{
+    const query_sql = "DELETE FROM menus WHERE id = $1";
+    const values_sql = [req.params.id];
+    database_postgres.query(query_sql, values_sql, (err, result)=> {
+        if (err) {
+            console.error('Error executing the query ', err)
+        } else {
+            res.send("Succesfully deleted");
+
+        }
+    })
+})
