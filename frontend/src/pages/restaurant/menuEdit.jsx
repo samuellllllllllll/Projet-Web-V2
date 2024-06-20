@@ -56,44 +56,59 @@ const MenuEdit = () => {
         ));
     };
 
-    const handleAddFood = (category) => {
-        setNewFood({ ...newFood, category });
-        setShowModal(true);
-        setIsModalOpen(true);
-    };
-
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setNewFood({ ...newFood, [name]: value });
+        setNewFood((prevFood) => ({
+            ...prevFood,
+            [name]: value
+        }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // Utilisation correcte de axios.put avec les données directement passées
-            const response = await axios.put(`http://localhost:4548/articles/restaurants/menu/modify`, {
-                params: {
+            if (selectedFood) {
+                // Modification d'un article existant
+                const response = await axios.put(`http://localhost:4548/articles/restaurants/menu/modify`, {
                     name: newFood.name,
                     price: newFood.price,
                     url_picture: newFood.images,
                     category: newFood.category,
                     id: selectedFood.id
-                }
-            });
-            console.log('Response from server:', response.data);
-            console.log(newFood.name)
+                });
+                console.log('Response from server:', response.data);
+            } else {
+                // Ajout d'un nouvel article
+                const response = await axios.post('http://localhost:4548/articles', {
+                    name: newFood.name,
+                    price: newFood.price,
+                    url_picture: newFood.images,
+                    category: newFood.category
+                });
+                console.log('Response from server:', response.data);
+            }
 
-            // Mise à jour locale des articles après modification
+            // Mise à jour locale des articles après modification ou ajout
             await fetchArticles();
 
             // Réinitialisation des états et fermeture du modal
             setShowModal(false);
             setIsModalOpen(false);
-            setSelectedFood(null);
+            setSelectedFood(null); // Réinitialiser selectedFood après chaque opération
+
+            // Réinitialisation de newFood pour vider les champs du formulaire
+            setNewFood({ images: '', name: '', price: '', category: '' });
 
         } catch (error) {
-            console.error('Error updating article:', error);
+            console.error('Error updating/adding article:', error);
         }
+    };
+
+    const handleAddFood = (category) => {
+        setSelectedFood(null); // Assurez-vous que selectedFood est null lors de l'ajout
+        setNewFood({ images: '', name: '', price: '', category }); // Réinitialisation complète de newFood
+        setShowModal(true);
+        setIsModalOpen(true);
     };
 
     const openEditModal = (food) => {
