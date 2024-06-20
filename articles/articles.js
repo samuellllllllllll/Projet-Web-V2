@@ -64,9 +64,11 @@ app.post("/articles", (req, res)=>{
     database_postgres.query(insert_test, values_test, (err, result) =>{
         if (err){
             console.error('Error inserting data', err);
+            console.log("Careful this request is using query");
         }
         else {
             console.log("Great success !");
+            res.send("success");
         }
     })
 })
@@ -96,6 +98,34 @@ app.get("/articles/restaurants/menu/:category_food", (req, res)=> {
             res.status(500).send('Error executing query');
         } else{
             res.json(result);
+        }
+    })
+})
+
+app.delete("/articles/restaurants/menu/:id", (req, res)=>{
+    const query_sql = "DELETE FROM articles WHERE id = $1";
+    const values_sql = [req.params.id];
+    database_postgres.query(query_sql, values_sql, (err, result)=> {
+        if (err) {
+            console.error('Error executing the query ', err)
+        } else {
+            res.send("Succesfully deleted");
+
+        }
+    })
+})
+
+app.put("/articles/restaurants/menu/modify", (req, res)=>{
+    //const decodedUrl = encodeURIComponent(req.params.url);
+    const query_sql = "UPDATE articles SET name = $1, price = $2,category = $3, url_picture = $4 WHERE id = $5";
+    const values_sql = [req.query.name, req.query.price,req.query.category, req.query.url, req.query.id];
+    database_postgres.query(query_sql, values_sql, (err, result)=>{
+        if (err) {
+            console.error('Error executing the query', err);
+            console.log("Careful this route is using query instead of params");
+        }
+        else {
+            res.send("Succesfully modified");
         }
     })
 })
