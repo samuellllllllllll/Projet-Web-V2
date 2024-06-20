@@ -5,7 +5,6 @@ const path = require('path');
 const cors = require('cors');
 const { generateAccessJWT, validateRefreshToken } = require('../tokenUtils/token.js'); 
 const loginRouter = require('../microservice login/login.js'); 
-const { authenticateToken, authorizeRoles } = require('../routes/authChecker.js');
 
 dotenv.config();
 const app = express();
