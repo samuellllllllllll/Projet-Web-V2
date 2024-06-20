@@ -10,11 +10,8 @@ const OrderTracking = () => {
     
     const getOrder = async () => {
         try {
-            const response = await axios.get('http://localhost:4545/orders/:id', {
-                params: {
-                    consumer_id: 1, // TO BE CHANGED
-                }
-            });
+            const consumer_id = 1;
+            const response = await axios.get(`http://localhost:4545/orders/consumers/${consumer_id}`);
             setOrder(response.data);
         } catch (error) {
             console.error(error);

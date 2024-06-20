@@ -1,10 +1,26 @@
 const express = require("express");
 const { Client } = require('pg');
-const app = express();
 const bodyParser = require("body-parser");
+const cors = require("cors");
+const dotenv = require("dotenv");
+
+dotenv.config();
+const app = express();
 
 app.use(bodyParser.json());
-const database_postgres = new Client({user: 'user',password: 'mysecretpassword',host: '0.0.0.0',port: '8001',database: 'CESIEats',});
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors({
+  origin: 'http://localhost:5173'
+}));
+
+const database_postgres = new Client({
+  host: process.env.POSTGRE_DB_HOST,
+  port: process.env.POSTGRE_DB_PORT,
+  user: process.env.POSTGRE_DB_USER,
+  password: process.env.POSTGRE_DB_PASSWORD,
+  database: process.env.POSTGRE_DB_DATABASE,
+  ssl: false
+});
 
 
 database_postgres.connect()

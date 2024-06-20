@@ -53,6 +53,7 @@ const Restaurant_page = () => {
                 const response = await axios.get('http://localhost:4548/articles/restaurant', {
                     params: { user_id: id },
                 });
+                console.log(response.data);
                 setProducts(response.data);
             } catch (error) {
                 console.error('Error fetching data:', error);

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import AuthContext from '../authContext.jsx';
 import '../styles/login_signin.css';
 import logo from '../assets/logo.png';
+import axios from 'axios';
 
 const LoginSignIn = () => {
   const [signInClicked, setSignInClicked] = useState(false);
@@ -29,8 +30,7 @@ const LoginSignIn = () => {
     try {
       const success = await login(data.email, data.password);
       if (success) {
-        console.log('Navigation after login'); // Debugging log
-                if (data.email === "vincent@vincent.fr") {
+          if (data.email === "vincent@vincent.fr") {
           navigate('/consommateur');
         } else if (data.email === "samuel@samuel.fr") {
           navigate('/livreur');
