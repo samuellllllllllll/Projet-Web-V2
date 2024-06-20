@@ -13,6 +13,8 @@ const MenuEdit = () => {
     const [newFood, setNewFood] = useState({ images: '', name: '', price: '', category: '' });
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedFood, setSelectedFood] = useState(null);
+    const [addCategory, setAddCategory] = useState(null);
+    const [menus, setMenus] = useState([]);
 
 
     const fetchArticles = async () => {
@@ -20,9 +22,11 @@ const MenuEdit = () => {
             const responsePlats = await axios.get('http://localhost:4548/articles/restaurants/menu/1');
             const responseBoissons = await axios.get('http://localhost:4548/articles/restaurants/menu/3');
             const responseDesserts = await axios.get('http://localhost:4548/articles/restaurants/menu/2');
+            const responseMenus = await axios.get('http://localhost:4548/articles/restaurants/menu/4');
             setPlats(responsePlats.data.rows);
             setBoissons(responseBoissons.data.rows);
             setDesserts(responseDesserts.data.rows);
+            setMenus(responseMenus.data.rows);
         } catch (error) {
             console.error('Error fetching articles:', error);
         }
@@ -70,20 +74,24 @@ const MenuEdit = () => {
             if (selectedFood) {
                 // Modification d'un article existant
                 const response = await axios.put(`http://localhost:4548/articles/restaurants/menu/modify`, {
-                    name: newFood.name,
-                    price: newFood.price,
-                    url_picture: newFood.images,
-                    category: newFood.category,
-                    id: selectedFood.id
+                    params: {
+                        name: newFood.name,
+                        price: newFood.price,
+                        url_picture: newFood.images,
+                        category: newFood.category,
+                        id: selectedFood.id
+                    }
                 });
                 console.log('Response from server:', response.data);
             } else {
                 // Ajout d'un nouvel article
                 const response = await axios.post('http://localhost:4548/articles', {
-                    name: newFood.name,
-                    price: newFood.price,
-                    url_picture: newFood.images,
-                    category: newFood.category
+                    params: {
+                        name: newFood.name,
+                        price: newFood.price,
+                        url_picture: newFood.images,
+                        category: addCategory
+                    }
                 });
                 console.log('Response from server:', response.data);
             }
@@ -105,6 +113,7 @@ const MenuEdit = () => {
     };
 
     const handleAddFood = (category) => {
+        setAddCategory(category);
         setSelectedFood(null); // Assurez-vous que selectedFood est null lors de l'ajout
         setNewFood({ images: '', name: '', price: '', category }); // Réinitialisation complète de newFood
         setShowModal(true);
@@ -156,6 +165,13 @@ const MenuEdit = () => {
             </div>
             <section className="card-row">
                 {renderFoodCards("3", desserts)}
+            </section>
+            <div className="section-header">
+                <h2 className="section-title">Menus</h2>
+                {isEditing && <button className="add-button" onClick={() => handleAddFood("4")}>+</button>}
+            </div>
+            <section className="card-row">
+                {renderFoodCards("4", menus)}
             </section>
             {showModal && (
                 <div className="modal">
