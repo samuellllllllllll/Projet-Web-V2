@@ -12,37 +12,32 @@ const MenuEdit = () => {
     const [showModal, setShowModal] = useState(false);
     const [newFood, setNewFood] = useState({ images: '', name: '', price: '', category: '' });
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedFood, setSelectedFood] = useState(null);
 
+
+    const fetchArticles = async () => {
+        try {
+            const responsePlats = await axios.get('http://localhost:4548/articles/restaurants/menu/1');
+            const responseBoissons = await axios.get('http://localhost:4548/articles/restaurants/menu/3');
+            const responseDesserts = await axios.get('http://localhost:4548/articles/restaurants/menu/2');
+            setPlats(responsePlats.data.rows);
+            setBoissons(responseBoissons.data.rows);
+            setDesserts(responseDesserts.data.rows);
+        } catch (error) {
+            console.error('Error fetching articles:', error);
+        }
+    };
 
     useEffect(() => {
-        const fetchArticles = async () => {
-            try {
-                const responsePlats = await axios.get('http://localhost:4548/articles/restaurants/menu/1');
-                const responseBoissons = await axios.get('http://localhost:4548/articles/restaurants/menu/3');
-                const responseDesserts = await axios.get('http://localhost:4548/articles/restaurants/menu/2');
-
-                setPlats(responsePlats.data.rows);
-                setBoissons(responseBoissons.data.rows);
-                setDesserts(responseDesserts.data.rows);
-            } catch (error) {
-                console.error('Error fetching articles:', error);
-            }
-        };
-
         fetchArticles();
     }, []);
 
-    const toggleEditMode = () => {
-        setIsEditing(!isEditing);
-    };
-
-    const removeFoodCard = (category, id) => {
-        if (category === '1') {
-            setPlats(plats.filter(plat => plat.id !== id));
-        } else if (category === '2') {
-            setBoissons(boissons.filter(boisson => boisson.id !== id));
-        } else if (category === '3') {
-            setDesserts(desserts.filter(dessert => dessert.id !== id));
+    const deleteArticles = async (articleId) => {
+        try {
+            await axios.delete(`http://localhost:4548/articles/restaurants/menu/${articleId}`);
+            fetchArticles();
+        } catch (error) {
+            console.error('Error deleting article:', error);
         }
     };
 
@@ -55,7 +50,8 @@ const MenuEdit = () => {
                 name={item.name}
                 price={`${item.price}€`}
                 isEditing={isEditing}
-                onDelete={() => removeFoodCard(category, item.id)}
+                onDelete={() => deleteArticles(item.id)}
+                onEdit={isEditing ? () => openEditModal(item) : undefined}
             />
         ));
     };
@@ -71,18 +67,52 @@ const MenuEdit = () => {
         setNewFood({ ...newFood, [name]: value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (newFood.category === '1') {
-            setPlats([...plats, { ...newFood, id: plats.length + 1 }]);
-        } else if (newFood.category === '2') {
-            setBoissons([...boissons, { ...newFood, id: boissons.length + 1 }]);
-        } else if (newFood.category === '3') {
-            setDesserts([...desserts, { ...newFood, id: desserts.length + 1 }]);
+        try {
+            // Utilisation correcte de axios.put avec les données directement passées
+            const response = await axios.put(`http://localhost:4548/articles/restaurants/menu/modify`, {
+                params: {
+                    name: newFood.name,
+                    price: newFood.price,
+                    url_picture: newFood.images,
+                    category: newFood.category,
+                    id: selectedFood.id
+                }
+            });
+            console.log('Response from server:', response.data);
+            console.log(newFood.name)
+
+            // Mise à jour locale des articles après modification
+            await fetchArticles();
+
+            // Réinitialisation des états et fermeture du modal
+            setShowModal(false);
+            setIsModalOpen(false);
+            setSelectedFood(null);
+
+        } catch (error) {
+            console.error('Error updating article:', error);
         }
-        setShowModal(false);
-        setIsModalOpen(false);
     };
+
+    const openEditModal = (food) => {
+        setSelectedFood(food);
+        setNewFood({
+            images: food.url_picture,
+            name: food.name,
+            price: food.price,
+            category: food.category
+        });
+        setShowModal(true);
+        setIsModalOpen(true);
+    };
+
+    const toggleEditMode = () => {
+        setIsEditing(!isEditing);
+        setSelectedFood(null);
+    };
+
 
     return (
         <div className="menu-page">
@@ -115,7 +145,7 @@ const MenuEdit = () => {
             {showModal && (
                 <div className="modal">
                     <div className="modal-content">
-                        <h2>Ajouter un nouvel article</h2>
+                        <h2>{selectedFood ? 'Modifier un article' : 'Ajouter un nouvel article'}</h2>
                         <form onSubmit={handleSubmit}>
                             <label className="form-label">
                                 Nom :
@@ -129,7 +159,7 @@ const MenuEdit = () => {
                                 Image URL :
                                 <input type="text" name="images" value={newFood.images} onChange={handleInputChange} />
                             </label>
-                            <button type="submit">Ajouter</button>
+                            <button type="submit">{selectedFood ? 'Modifier' : 'Ajouter'}</button>
                             <button type="button" onClick={() => setShowModal(false)}>Annuler</button>
                         </form>
                     </div>
