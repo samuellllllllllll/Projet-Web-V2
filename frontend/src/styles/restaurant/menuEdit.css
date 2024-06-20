@@ -1,8 +1,8 @@
 .menu-page {
     width: 100%;
-    height: 100vh; /* S'assure que la page prend toute la hauteur de la fenêtre */
+    height: 100vh;
     display: flex;
-    flex-direction: column; /* Permet une disposition verticale */
+    flex-direction: column;
 }
 
 .menu-header {
@@ -10,29 +10,22 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    position: relative; /* Assure que le header est positionné relativement */
-    z-index: 100; /* Assure que le header est au-dessus d'autres éléments */
-}
-
-.logo {
-  width: 10%;
-}
-
-.menuIcon {
-width: 3%;
+    position: relative;
+    z-index: 100;
 }
 
 .menu-nav {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Pour séparer les éléments à chaque extrémité */
-    height: 100vh; /* Assure que le nav prend toute la hauteur de .menu-page */
-    padding: 0 20px; /* Ajoute un padding pour l'espacement entre les éléments */
+    justify-content: center; /* Centre les éléments horizontalement */
+    padding: 20px;
 }
 
 .menu-title {
-margin-left: 650px; 
-color: #240046;
+    color: #240046;
+    text-align: center;
+    flex: 1; /* Permet au titre de prendre l'espace disponible */
+    margin-left: 250px;
 }
 
 .edit-button {
@@ -42,72 +35,139 @@ color: #240046;
 }
 
 .menu-section {
-display: flex;
-flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .section-title {
-margin-right: auto;
-margin-left: 50px;
-color: #FF7B00;
+    margin-right: 800px;
+    color: #FF7B00;
 }
 
-.card-row{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+.section-header {
+    display: flex;
+    flex-direction: row;
+    margin-right: 200px;
 }
 
-.card-right{
-  margin-right: 150px;
+.card-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin: 20px;
 }
 
-.card-left{
-margin-left: 150px;
+.header-black.modal-open {
+    /* Styles pour le header en mode modal */
+    background: rgba(0, 0, 0, 0.5);
+}
+
+
+.add-button {
+    position: relative;
+    background-color: #FF7B00;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 1.2em;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: 800px;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.modal-content .form-label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.modal-content .form-label > input {
+    width: 100%; /* Utilise toute la largeur disponible */
+    padding: 5px;
+    margin-top: 5px; /* Ajustement du margin-top si nécessaire */
+}
+
+
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-content input {
+    padding: 5px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.modal-content button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #FF7B00;
+    color: white;
+    margin-top: 10px;
+}
+
+.modal-content button[type="button"] {
+    background-color: #ccc;
 }
 
 @media screen and (max-width: 768px) {
-    .menu-title {   
-      margin-left: 130px;
+    .menu-title {
+        margin-left: 130px;
         text-align: center;
         font-size: 1.8em;
     }
 
-    .menu-nav{
-      width: auto;
-      height: auto;
+    .menu-nav {
+        width: auto;
+        height: auto;
     }
 
-    .logo{
-      margin-left: -2%;
-      width: 30%;
-    }
-
-    .menuIcon{
-      width: 6%;
-    }
-
-    .edit-button{
-      margin-left: 18%;
+    .edit-button {
+        margin-left: 18%;
     }
 
     .menu-section {
-        align-items: center; /* Centrer verticalement les éléments */
+        align-items: center;
     }
 
     .section-title {
-        margin-left: 0%;
+        margin-left: 750px;
     }
 
     .card-row {
-        flex-direction: row; /* Empiler les cartes verticalement */
-    }
-
-    .card-right{
-        margin-right: 5%;
-    }  
-
-    .card-left {
-        margin: 0; /* Supprimer les marges latérales pour centrer les cartes */
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin: 10px;
     }
 }
