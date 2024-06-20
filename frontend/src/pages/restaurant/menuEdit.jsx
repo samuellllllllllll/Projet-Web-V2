@@ -3,7 +3,7 @@ import axios from 'axios';
 import '../../styles/restaurant/menuEdit.css';
 import FoodCard from '../../components/FoodCard';
 import MobileHeader2 from '../../components/MobileHeader2.jsx';
-import AladinMenu from '../../assets/aladin.jpg';  // Importer l'image
+import AladinMenu from '../../assets/aladin.jpg';
 
 const MenuEdit = () => {
     const [plats, setPlats] = useState([]);
@@ -17,6 +17,10 @@ const MenuEdit = () => {
     const [addCategory, setAddCategory] = useState(null);
     const [menus, setMenus] = useState([]);
     const [entrées, setEntrées] = useState([]);
+    const [hasStarter, setHasStarter] = useState(false);
+    const [hasMainDish, setHasMainDish] = useState(false);
+    const [hasDessert, setHasDessert] = useState(false);
+    const [hasDrink, setHasDrink] = useState(false);
 
     const fetchArticles = async () => {
         try {
@@ -45,8 +49,13 @@ const MenuEdit = () => {
 
     const deleteArticles = async (articleId) => {
         try {
-            await axios.delete(`http://localhost:4548/articles/restaurants/menu/${articleId}`);
-            fetchArticles();
+            if (selectedFood.category === "menus") {
+                await axios.delete(`http://localhost:4548/articles/restaurants/menu/${articleId}`);
+                fetchArticles();
+            } else {
+                await axios.delete(`http://localhost:4546/restaurants/menus/${articleId}`);
+                fetchArticles();
+            }
         } catch (error) {
             console.error('Error deleting article:', error);
         }
@@ -60,7 +69,7 @@ const MenuEdit = () => {
             <FoodCard
                 key={item.id}
                 id={item.id}
-                images={isMenu ? AladinMenu : item.url_picture}  // Utiliser l'image AladinMenu pour les menus
+                images={isMenu ? AladinMenu : item.url_picture}
                 name={item.name}
                 price={`${item.price}€`}
                 isEditing={isEditing}
@@ -71,42 +80,70 @@ const MenuEdit = () => {
     };
 
     const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setNewFood((prevFood) => ({
-            ...prevFood,
-            [name]: value
-        }));
+        const { name, value, type, checked } = e.target;
+        if (type === 'checkbox') {
+            switch (name) {
+                case 'starter':
+                    setHasStarter(checked);
+                    break;
+                case 'main_dish':
+                    setHasMainDish(checked);
+                    break;
+                case 'dessert':
+                    setHasDessert(checked);
+                    break;
+                case 'drink':
+                    setHasDrink(checked);
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            setNewFood((prevFood) => ({
+                ...prevFood,
+                [name]: value
+            }));
+        }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             if (selectedFood) {
-                // Modification d'un article existant
-                const response = await axios.put(`http://localhost:4548/articles/restaurants/menu/modify`, {
-                    params: {
-                        name: newFood.name,
-                        price: newFood.price,
-                        url_picture: newFood.images,
-                        category: newFood.category,
-                        id: selectedFood.id
-                    }
-                });
-                console.log('Response from server:', response.data);
+                if (selectedFood?.category === "menus") {
+                    const response = await axios.put(`http://localhost:4546/restaurants/menus/modify/${newFood.name}/${newFood.price}/${hasStarter}/${hasMainDish}/${hasDessert}/${hasDrink}/${selectedFood.id}`);
+                    console.log('Response from server:', response.data);
+                } else {
+                    // Modification d'un article existant
+                    const response = await axios.put(`http://localhost:4548/articles/restaurants/menu/modify`, {
+                        params: {
+                            name: newFood.name,
+                            price: newFood.price,
+                            url_picture: newFood.images,
+                            category: newFood.category,
+                            id: selectedFood.id
+                        }
+                    });
+                    console.log('Response from server:', response.data);
+                }
             } else {
-                // Ajout d'un nouvel article
-                console.log(addCategory);
-                const response = await axios.post('http://localhost:4548/articles', {
-                    params: {
-                        name: newFood.name,
-                        price: newFood.price,
-                        url_picture: newFood.images,
-                        category: addCategory,
-                        user_id: 2,
-                        availability: true
-                    }
-                });
-                console.log('Response from server:', response.data);
+                if (addCategory === "menus") {
+                    const response = await axios.post(`http://localhost:4546/restaurants/menus/${newFood.name}/${newFood.price}/${hasStarter}/${hasMainDish}/${hasDessert}/${hasDrink}/2`);
+                } else {
+                    // Ajout d'un nouvel article
+                    console.log(addCategory);
+                    const response = await axios.post('http://localhost:4548/articles', {
+                        params: {
+                            name: newFood.name,
+                            price: newFood.price,
+                            url_picture: newFood.images,
+                            category: addCategory,
+                            user_id: 2,
+                            availability: true
+                        }
+                    });
+                    console.log('Response from server:', response.data);
+                }
             }
 
             // Mise à jour locale des articles après modification ou ajout
@@ -141,6 +178,34 @@ const MenuEdit = () => {
             price: food.price,
             category: food.category
         });
+
+        if (food.category === 'menus') {
+            if (hasStarter === 1) {
+                setHasStarter(checked);
+            }
+
+            if (hasMainDish === 1) {
+                setHasMainDish(checked);
+            }
+
+            if (hasDrink === 1) {
+                setHasDrink(checked);
+            }
+
+            if (hasDessert === 1) {
+                setHasDessert(checked);
+            }
+
+            setHasStarter(true);
+            setHasMainDish(true);
+            setHasDessert(true);
+            setHasDrink(true);
+        } else {
+            setHasStarter(false);
+            setHasMainDish(false);
+            setHasDessert(false);
+            setHasDrink(false);
+        }
         setShowModal(true);
         setIsModalOpen(true);
     };
@@ -187,6 +252,7 @@ const MenuEdit = () => {
             </section>
             <div className="section-header">
                 <h2 className="section-title">Menus</h2>
+                {isEditing && <button className="add-button" onClick={() => handleAddFood("menus")}>+</button>}
             </div>
             <section className="card-row">
                 {renderFoodCards("menus", menus, true)}
@@ -206,8 +272,30 @@ const MenuEdit = () => {
                             </label>
                             <label className="form-label">
                                 Image URL :
-                                <input type="text" name="images" value={newFood.images} onChange={handleInputChange} />
+                                {addCategory !== "menus" && (
+                                    <input type="text" name="images" value={newFood.images} onChange={handleInputChange} />
+                                )}
                             </label>
+                            {addCategory === "menus" && (
+                                <>
+                                    <label className="form-label checkbox-label">
+                                        Entrées :
+                                        <input type="checkbox" name="starter" checked={hasStarter} onChange={handleInputChange} className="checkbox-input" />
+                                    </label>
+                                    <label className="form-label checkbox-label">
+                                        Plats :
+                                        <input type="checkbox" name="main_dish" checked={hasMainDish} onChange={handleInputChange} className="checkbox-input" />
+                                    </label>
+                                    <label className="form-label checkbox-label">
+                                        Desserts :
+                                        <input type="checkbox" name="dessert" checked={hasDessert} onChange={handleInputChange} className="checkbox-input" />
+                                    </label>
+                                    <label className="form-label checkbox-label">
+                                        Boissons :
+                                        <input type="checkbox" name="drink" checked={hasDrink} onChange={handleInputChange} className="checkbox-input" />
+                                    </label>
+                                </>
+                            )}
                             <button type="submit">{selectedFood ? 'Modifier' : 'Ajouter'}</button>
                             <button type="button" onClick={() => setShowModal(false)}>Annuler</button>
                         </form>
