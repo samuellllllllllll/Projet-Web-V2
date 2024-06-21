@@ -26,7 +26,6 @@ const DeliverymanOrder2 = () => {
         try {
             const orderResponse = await axios.get(`http://localhost:4545/orders/${orderId}`);
             setOrderDetails(orderResponse.data);
-            console.log(orderResponse.data);
         } catch (error) {
             console.error('Error fetching order or restaurant details:', error);
         }
