@@ -191,8 +191,8 @@ const MenuEdit = () => {
         setIsModalOpen(true);
     };
 
-
     const openEditModalMenu = (food) => {
+        console.log(food);
         setSelectedFood(food);
         setNewFood({
             images: food.url_picture,
@@ -200,10 +200,12 @@ const MenuEdit = () => {
             price: food.price,
             category: food.category
         });
-        setHasStarter(true);
-        setHasMainDish(true);
-        setHasDessert(true);
-        setHasDrink(true);
+
+        setHasStarter(food.starter || false);
+        setHasMainDish(food.main_dish || false);
+        setHasDessert(food.dessert || false);
+        setHasDrink(food.drink || false);
+
         setShowModal(true);
         setIsModalOpen(true);
         setIsMenu(true);
