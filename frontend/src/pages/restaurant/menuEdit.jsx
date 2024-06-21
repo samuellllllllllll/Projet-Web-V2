@@ -131,9 +131,9 @@ const MenuEdit = () => {
         e.preventDefault();
         try {
             if (selectedFood) {
-                if (selectedFood?.category === "menus") {
+                if (isMenu) {
                     const response = await axios.put(`http://localhost:4546/restaurants/menus/modify/${newFood.name}/${newFood.price}/${hasStarter}/${hasMainDish}/${hasDessert}/${hasDrink}/${selectedFood.id}`);
-                    console.log('Response from server:', response.data);
+                    console.log('Response from server:', response);
                 } else {
                     // Modification d'un article existant
                     const response = await axios.put(`http://localhost:4548/articles/restaurants/menu/modify`, {
@@ -145,7 +145,7 @@ const MenuEdit = () => {
                             id: selectedFood.id
                         }
                     });
-                    console.log('Response from server:', response.data);
+                    console.log('Response from server:', response);
                 }
             } else {
                 if (addCategory === "menus") {
@@ -192,7 +192,6 @@ const MenuEdit = () => {
     };
 
     const openEditModalMenu = (food) => {
-        console.log(food);
         setSelectedFood(food);
         setNewFood({
             images: food.url_picture,
