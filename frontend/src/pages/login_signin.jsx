@@ -41,8 +41,6 @@ const LoginSignIn = () => {
     try {
       const success = await login(data.email, data.password);
       const role = localStorage.getItem('role');
-      console.log("success", success);
-      console.log("role", role);
       if (success) {
         if (role == 1) {
           navigate('/consommateur');
