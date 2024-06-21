@@ -28,7 +28,7 @@ const DeliverymanOrder3 = () => {
         <div className="menu-page">
             <MobileHeader />
             <main className="order-details">
-                <img src={valid} alt="validation" className="valid" />
+                <img src={valid} alt="validation" className="icone-de-validation" />
                 <h1>Commande livrée !</h1>
                 <div className="confirm-section">
                     <button className="confirm-button" onClick={deliverOrder} >Retour à l'accueil</button>
