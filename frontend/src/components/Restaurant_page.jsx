@@ -93,7 +93,7 @@ const Restaurant_page = () => {
     // The product that I choose will have a border around it
     // When I click on a product, the border will be added or removed
     const toggleSelection = (product_id, category) => {
-        if (category === 0) {
+        if (category === 4) {
             if (selectedIdProducts.id_starter === product_id) {
                 setSelectedNameProducts({...selectedNameProducts, name_starter: ''});
                 setSelectedIdProducts({...selectedIdProducts, id_starter: null});
@@ -214,9 +214,9 @@ const Restaurant_page = () => {
                             <div className="restaurant-page-container-product-cards">
                                 {/* Only products with category=0 */}
                                 {/* If products is empty show a message */}
-                                {products.filter(product => product.category === 0).length === 0 ? <div className="restaurant-page-container-product-cards-empty">Ce restaurant n'a pas d'entrée</div> : products.filter(product => product.category === 0).map((product) => (
+                                {products.filter(product => product.category === 4).length === 0 ? <div className="restaurant-page-container-product-cards-empty">Ce restaurant n'a pas d'entrée</div> : products.filter(product => product.category === 4).map((product) => (
                                     <div className="restaurant-page-container-product-card" key={product.id}>
-                                        <Product_card_consumer key={product.id} id={product.id} name={product.name} price={product.price} image={product.image} restaurant_id={id} restaurant_name={name} />
+                                        <Product_card_consumer key={product.id} id={product.id} name={product.name} price={product.price} image={product.url_picture} restaurant_id={id} restaurant_name={name} />
                                     </div>
                                 ))}
                             </div>

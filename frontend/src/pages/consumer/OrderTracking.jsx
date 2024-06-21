@@ -35,22 +35,13 @@ const OrderTracking = () => {
         return formattedDate;
     }
 
+    // Refresh orders every 10 seconds
     useEffect(() => {
         getOrder();
-
-        return () => {
-            try{
-                const intervalId = setInterval(() => {
-                    getOrder();
-                }, 10000);
-            } catch (error) {
-                // Wait 30 seconds before trying again
-                setTimeout(() => {
-                    clearInterval(intervalId);
-                }, 30000);
-                console.error(error);
-            }
-        };
+        const interval = setInterval(() => {
+            getOrder();
+        }, 10000);
+        return () => clearInterval(interval);
     }, []);
 
     return(
@@ -146,7 +137,6 @@ const OrderTracking = () => {
                         </div>
                     ))}
                 </div>
-                <Footer />
             </div>
         </div>
     )
