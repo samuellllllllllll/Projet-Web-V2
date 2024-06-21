@@ -21,6 +21,7 @@ const MenuEdit = () => {
     const [hasMainDish, setHasMainDish] = useState(false);
     const [hasDessert, setHasDessert] = useState(false);
     const [hasDrink, setHasDrink] = useState(false);
+    const [isMenu, setIsMenu] = useState(false);
 
     const fetchArticles = async () => {
         try {
@@ -47,21 +48,24 @@ const MenuEdit = () => {
         fetchArticles();
     }, []);
 
-    const deleteArticles = async (articleId) => {
+    useEffect(() => {
+        setIsMenu(addCategory === "menus");
+    }, [addCategory]);
+
+    const deleteArticles = async (articleId, category) => {
         try {
-            if (selectedFood.category === "menus") {
-                await axios.delete(`http://localhost:4548/articles/restaurants/menu/${articleId}`);
-                fetchArticles();
-            } else {
+            if (category === "menus") {
                 await axios.delete(`http://localhost:4546/restaurants/menus/${articleId}`);
-                fetchArticles();
+            } else {
+                await axios.delete(`http://localhost:4548/articles/restaurants/menu/${articleId}`);
             }
+            fetchArticles();
         } catch (error) {
             console.error('Error deleting article:', error);
         }
     };
 
-    const renderFoodCards = (category, items, isMenu = false) => {
+    const renderFoodCards = (category, items) => {
         if (items.length === 0) {
             return <p className='yapa'>Il n'y a pas de {category}</p>;
         }
@@ -69,16 +73,33 @@ const MenuEdit = () => {
             <FoodCard
                 key={item.id}
                 id={item.id}
-                images={isMenu ? AladinMenu : item.url_picture}
+                images={item.url_picture}
                 name={item.name}
                 price={`${item.price}€`}
                 isEditing={isEditing}
-                onDelete={() => deleteArticles(item.id)}
+                onDelete={() => deleteArticles(item.id, category)}
                 onEdit={isEditing ? () => openEditModal(item) : undefined}
             />
         ));
     };
 
+    const renderMenuCards = (category, items) => {
+        if (items.length === 0) {
+            return <p className='yapa'>Il n'y a pas de {category}</p>;
+        }
+        return Array.isArray(items) && items.map(item => (
+            <FoodCard
+                key={item.id}
+                id={item.id}
+                images={AladinMenu}
+                name={item.name}
+                price={`${item.price}€`}
+                isEditing={isEditing}
+                onDelete={() => deleteArticles(item.id, category)}
+                onEdit={isEditing ? () => openEditModalMenu(item) : undefined}
+            />
+        ));
+    };
     const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target;
         if (type === 'checkbox') {
@@ -110,9 +131,9 @@ const MenuEdit = () => {
         e.preventDefault();
         try {
             if (selectedFood) {
-                if (selectedFood?.category === "menus") {
+                if (isMenu) {
                     const response = await axios.put(`http://localhost:4546/restaurants/menus/modify/${newFood.name}/${newFood.price}/${hasStarter}/${hasMainDish}/${hasDessert}/${hasDrink}/${selectedFood.id}`);
-                    console.log('Response from server:', response.data);
+                    console.log('Response from server:', response);
                 } else {
                     // Modification d'un article existant
                     const response = await axios.put(`http://localhost:4548/articles/restaurants/menu/modify`, {
@@ -124,7 +145,7 @@ const MenuEdit = () => {
                             id: selectedFood.id
                         }
                     });
-                    console.log('Response from server:', response.data);
+                    console.log('Response from server:', response);
                 }
             } else {
                 if (addCategory === "menus") {
@@ -164,10 +185,29 @@ const MenuEdit = () => {
 
     const handleAddFood = (category) => {
         setAddCategory(category);
-        setSelectedFood(null); // Assurez-vous que selectedFood est null lors de l'ajout
-        setNewFood({ images: '', name: '', price: '', category }); // Réinitialisation complète de newFood
+        setSelectedFood(null);
+        setNewFood({ images: '', name: '', price: '', category });
         setShowModal(true);
         setIsModalOpen(true);
+    };
+
+    const openEditModalMenu = (food) => {
+        setSelectedFood(food);
+        setNewFood({
+            images: food.url_picture,
+            name: food.name,
+            price: food.price,
+            category: food.category
+        });
+
+        setHasStarter(food.starter || false);
+        setHasMainDish(food.main_dish || false);
+        setHasDessert(food.dessert || false);
+        setHasDrink(food.drink || false);
+
+        setShowModal(true);
+        setIsModalOpen(true);
+        setIsMenu(true);
     };
 
     const openEditModal = (food) => {
@@ -180,31 +220,17 @@ const MenuEdit = () => {
         });
 
         if (food.category === 'menus') {
-            if (hasStarter === 1) {
-                setHasStarter(checked);
-            }
-
-            if (hasMainDish === 1) {
-                setHasMainDish(checked);
-            }
-
-            if (hasDrink === 1) {
-                setHasDrink(checked);
-            }
-
-            if (hasDessert === 1) {
-                setHasDessert(checked);
-            }
-
             setHasStarter(true);
             setHasMainDish(true);
             setHasDessert(true);
             setHasDrink(true);
+            setIsMenu(true);
         } else {
             setHasStarter(false);
             setHasMainDish(false);
             setHasDessert(false);
             setHasDrink(false);
+            setIsMenu(false);
         }
         setShowModal(true);
         setIsModalOpen(true);
@@ -214,6 +240,14 @@ const MenuEdit = () => {
         setIsEditing(!isEditing);
         setSelectedFood(null);
     };
+
+    const isMenuEditTrue = () => {
+        setIsMenu(true);
+    }
+
+    const isMenuEditFalse = () => {
+        setIsMenu(false);
+    }
 
     return (
         <div className="menu-page">
@@ -227,7 +261,7 @@ const MenuEdit = () => {
                 {isEditing && <button className="add-button" onClick={() => handleAddFood("3")}>+</button>}
             </div>
             <section className="card-row">
-                {renderFoodCards("boissons", boissons)}
+                {renderFoodCards("boissons", boissons, false)}
             </section>
             <div className="section-header">
                 <h2 className="section-title">Entrées</h2>
@@ -255,7 +289,7 @@ const MenuEdit = () => {
                 {isEditing && <button className="add-button" onClick={() => handleAddFood("menus")}>+</button>}
             </div>
             <section className="card-row">
-                {renderFoodCards("menus", menus, true)}
+                {renderMenuCards("menus", menus)}
             </section>
             {showModal && (
                 <div className="modal">
@@ -272,11 +306,11 @@ const MenuEdit = () => {
                             </label>
                             <label className="form-label">
                                 Image URL :
-                                {addCategory !== "menus" && (
+                                {!isMenu && (
                                     <input type="text" name="images" value={newFood.images} onChange={handleInputChange} />
                                 )}
                             </label>
-                            {addCategory === "menus" && (
+                            {isMenu && (
                                 <>
                                     <label className="form-label checkbox-label">
                                         Entrées :
