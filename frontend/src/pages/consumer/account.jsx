@@ -42,6 +42,8 @@ const Account = () => {
 
         // Update the user informations
         try{
+            // Get id from local storage
+            const id = localStorage.getItem('id');
             const response = await axios.put('http://localhost:4549/account/consumer/update_info', {
                 params: {
                     phone: userInfo.phone,
@@ -51,7 +53,7 @@ const Account = () => {
                     address_street: userInfo.street,
                     address_number: userInfo.number,
                     adresse_country: userInfo.country,
-                    id: 1 // TO BE CHANGED
+                    id: id,
                 }
             });
         } catch (error) {
@@ -81,10 +83,12 @@ const Account = () => {
 
         // Update the user password
         try{
+            // Get id from local storage
+            const id = localStorage.getItem('id');
             const response = await axios.put('http://localhost:4549/account/consumer/update_password', {
                 params: {
                     password: userPassword.password,
-                    id: 1 // TO BE CHANGED
+                    id: id,
                 }
             });
         } catch (error) {
@@ -102,11 +106,15 @@ const Account = () => {
     const handleDeleteClick = async () => {
         // Delete the user account
         try{
+            // Get id from local storage
+            const id = localStorage.getItem('id');
             const response = await axios.put('http://localhost:4549/account/consumer/delete', {
                 params: {
-                    id: 1 // TO BE CHANGED
+                    id: id,
                 }
             });
+            // Disconnect the user
+            logout();
         }
         catch (error) {
             console.error('Error deleting data:', error);
@@ -139,8 +147,10 @@ const Account = () => {
 
     const loadInfoUser = async () => {
         try {
+            // Get id from local storage
+            const id = localStorage.getItem('id');
             const response = await axios.get('http://localhost:4549/account/consumer', {
-                params: { id: 1 }, // TO BE CHANGED
+                params: { id: id }
             });
             // Change the data in user
             setUserInfo(response.data);
