@@ -16,10 +16,8 @@ const ProtectedRoute = ({ element: Component, allowedRoles }) => {
   useEffect(() => {
     const checkToken = async () => {
       if (isTokenExpired(accessToken)) {
-        console.log('Token expired, attempting to refresh...');
         await refreshAccessToken();
       } else {
-        console.log('Token is valid.');
       }
       setIsTokenChecked(true);
     };
@@ -27,8 +25,7 @@ const ProtectedRoute = ({ element: Component, allowedRoles }) => {
   }, [accessToken, isTokenExpired, refreshAccessToken]);
 
   if (isLoading || !isTokenChecked) {
-    console.log('Loading or checking token...');
-    return <div>Loading...</div>; // Show a loading indicator while checking and refreshing the token
+    return <div>Loading...</div>;
   }
 
   if (!accessToken) {
@@ -41,7 +38,6 @@ const ProtectedRoute = ({ element: Component, allowedRoles }) => {
     return <Navigate to="/" />;
   }
 
-  console.log('Access token and role valid, rendering component.');
   return <Component />;
 };
 

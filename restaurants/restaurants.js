@@ -75,7 +75,7 @@ app.get("/restaurants/menus", (req, res) => {
     });
 });
 
-// Get the adress of a restaurant
+// Get the address of a restaurant
 app.get("/restaurants/address", (req, res) => {
 
     const query_sql = "SELECT * FROM users WHERE id = $1;";

@@ -5,6 +5,17 @@ import '../styles/login_signin.css';
 import logo from '../assets/logo.png';
 import axios from 'axios';
 
+const roleMapping = {
+  1: 'consumer',
+  2: 'restaurant',
+  3: 'livreur'
+};
+
+const reverseRoleMapping = {
+  1: 'consumer',
+  2: 'restaurant',
+  3: 'livreur'
+};
 const LoginSignIn = () => {
   const [signInClicked, setSignInClicked] = useState(false);
   const [messageSignIn, setMessageSignIn] = useState('');
@@ -30,15 +41,14 @@ const LoginSignIn = () => {
     try {
       const success = await login(data.email, data.password);
       const role = localStorage.getItem('role');
-      console.log("succes", success);
+      console.log("success", success);
       console.log("role", role);
       if (success) {
-        console.log("role", role);
-          if (role == 1) {
+        if (role == 1) {
           navigate('/consommateur');
-        } else if (role == 2) {
-          navigate('/livreur');
         } else if (role == 3) {
+          navigate('/livreur');
+        } else if (role == 2) {
           navigate('/restaurant');
         } else {
           setMessageLogin('Identifiant ou mot de passe incorrect.');
@@ -73,23 +83,21 @@ const LoginSignIn = () => {
       return;
     }
 
+    const numericRole = roleMapping[data.choice];
+
     // Create user
     try {
-      const response = await axios.post('http://localhost:4547/users', {
-        params : {
-          email: data.email,
-          password: data.password,
-          role: data.choice,
-          is_deleted: false
-        }
+      await axios.post('http://localhost:4547/users', {
+        email: data.email,
+        password: data.password,
+        role: numericRole,
+        is_deleted: false
       });
+      setMessageSignIn('Compte créé avec succès. Vous pouvez maintenant vous connecter.');
+      form.reset();
     } catch (error) {
       setMessageSignIn('Erreur lors de la création du compte.');
-      return;
     }
-
-    setMessageSignIn('Compte créé avec succès. Vous pouvez maintenant vous connecter.');
-    form.reset();
 
     setTimeout(() => {
       setMessageSignIn('');
