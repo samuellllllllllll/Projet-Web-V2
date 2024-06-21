@@ -6,16 +6,11 @@ import logo from '../assets/logo.png';
 import axios from 'axios';
 
 const roleMapping = {
-  1: 'consumer',
-  2: 'restaurant',
-  3: 'livreur'
+  consumer: 1,
+  restaurant: 2,
+  livreur: 3
 };
 
-const reverseRoleMapping = {
-  1: 'consumer',
-  2: 'restaurant',
-  3: 'livreur'
-};
 const LoginSignIn = () => {
   const [signInClicked, setSignInClicked] = useState(false);
   const [messageSignIn, setMessageSignIn] = useState('');
@@ -81,11 +76,13 @@ const LoginSignIn = () => {
       return;
     }
 
+    // Map role to numeric value
     const numericRole = roleMapping[data.choice];
+    console.log('Mapped role:', numericRole);
 
     // Create user
     try {
-      await axios.post('http://localhost:4547/users', {
+      const response = await axios.post('http://localhost:4547/users', {
         email: data.email,
         password: data.password,
         role: numericRole,
@@ -125,9 +122,9 @@ const LoginSignIn = () => {
               <div className="choice-text">Je suis restaurateur</div>
               <input type="radio" name="choice" value="restaurant" id="restaurant" required />
             </label>
-            <label className="choice" htmlFor="deliveryman">
+            <label className="choice" htmlFor="livreur">
               <div className="choice-text">Je suis livreur</div>
-              <input type="radio" name="choice" value="deliveryman" id="deliveryman" required />
+              <input type="radio" name="choice" value="livreur" id="livreur" required />
             </label>
           </div>
           <div className="label-div">

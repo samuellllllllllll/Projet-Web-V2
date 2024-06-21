@@ -1,8 +1,8 @@
-const express = require("express");
+const express = require('express');
 const { Client } = require('pg');
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const dotenv = require("dotenv");
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const dotenv = require('dotenv');
 const bcrypt = require('bcrypt');
 
 dotenv.config();
@@ -23,53 +23,53 @@ const database_postgres = new Client({
   ssl: false
 });
 
-
 database_postgres.connect()
-.then(() => {
+  .then(() => {
     console.log('Connected to PostgreSQL database');
+  })
+  .catch(err => {
+    console.error('Connection error', err.stack);
+  });
+
+app.get("/", (req, res) => {
+  res.send("Users default route")
 });
 
-app.get("/", (req,res)=>{
-    res.send("Users default route")
-})
-
 app.get("/users", (req, res) => {
-    database_postgres.query('SELECT * FROM users', (err, result)=>{
-        if (err) {
-            console.error('Error executing query', err);
-        }
-        else {
-            console.log('Query result :', result.rows);
-        }
-        res.send(result.rows);
-    });
-})
-
-app.post("/users", (req, res)=>{
-
-    if (req.body.params.role === 'consumer') {
-        var role = 1;
-    } else if (req.body.params.role === 'deliveryman') {
-        var role = 2;
-    } else if (req.body.params.role === 'restaurant') {
-        var role = 3;
+  database_postgres.query('SELECT * FROM users', (err, result) => {
+    if (err) {
+      console.error('Error executing query', err);
+    } else {
     }
+    res.send(result.rows);
+  });
+});
 
-    const password = bcrypt.hashSync(req.body.params.password, 10);
-    const insert_test = 'INSERT INTO users(email, password, role, is_deleted) VALUES($1,$2,$3,$4)';
-    const values_test = [req.body.params.email, password, role, req.body.params.is_deleted];
-    
-    database_postgres.query(insert_test, values_test, (err, result) =>{
-        if (err){
-            console.error('Error inserting data', err);
-        }
-        else {
-            res.send("Inserted User")
-        }
-        
-    })
-})
+app.post("/users", async (req, res) => {
+  try {
 
-app.listen(4547, ()=>{
-    console.log("Up and running users");
-})
+    // Hash the password before storing it
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const insertQuery = 'INSERT INTO users(email, password, role, is_deleted) VALUES($1,$2,$3,$4)';
+    const values = [req.body.email, hashedPassword, req.body.role, req.body.is_deleted];
+
+    database_postgres.query(insertQuery, values, (err, result) => {
+      if (err) {
+        console.error('Error inserting data', err);
+        res.status(500).json({ message: 'Error inserting data' });
+      } else {
+        res.send("Inserted User");
+      }
+    });
+  } catch (error) {
+    console.error('Error hashing password', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+const port = process.env.PORT || 4547;
+app.listen(port, () => {
+  console.log(`Up and running users service on port ${port}`);
+});
+
+module.exports = app;
