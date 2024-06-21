@@ -3,6 +3,7 @@ const { Client } = require('pg');
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const bcrypt = require('bcrypt');
 
 dotenv.config();
 const app = express();
@@ -45,9 +46,18 @@ app.get("/users", (req, res) => {
 })
 
 app.post("/users", (req, res)=>{
-    console.log("Request body : ", req.body);
+
+    if (req.body.params.role === 'consumer') {
+        var role = 1;
+    } else if (req.body.params.role === 'deliveryman') {
+        var role = 2;
+    } else if (req.body.params.role === 'restaurant') {
+        var role = 3;
+    }
+
+    const password = bcrypt.hashSync(req.body.params.password, 10);
     const insert_test = 'INSERT INTO users(email, password, role, is_deleted) VALUES($1,$2,$3,$4)';
-    const values_test = [req.body.email, req.body.password, req.body.role, req.body.is_deleted];
+    const values_test = [req.body.params.email, password, role, req.body.params.is_deleted];
     
     database_postgres.query(insert_test, values_test, (err, result) =>{
         if (err){

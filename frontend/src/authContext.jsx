@@ -63,7 +63,6 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('refreshToken', response.data.refreshToken);
       localStorage.setItem('role', response.data.role);
       localStorage.setItem('id', response.data.id);
-      console.log(response.data.id);
       return true;
     } catch (error) {
       console.error('Login error:', error);

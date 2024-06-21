@@ -1,6 +1,8 @@
 .card-section {
     display: flex;
     flex-direction: column;
+
+    width: fit-content;
 }
 
 .card-item {

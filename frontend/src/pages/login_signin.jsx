@@ -29,12 +29,16 @@ const LoginSignIn = () => {
 
     try {
       const success = await login(data.email, data.password);
+      const role = localStorage.getItem('role');
+      console.log("succes", success);
+      console.log("role", role);
       if (success) {
-          if (data.email === "vincent@vincent.fr") {
+        console.log("role", role);
+          if (role == 1) {
           navigate('/consommateur');
-        } else if (data.email === "samuel@samuel.fr") {
+        } else if (role == 2) {
           navigate('/livreur');
-        } else if (data.email === "aladdin@aladdin.fr") {
+        } else if (role == 3) {
           navigate('/restaurant');
         } else {
           setMessageLogin('Identifiant ou mot de passe incorrect.');
@@ -47,7 +51,7 @@ const LoginSignIn = () => {
     }
   };
 
-  const handleSubmitSignIn = (e) => {
+  const handleSubmitSignIn = async (e) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
@@ -71,7 +75,7 @@ const LoginSignIn = () => {
 
     // Create user
     try {
-      axios.post('http://localhost:4547/users', {
+      const response = await axios.post('http://localhost:4547/users', {
         params : {
           email: data.email,
           password: data.password,
@@ -86,6 +90,10 @@ const LoginSignIn = () => {
 
     setMessageSignIn('Compte créé avec succès. Vous pouvez maintenant vous connecter.');
     form.reset();
+
+    setTimeout(() => {
+      setMessageSignIn('');
+    }, 3000);
   };
 
   return signInClicked ? (
